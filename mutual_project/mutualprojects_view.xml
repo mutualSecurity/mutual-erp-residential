@@ -257,9 +257,6 @@
                   <field name="version_id" position="attributes">
                       <attribute name="invisible">1</attribute>
                   </field>
-                  <field name="description" position="attributes">
-                     <attribute name="string">Remarks by Bank</attribute>
-                  </field>
                   <field name="name" position="attributes">
                      <attribute name="string">Complaints</attribute>
                   </field>
