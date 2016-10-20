@@ -336,9 +336,9 @@
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_kanban_view"/>
             <field name="arch" type="xml">
-                <field name="name" position="after"><br/>
+                <field name="partner_id" position="after"><br/>
                      <span style="color:royalblue;">
-                         <field name="cs_number_issue"/>
+                         <strong><field name="cs_number_issue"/></strong>
                      </span>
                 </field>
             </field>
