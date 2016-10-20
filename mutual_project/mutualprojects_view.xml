@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-       <!-- <record id="open_project_attachment_view" model="ir.actions.act_window">
-	        <field name="name">Technicians</field>
-            <field name="res_model">tech.list</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">click create to add a new record</p>
-            </field>
-        </record>
-       &lt;!&ndash; <menuitem id="project.menu_project_management" name="Complaints"/>&ndash;&gt;
-   &lt;!&ndash;     <menuitem action="open_view_project_all" id="project.menu_project_management" name="Complaints and Tasks" parent="project.menu_project_management" sequence="1"/>
-   &ndash;&gt;  <menuitem
-            name="Technicians"
-            action="open_project_attachment_view"
-            id="menu_open_project_attachment_view"
-            sequence="20"
-            parent="project.menu_project_management">
-        </menuitem>-->
-
         <!-- =========================== Issues Logs Begins ================================ -->
         <record id="tech_open_project_attachment_view" model="ir.actions.act_window">
 	        <field name="name">Issues Logs</field>
@@ -158,12 +139,6 @@
 
        <!-- <menuitem action="open_view_project_all" id="menu_tech" name="Projects" parent="menu_project_management" sequence="1"/>-->
 
-
-
-
-
-
-
         <!--====================================== Task form view Beginning ==================================-->
         <record model="ir.ui.view" id="project.view_task">
             <field name="name">project.task.form</field>
@@ -178,18 +153,12 @@
                 </field>
                 <field name="partner_id" position="after">
                       <field name="cs_number_task"/>
-                      <field name="bank_code_task"/>
-                      <field name="branch_code_task"/>
-                      <field name="city_task"/>
-                      <field name="monitoring_address_task"/>
                 </field>
                 <field name="sequence" position="replace">
 
                 </field>
                 <field name="date_end" position="after">
                     <field name='compute_total_time'/>
-                    <!--<field name="total_time"/>
-                    <button name="calculate_duration" string="Total Time" type="object" class="btn-link"  />-->
                 </field>
                 <field name="date_deadline" position="before">
                     <field name="complaint_reference"/>
@@ -209,10 +178,6 @@
             </field>
         </record>
          <!--====================================== Task form view Ending ==================================-->
-
-
-
-
 
 
         <!--====================================== Issue form view Beginning ==================================-->
@@ -237,40 +202,18 @@
 
                 </field>
                 <field name="id" position="after">
-                    <field name="date_start" />
-                    <field name="date_end" />
                     <field name="first_signal_time"/>
-                    <!--<field name="total_time" />-->
-                    <field name='compute_total_time'/>
-                    <field name="status" style="background:	#6495ED !important;" />
-                    <field name='complaint_log_bank'/>
                 </field>
                  <field name="partner_id" position="after">
                      <field name="cs_number_issue"/>
-                     <field name="bank_code_issue"/>
-                     <field name="branch_code_issue"/>
-                     <field name="city_issue"/>
-                     <field name="monitoring_address_issue"/>
+                     <field name="date_start" />
+                     <field name="date_end" />
+                     <field name='compute_total_time'/>
                  </field>
-                <field name="user_id" position="before">
-                    <field name="complaint_source"/>
-                    <field name="sale_order_issue"/>
-                </field>
                 <field name="user_id" position="after">
                     <field name="user_id_issue"/>
                 </field>
-                <field name="project_id" position="after">
-                    <!--<button name="calculate_duration" string="Total Time" type="object" class="btn-link"  />-->
-                </field>
-                <!--<field name="task_id" position="after">-->
-                    <!--<br/><lable><strong>Is a self complaint?</strong></lable><field name="is_self_complaint" style="margin-left:10px;"/>-->
-                <!--</field>-->
                 <notebook>
-                    <page string="Remarks by CMS">
-                        <field name="remark_by_cms"/>
-                    </page>
-                </notebook>
-                 <notebook>
                     <page string="Timesheet">
                           <field name="tech_name" colspan="4" nolabel="1">
                             <tree editable="top" string="Timesheets">
@@ -282,64 +225,12 @@
                           </field>
                     </page>
                 </notebook>
-                <notebook>
-                    <page string="Checking Criteria">
-                        <group>
-                            <lable><h2>Zone Signals</h2></lable><br/>
-                            <field name="Zone1"/>
-                            <field name="Zone2"/>
-                            <field name="Zone3"/>
-                            <field name="Zone4"/>
-                            <field name="Zone5"/>
-                            <field name="Zone6"/>
-                            <field name="Zone7"/>
-                            <field name="Zone8"/>
-                            <field name="Zone9"/>
-                        </group>
-                        <group>
-                             <lable><h2>Keypad Signals</h2></lable><br/>
-                             <field name="panic"/>
-                             <field name="duress"/>
-                             <field name="medical"/>
-                             <field name="fire"/>
-                        </group>
-                        <lable><h2>BS Connected to</h2></lable>
-                        <group colspan="4">
-                            <field name="gsm"/>
-                        </group>
-                        <group col="6">
-                             <!--<lable><h2>BS Connected to</h2></lable><br/>-->
-                             <field name="gsmNumber" />
-                             <field name="gsm_postpaid_prepaid" widget="radio"/>
-                        </group>
-                        <group col="6">
-                             <field name="ptcl" />
-                             <field name="ptcl_dedicated_shared" widget="radio"/>
-                        </group>
-                        <group>
-                             <field name="response_check" widget="radio"/>
-                            <field name="check_by" style="width:37%%"/>
-                        </group>
-                    </page>
-                </notebook>
-                <notebook>
-                    <page string="SMS">
-                        <group>
-                            <field name="techContact"/>
-                            <field name="sms"/>
-                        </group>
-
-                            <button name="details" string="Details" type="object" class="btn-link" />
-                            <button name="smsSent" string="Sent" type="object" class="btn-link"  />
-
-                    </page>
-                </notebook>
-                <xpath expr="//page[@string='Extra Info']" position="attributes">
-                    <attribute name="invisible">True</attribute>
-                </xpath>
-                <xpath expr="//page[@string='Description']" position="attributes">
-                    <attribute name="string">Remarks by Bank</attribute>
-                </xpath>
+                <!--<xpath expr="//page[@string='Extra Info']" position="attributes">-->
+                    <!--<attribute name="invisible">True</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//page[@string='Description']" position="attributes">-->
+                    <!--<attribute name="string">Remarks by Bank</attribute>-->
+                <!--</xpath>-->
             </field>
         </record>
         <!--====================================== Issue form view Ending ==================================-->
@@ -355,21 +246,16 @@
                       <field name="description"/>
                       <field name="user_id_issue"/>
                       <field name="cs_number_issue"/>
-                      <field name="bank_code_issue"/>
-                      <field name="branch_code_issue"/>
-                      <field name="city_issue"/>
-                      <field name="monitoring_address_issue"/>
                       <field name="task_id" />
                       <field name="date_start"/>
                       <field name="date_end"/>
                       <field name="compute_total_time"/>
                   </field>
                   <field name="user_id" position="after">
-                      <!--<field name="technicians"/>-->
                       <field name="create_date"/>
                   </field>
-                  <field name="version_id" position="replace">
-
+                  <field name="version_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
                   </field>
                   <field name="description" position="attributes">
                      <attribute name="string">Remarks by Bank</attribute>
@@ -377,12 +263,9 @@
                   <field name="name" position="attributes">
                      <attribute name="string">Complaints</attribute>
                   </field>
-                  <field name="partner_id" position="replace">
-
+                  <field name="partner_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
                   </field>
-                  <!--<field name="user_id" position="attributes">-->
-                      <!--<attribute name="string">Logged by</attribute>-->
-                  <!--</field>-->
             </field>
         </record>
         <!--====================================== List view of Issue form for metrics ends ==================================-->
@@ -397,10 +280,6 @@
                  <field name="date_end" position="after">
                       <field name="reviewer_id"/>
                       <field name="cs_number_task"/>
-                      <field name="bank_code_task"/>
-                      <field name="branch_code_task"/>
-                      <field name="city_task"/>
-                      <field name="monitoring_address_task"/>
                       <field name="compute_total_time"/>
                       <field name="date_deadline"/>
                       <field name="create_date"/>
@@ -417,6 +296,8 @@
                   </field>
             </field>
         </record>
+        <!--====================================== List view of tasks form for metrics ends ==================================-->
+
          <!--==========================Search View of Issues=============================-->
         <record  model="ir.ui.view" id="project_issue.view_project_issue_filter_search">
             <field name="name">Project Issue Tracker Search</field>
@@ -428,10 +309,6 @@
                     <field name="create_date"/>
                     <field name="user_id_issue"/>
                     <field name="cs_number_issue"/>
-                    <field name="bank_code_issue"/>
-                    <field name="branch_code_issue"/>
-                    <field name="city_issue"/>
-                    <field name="monitoring_address_issue"/>
                     <group string="Custome Filter">
                         <filter name="user_id_issue" string="Not Forwarded" domain="[('user_id_issue','=',False)]"/>
                         <filter name="user_id" string="Not Assigned" domain="[('user_id','=',False)]"/>
@@ -449,14 +326,9 @@
                     <field name="priority"/>
                     <field name="create_date"/>
                     <field name="cs_number_task"/>
-                    <field name="bank_code_task"/>
-                    <field name="branch_code_task"/>
-                    <field name="city_task"/>
-                    <field name="monitoring_address_task"/>
                 </search>
             </field>
         </record>
-        <!--====================================== List view of tasks form for metrics ends ==================================-->
 
         <!--====================================== Kanban view of issue begins ==================================-->
         <record model="ir.ui.view" id="project_issue_kanban_view">
@@ -465,9 +337,9 @@
             <field name="inherit_id" ref="project_issue.project_issue_kanban_view"/>
             <field name="arch" type="xml">
                 <field name="name" position="after"><br/>
-                    <field name="cs_number_issue"/>
-                    <span style="margin-left:5px;color:royalblue;"><field name="city_issue" /></span><br/>
-                    <field name="complaint_source"/>
+                     <span style="color:royalblue;">
+                         <field name="cs_number_issue"/>
+                     </span>
                 </field>
             </field>
         </record>
