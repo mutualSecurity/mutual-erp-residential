@@ -225,12 +225,6 @@
                           </field>
                     </page>
                 </notebook>
-                <!--<xpath expr="//page[@string='Extra Info']" position="attributes">-->
-                    <!--<attribute name="invisible">True</attribute>-->
-                <!--</xpath>-->
-                <!--<xpath expr="//page[@string='Description']" position="attributes">-->
-                    <!--<attribute name="string">Remarks by Bank</attribute>-->
-                <!--</xpath>-->
             </field>
         </record>
         <!--====================================== Issue form view Ending ==================================-->
@@ -243,7 +237,6 @@
               <field name="priority" eval="20"/>
               <field name="arch" type="xml">
                   <field name="priority" position="after">
-                      <field name="description"/>
                       <field name="user_id_issue"/>
                       <field name="cs_number_issue"/>
                       <field name="task_id" />
