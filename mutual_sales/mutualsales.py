@@ -5,6 +5,9 @@ from openerp.osv import fields, osv
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
+        'is_rider': fields.boolean('Is a Rider?', help="Check if the contact is a company, otherwise it is a person"),
+        'is_technician': fields.boolean('Is a Technician?',
+                                        help="Check if the contact is a company, otherwise it is a person"),
         'customer_relatives': fields.one2many('customer.relatives','customer_r','Relative'),
         'disco': fields.boolean('Disconnection', store=True),
         'reco': fields.boolean('Reconnection', store=True),

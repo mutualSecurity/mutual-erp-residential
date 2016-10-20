@@ -49,6 +49,10 @@
                     <field string="CS Number" name="cs_number"  placeholder="CS Number" />
                     <field string="Uplink Date" name="uplink_date"  placeholder="Uplink Date" />
                 </field>
+                <field name="title" position="after">
+                    <field name="is_technician" attrs="{'invisible': [('customer','=',True)]}"/>
+                    <field name="is_rider" attrs="{'invisible': [('customer','=',True)]}"/>
+                </field>
                 <field name="function" position="after">
                     <field name="office"/>
                 </field>
@@ -101,6 +105,21 @@
                           </field>
                     </page>
                 </notebook>
+            </field>
+        </record>
+        <record  model="ir.ui.view" id="view_res_partner_filter">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter" />
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+                    <field name="cs_number"/>
+                    <field name="mobile" />
+                    <field name="phone" />
+                    <field name="email"/>
+                    <field name="payment_next_action" />
+                    <field name="payment_responsible_id" />
+                </search>
             </field>
         </record>
 
