@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="cs_id">
+            <field name="name">Opportunities</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+            <field name="arch" type="xml">
+                <field name="title_action" position="after">
+                    <button name="log_next_activity_done" string="Survey Completed" type="object" class="btn-link" attrs="{'invisible': ['|', ('active','=',False), ('probability', '!=', 40)]}" />
+                    <button name="survey_schedule" string="Schedule Survey" type="object" class="btn-link" attrs="{'invisible': ['|', ('active','=',False), ('probability', '!=', 20)]}" />
+                </field>
+                 <!--<xpath expr="//button[@name='log_next_activity_done']" position="replace" >-->
+                        <!--<button name="log_next_activity_done" string="Done" type="object" class="btn-link" attrs="{'invisible': ['|', ('active','=',False), ('probability', '=', 70)]}" />-->
+                        <!--<button name="change_to_survey_scheduled" string="Schedule Survey" type="object" class="btn-link" attrs="{'invisible': ['|', ('active','=',False), ('probability', '>', 20)]}" />-->
+                <!--</xpath>-->
+            </field>
+        </record>
+    </data>
+</openerp>

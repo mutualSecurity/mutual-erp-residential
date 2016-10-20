@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="external_layout_ack">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="mutual_reports.external_layout_header_ack" />
+    <t t-raw="0" />
+
+</template>
+
+<template id="external_layout_header_ack">
+    <!--<div class="header">-->
+        <!--<div class="row">-->
+            <!--<div class="col-xs-3">-->
+                <!--&lt;!&ndash;<div t-field="company.partner_id"&ndash;&gt;-->
+                    <!--&lt;!&ndash;t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'&ndash;&gt;-->
+                    <!--&lt;!&ndash;style="border-bottom: 1px solid black;"/>-->
+                    <!--&ndash;&gt;-->
+                <!--&lt;!&ndash;<div t-if="company.vat">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span t-field="company.vat"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</template>
+
+<template   id="external_layout_header">
+    <div class="header">
+        <div class="row">
+            <div class="col-sm-12" t-if="company.vat">
+                <span><strong>OUR NTN</strong></span>
+                <p class="text-center" t-field="company.vat" />
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+
+</data>
+</openerp>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.actions.act_window" id="open_project_attachment_view" >
+	        <field name="name">Riders</field>
+            <field name="res_model">rider.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new Rider</p>
+            </field>
+        </record>
+        <menuitem name="Riders" action="open_project_attachment_view" id="menu_base_partner" parent="base.menu_sales_followup"/>
+
+        <record model="ir.ui.view" id="followups_id">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <field name="payment_responsible_id" position="after">
+                    <field name="riders" />
+                </field>
+            </field>
+        </record>
+        <record id="customer_followup_tree" model="ir.ui.view">
+              <field name="name">res.partner.followup.inherit.tree</field>
+              <field name="model">res.partner</field>
+              <field name="inherit_id" ref="account_followup.customer_followup_tree" />
+              <field name="priority" eval="20"/>
+              <field name="arch" type="xml">
+                  <field name="display_name" position="after">
+                      <field name="riders"/>
+                  </field>
+            </field>
+        </record>
+    </data>
+</openerp>

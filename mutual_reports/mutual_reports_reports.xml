@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+                id="custom_report_acknowledgment_receipt"
+                model="account.invoice"
+                string="Print Acknowledgment Receipt"
+                report_type="qweb-pdf"
+                name="mutual_reports.report_acknowledgment_receipt"
+                attachment_use="False"
+                file="mutual_reports.report_acknowledgment_receipt"
+        />
+        <report
+                id="custom_report_issue_pdf"
+                model="project.issue"
+                string="Print Issue"
+                report_type="qweb-pdf"
+                name="mutual_reports.report_issue_pdf"
+                attachment_use="False"
+                file="mutual_reports.report_issue_pdf"
+        />
+        <report
+                id="custom_report_task_pdf"
+                model="project.task"
+                string="Print Task"
+                report_type="qweb-pdf"
+                name="mutual_reports.report_task_pdf"
+                attachment_use="False"
+                file="mutual_reports.report_task_pdf"
+        />
+    </data>
+</openerp>

@@ -1,0 +1,20 @@
+.openerp .oe_form .oe_form_field_selection select {
+    width: 100%;
+    height: 35px;
+    font-size: 14px;
+}
+/*label{*/
+    /*visibility: hidden;*/
+/*}*/
+.hide
+{
+    visibility: hidden;
+}
+
+
+.openerp .oe_webclient .oe_star_on, .openerp .modal-body .oe_star_on {
+    color: red !important;
+}
+.oe_kanban_color_0{
+    /*background: red !important;*/
+}

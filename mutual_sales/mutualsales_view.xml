@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="relatives_open_project_attachment_view" model="ir.actions.act_window">
+	        <field name="name">Customer Relatives</field>
+            <field name="res_model">customer.relatives</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+        <menuitem
+            name="Customer Relatives"
+            action="relatives_open_project_attachment_view"
+            id="menu_relatives_open_project_attachment_view"
+            sequence="7"
+            parent="base.menu_sales">
+        </menuitem>
+        <record id="customer_relatives_form_view" model="ir.ui.view">
+            <field name="name">customer_relatives.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">customer.relatives</field>
+            <field name="arch" type="xml">
+                <form string="customer_relatives">
+                    <sheet>
+                        <group string="Customer Relatives">
+                            <group>
+                                 <field name="customer_r"/>
+                                 <field name="relative"/>
+                                 <field name="relationship"/>
+                            </group>
+                            <group>
+                                <field name="contact_1"/>
+                                <field name="contact_2"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cs_id">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field string="CS Number" name="cs_number"  placeholder="CS Number" />
+                    <field string="Uplink Date" name="uplink_date"  placeholder="Uplink Date" />
+                </field>
+                <field name="function" position="after">
+                    <field name="office"/>
+                </field>
+                <label for="street" string="Address" position="replace">
+                    <label for="street" string="Monitoring Address" />
+                </label>
+                <xpath expr="//form/sheet/group" position="after" >
+                    <group>
+                            <label for="c_street" string='Correspondences Address'></label>
+                            <div>
+                                <field name="c_street" placeholder="Street..."/>
+                                <field name="c_street2"/>
+                                <div class="address_format">
+                                    <field name="c_city" placeholder="City" style="width: 40%%"/>
+                                    <field name="c_state_id" on_change="onchange_state(state_id)" options='{"no_open": True}' placeholder="State" style="width: 24%%"/>
+                                    <field name="c_zip" placeholder="ZIP" style="width: 34%%"/>
+                                </div>
+                                <field name="c_country_id" placeholder="Country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                    </group>
+                    <group>
+                    <lable><h3 style="margin-top:10px">For CEO use only</h3></lable>
+                    <br/><field name="disco"/>
+                    <field name="reco"/>
+                    </group>
+                </xpath>
+                <notebook>
+                    <page string="Personal Info" groups="base.group_sale_manager">
+                        <label for="nic_num">CNIC Number</label>
+                        <field string="Nic Card Number" name="nic_num"  placeholder="44204-1234567-8" />
+                        <label for="ntn_num">NTN Number</label>
+                        <field string="NTN Number" name="ntn_num"  placeholder="1234567-1" />
+                        <label for="gst_num">GST Number</label>
+                        <field string="GST Number" name="gst_num"  placeholder="1234567-1" />
+                        <label for="credit_card_no">Credit Card Number</label>
+                        <field string="Credit Card Number" name="credit_card_no"  placeholder="14444444444444" />
+                        <label for="credit_card_exp_date">Credit Card Exipry Date</label>
+                        <field string="Expiry Date" name="credit_card_exp_date"  placeholder="Expiry Date" />
+                    </page>
+                </notebook>
+                <notebook>
+                    <page string="Relatives Info">
+                          <field name="customer_relatives" colspan="4" nolabel="1">
+                            <tree editable="top" string="Relative">
+                                 <field name="relative"/>
+                                 <field name="relationship"/>
+                                 <field name="contact_1"/>
+                                 <field name="contact_2"/>
+                            </tree>
+                          </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</openerp>

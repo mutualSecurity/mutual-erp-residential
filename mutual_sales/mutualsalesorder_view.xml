@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <record model="ir.ui.view" id="sale.view_order_id">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <notebook>
+                    <page string="Due Deligence" groups="base.group_sale_manager">
+                        <group col="4">
+                            <field name="behalf_of_customer" />
+                            <field name="How_much_you_paid"/>
+                            <field name="date"/>
+                        </group>
+                        <group style="margin-top:10px">
+                            <field name="ptcl_gsm" widget="radio" style="margin-top:20px"/>
+                            <field name="ptcl_inorder" widget="radio" style="margin-top:20px"/>
+                            <field name="owner_tenant" widget="radio" style="margin-top:20px"/>
+                            <field name="terms" widget="radio" style="margin-top:20px"/>
+                        </group>
+                        <group>
+                            <field name="remarks"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>
