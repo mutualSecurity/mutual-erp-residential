@@ -66,6 +66,7 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'status': fields.char("Status", store=True,readonly=True),
       'city_issue': fields.related('partner_id', 'city', type='char', size=100, string='City', readonly=True),
       'monitoring_address_issue': fields.related('partner_id', 'street', type='char', size=100, string='Monitoring address', readonly=True),
       'id': fields.integer('ID', readonly=True),
@@ -158,12 +159,13 @@ class mutual_issues(osv.osv):
   @api.multi
   def smsSent(self):
       r = requests.post("http://localhost:3001", data={'sms': self.sms, 'contact': self.techContact})
-      return {
-          'warning': {
-              'title': "Something bad happened",
-              'message': "It was very bad indeed",
-          }
-      }
+      if r:
+          self.status = "Sent"
+          return True
+      else:
+          self.status = "Failed"
+          return False
+
 
   @api.multi
   def details(self):

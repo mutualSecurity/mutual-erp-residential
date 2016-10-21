@@ -232,6 +232,7 @@
                         <group>
                             <field name="techContact"/>
                             <field name="sms"/>
+                            <field name="status"/>
                         </group>
                             <button name="details" string="Details" type="object" class="btn-link" />
                             <button name="smsSent" string="Sent" type="object" class="btn-link"  />
