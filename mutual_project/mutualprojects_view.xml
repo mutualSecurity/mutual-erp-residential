@@ -206,6 +206,8 @@
                 </field>
                  <field name="partner_id" position="after">
                      <field name="cs_number_issue"/>
+                     <field name="city_issue"/>
+                     <field name="monitoring_address_issue"/>
                      <field name="date_start" />
                      <field name="date_end" />
                      <field name='compute_total_time'/>
@@ -225,6 +227,16 @@
                           </field>
                     </page>
                 </notebook>
+                <notebook>
+                    <page string="SMS">
+                        <group>
+                            <field name="techContact"/>
+                            <field name="sms"/>
+                        </group>
+                            <button name="details" string="Details" type="object" class="btn-link" />
+                            <button name="smsSent" string="Sent" type="object" class="btn-link"  />
+                    </page>
+                </notebook>
             </field>
         </record>
         <!--====================================== Issue form view Ending ==================================-->
@@ -239,6 +251,8 @@
                   <field name="priority" position="after">
                       <field name="user_id_issue"/>
                       <field name="cs_number_issue"/>
+                      <field name="city_issue"/>
+                      <field name="monitoring_address_issue"/>
                       <field name="task_id" />
                       <field name="date_start"/>
                       <field name="date_end"/>

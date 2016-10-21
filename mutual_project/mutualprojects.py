@@ -66,10 +66,16 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'city_issue': fields.related('partner_id', 'city', type='char', size=100, string='City', readonly=True),
+      'monitoring_address_issue': fields.related('partner_id', 'street', type='char', size=100, string='Monitoring address', readonly=True),
+      'id': fields.integer('ID', readonly=True),
+      'techContact': fields.char('Contact', store=True, size=11),
+      'sms': fields.text('SMS', store=True),
       'cs_number_issue': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
       'tech_name': fields.one2many('tech.activities.issues', 'tech_name', 'Timesheets', store=True),
       'user_id_issue': fields.many2one('res.users', 'Forwarded to', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',False)]"),
       'user_id': fields.many2one('res.partner', 'Assigned Tech', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',True)]"),
+      'contact': fields.related('user_id', 'mobile', type='char', size=12, string='Contact', readonly=True),
       'compute_total_time':fields.char('Total Time',store=True,readonly=True,compute='_compute_total_time',old='total_time'),
       'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain="[('customer','=',True)]"),
       'categ_ids': fields.many2many('project.category', string='Other Complaints'),
@@ -149,8 +155,29 @@ class mutual_issues(osv.osv):
                                'Complaint Title', required=True, read=['__export__.res_groups_52'], write=['project.group_project_user'])
   }
 
+  @api.multi
+  def smsSent(self):
+      r = requests.post("http://localhost:3001", data={'sms': self.sms, 'contact': self.techContact})
+      return {
+          'warning': {
+              'title': "Something bad happened",
+              'message': "It was very bad indeed",
+          }
+      }
+
+  @api.multi
+  def details(self):
+      self.techContact = self.contact
+      self.sms = str(self.id)+"\n"+str(self.cs_number_issue)+"\n"+str(self.name)+"\n"+str(self.monitoring_address_issue)+"\n"+str(self.city_issue)
+      return {
+          'warning': {
+              'title': "Something bad happened",
+              'message': "It was very bad indeed",
+          }
+      }
+
   @api.one
-  @api.depends('date_start','date_end')
+  @api.depends('date_start', 'date_end')
   def _compute_total_time(self):
       print self.date_start
       # Time-In calculation
