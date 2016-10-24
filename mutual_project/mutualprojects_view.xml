@@ -134,9 +134,6 @@
 
             <!--</field>-->
         <!--</record>-->
-
-
-
        <!-- <menuitem action="open_view_project_all" id="menu_tech" name="Projects" parent="menu_project_management" sequence="1"/>-->
 
         <!--====================================== Task form view Beginning ==================================-->
@@ -145,24 +142,51 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_form2" />
             <field name="arch" type="xml">
-               <field name="name" position="replace">
-                     <field name="name" />
+                <field name="name" position="replace">
+                    <field name="name" />
                 </field>
-                <field name="date_start" position="before">
-                    <field name="first_signal_time_task" />
-                </field>
-                <field name="partner_id" position="after">
-                      <field name="cs_number_task"/>
-                </field>
-                <field name="sequence" position="replace">
+                <field name="partner_id" position="replace">
 
                 </field>
-                <field name="date_end" position="after">
-                    <field name='compute_total_time'/>
-                </field>
-                <field name="date_deadline" position="before">
+                <xpath expr="//field[@name='reviewer_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="before">
+                    <field name="create_uid" readonly="True"/>
+                    <field name="partner_id"/>
+                    <field name="cs_number_task"/>
+                    <field name="city_task"/>
+                    <field name="monitoring_address_task"/>
+                </xpath>
+                <xpath expr="//field[@name='create_uid']" position="attributes">
+                    <attribute name="string">Logged by</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="before">
                     <field name="complaint_reference"/>
-                </field>
+                    <field name="user_id"/>
+                    <field name="timeIn"/>
+                    <field name="first_signal_time_task"/>
+                    <field name="timeOut"/>
+                    <field name="compute_total_time"/>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Description']" position="attributes">
+                    <attribute name="string">Remarks</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Extra Info']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='reviewer_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <notebook>
                     <page string="Timesheet">
                           <field name="tech_name_tasks" colspan="4" nolabel="1">
@@ -282,23 +306,40 @@
               <field name="inherit_id" ref="project.view_task_tree2" />
               <field name="priority" eval="20"/>
               <field name="arch" type="xml">
-                 <field name="date_end" position="after">
-                      <field name="reviewer_id"/>
+                  <xpath expr="//field[@name='project_id']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='date_start']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='date_end']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='progress']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='name']" position="before">
+                      <field name="complaint_reference"/>
+                  </xpath>
+                  <xpath expr="//field[@name='name']" position="after">
+                      <field name="create_uid"/>
                       <field name="cs_number_task"/>
+                      <field name="city_task"/>
+                      <field name="monitoring_address_task"/>
+                  </xpath>
+                  <xpath expr="//field[@name='user_id']" position="after">
+                      <field name="timeIn"/>
+                      <field name="timeOut"/>
                       <field name="compute_total_time"/>
-                      <field name="date_deadline"/>
+                      <field name="description"/>
                       <field name="create_date"/>
-                      <field name="priority"/>
-                 </field>
-                  <field name="name" position="before">
-                      <field name="partner_id"/>
-                  </field>
-                  <field name="progress" position="replace">
-
-                  </field>
-                  <field name="date_deadline" position="replace">
-
-                  </field>
+                  </xpath>
+                  <xpath expr="//field[@name='description']" position="attributes">
+                    <attribute name="string">Remarks</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='create_uid']" position="attributes">
+                      <attribute name="string">Logged by</attribute>
+                  </xpath>
             </field>
         </record>
         <!--====================================== List view of tasks form for metrics ends ==================================-->
@@ -322,18 +363,23 @@
             </field>
         </record>
          <!--==========================Search View of tasks=============================-->
-        <record  model="ir.ui.view" id="project.view_task_search_form_search">
+          <record  model="ir.ui.view" id="project.view_task_search_form_search">
             <field name="name">project.task.search.form</field>
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_search_form" />
             <field name="arch" type="xml">
-                <search string="Tasks">
+                 <search string="Tasks">
                     <field name="priority"/>
-                    <field name="create_date"/>
                     <field name="cs_number_task"/>
+                    <field name="city_task"/>
+                    <field name="monitoring_address_task"/>
+                     <group string="Custome Filter">
+                        <filter name="user_id" string="Not Assigned" domain="[('user_id','=',False)]"/>
+                    </group>
                 </search>
             </field>
         </record>
+
 
         <!--====================================== Kanban view of issue begins ==================================-->
         <record model="ir.ui.view" id="project_issue_kanban_view">
@@ -346,8 +392,34 @@
                          <strong><field name="cs_number_issue"/></strong>
                      </span>
                 </field>
+                <xpath expr='//kanban'  position="attributes">
+                   <attribute name="quick_create">0</attribute>
+                </xpath>
             </field>
         </record>
         <!--====================================== Kanban view of issue ends ==================================-->
+
+        <!--====================================== Kanban view of task begins ==================================-->
+        <record model="ir.ui.view" id="project_task_kanban">
+            <field name="name">project.task.kanban</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr='//kanban'  position="attributes">
+                   <attribute name="quick_create">0</attribute>
+                </xpath>
+                <xpath expr='//kanban//field[@name="project_id"]' position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr='//kanban//field[@name="date_deadline"]' position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr='//kanban//field[@name="project_id"]' position="after">
+                    <field name="partner_id"/><br/>
+                    <span style="color:green !important; font-weight:bold"><field name="cs_number_task"/></span>
+                </xpath>
+            </field>
+        </record>
+        <!--====================================== Kanban view of task ends ==================================-->
     </data>
 </openerp>
