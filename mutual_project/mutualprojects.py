@@ -78,7 +78,7 @@ class mutual_issues(osv.osv):
       'user_id': fields.many2one('res.partner', 'Assigned Tech', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',True)]"),
       'contact': fields.related('user_id', 'mobile', type='char', size=12, string='Contact', readonly=True),
       'compute_total_time':fields.char('Total Time',store=True,readonly=True,compute='_compute_total_time',old='total_time'),
-      'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain="[('customer','=',True)]"),
+      'partner_id': fields.many2one('res.partner', 'Customer', required=True),
       'categ_ids': fields.many2many('project.category', string='Other Complaints'),
       'date_start': fields.datetime('Time In', select=True, copy=True),
       'date_end': fields.datetime('Time Out', select=True, copy=True),
