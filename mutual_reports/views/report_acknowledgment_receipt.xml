@@ -112,7 +112,10 @@
                                             </td>
                                             <td class="text-right">
                                                 <span t-field="o.amount_total"
-                                                      t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                                      t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/><br/>
+                                            <strong t-if="o.partner_id.lang == 'fr_FR'">Arrêté la présente facture à la somme de:</strong>
+			                <strong t-if="o.partner_id.lang == 'en_US'">Amount in words:</strong>
+			                <span t-field="o.amount_to_text"/>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -237,7 +240,10 @@
                                             </td>
                                             <td class="text-right">
                                                 <span t-field="o.amount_total"
-                                                      t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                                      t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/><br/>
+                                                      <strong t-if="o.partner_id.lang == 'fr_FR'">Arrêté le présent devis/commande à la somme de:</strong>
+			                <strong t-if="o.partner_id.lang == 'en_US'">Amount in words:</strong>
+			                <span t-field="o.amount_to_text"/>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -357,7 +363,10 @@
                                             </td>
                                             <td class="text-right">
                                                 <span t-field="o.amount_total"
-                                                      t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                                      t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/><br/>
+                                                      <strong t-if="o.partner_id.lang == 'fr_FR'">Arrêté le présent devis/commande à la somme de:</strong>
+			                <strong t-if="o.partner_id.lang == 'en_US'">Amount in words:</strong>
+			                <span t-field="o.amount_to_text"/>
                                             </td>
                                         </tr>
                                         <tr class="">
