@@ -1,13 +1,15 @@
 #The file name of this file must match the filename name which we import in __init__.py file
 from openerp.osv import fields, osv
-
+from openerp import api
+import re
 
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
+        'mobile': fields.char('Mobile', store=True, size=11),
+        'phone': fields.char('Phone', store=True, size=11),
         'is_rider': fields.boolean('Is a Rider?', help="Check if the contact is a company, otherwise it is a person"),
-        'is_technician': fields.boolean('Is a Technician?',
-                                        help="Check if the contact is a company, otherwise it is a person"),
+        'is_technician': fields.boolean('Is a Technician?', help="Check if the contact is a company, otherwise it is a person"),
         'customer_relatives': fields.one2many('customer.relatives','customer_r','Relative'),
         'disco': fields.boolean('Disconnection', store=True),
         'reco': fields.boolean('Reconnection', store=True),
@@ -28,12 +30,20 @@ class mutual_sales(osv.osv):
         'active': fields.boolean('Active', read=["base.group_sale_salesman"], write=["base.group_sale_manager"]),
     }
 
-mutual_sales()
+    @api.one
+    @api.constrains('mobile')
+    def _check_values(self):
+        result = re.search('^[0-9]*$', self.mobile)
+        if not result:
+            self.phone = "call"
+            raise Warning(('Please enter correct format of mobile number \n e.g 03160241802'))
+
+
 
 
 class duedeligence(osv.osv):
     _inherit = "sale.order"
-    _columns ={
+    _columns = {
         'behalf_of_customer': fields.char('Spoke To', size=30, store=True),
         'How_much_you_paid': fields.float("How much you paid?", store=True),
         'date': fields.datetime("Date", store=True),
