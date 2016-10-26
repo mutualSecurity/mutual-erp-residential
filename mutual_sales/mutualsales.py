@@ -6,14 +6,14 @@ import re
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
-        'mobile': fields.char('Mobile', store=True, size=11),
-        'phone': fields.char('Phone', store=True, size=11),
+        'mobile': fields.char('Mobile', store=True, size=11, on_change='validate_mobile()'),
+        'phone': fields.char('Phone', store=True, size=11, on_change='validate_phone()'),
         'is_rider': fields.boolean('Is a Rider?', help="Check if the contact is a company, otherwise it is a person"),
         'is_technician': fields.boolean('Is a Technician?', help="Check if the contact is a company, otherwise it is a person"),
         'customer_relatives': fields.one2many('customer.relatives','customer_r','Relative'),
         'disco': fields.boolean('Disconnection', store=True),
         'reco': fields.boolean('Reconnection', store=True),
-        'cs_number': fields.char('Cs Number', size=10, read=["account.group_account_user"], write=["account.group_account_manager"]),
+        'cs_number': fields.char('Cs Number', size=6, read=["account.group_account_user"], write=["account.group_account_manager"], on_change='validate_csnumber()'),
         'c_street': fields.char('Corresponding Street'),
         'office': fields.char('Office Number',store=True),
         'c_street2': fields.char('Corresponding Street2'),
@@ -31,13 +31,60 @@ class mutual_sales(osv.osv):
     }
 
     @api.one
-    @api.constrains('mobile')
-    def _check_values(self):
-        result = re.search('^[0-9]*$', self.mobile)
-        if not result:
-            self.phone = "call"
-            raise Warning(('Please enter correct format of mobile number \n e.g 03160241802'))
+    @api.depends('cs_number')
+    @api.onchange('cs_number')
+    def validate_csnumber(self):
+        if self.cs_number:
+            cs = re.search('^[A-Z]{1}[A-Z0-9][0-9]{4}$', self.cs_number)
+            if cs:
+                return True
+            else:
+                raise Warning(('Please enter correct format of cs number \n e.g CM0001 C10001'))
+        else:
+            return True
 
+    @api.one
+    @api.depends('phone')
+    @api.onchange('phone')
+    def validate_phone(self):
+        if self.phone:
+            phone = re.search('^[0-9]*$', self.phone)
+            if phone:
+                return True
+            else:
+                raise Warning(('Please enter correct format of phone number \n e.g 02134310098'))
+        else:
+            return True
+
+    @api.one
+    @api.depends('mobile')
+    @api.onchange('mobile')
+    def validate_mobile(self):
+        if self.mobile:
+            mobile = re.search('^[0-9]*$', self.mobile)
+            if mobile:
+                return True
+            else:
+                raise Warning(('Please enter correct format of mobile number \n e.g 03413326418'))
+        else:
+            return True
+
+
+    #
+    # @api.one
+    # @api.constrains('phone')
+    # def _check_values(self):
+    #     result = re.search('^[0-9]*$', self.phone)
+    #     if not result:
+    #         raise Warning(('Please enter correct format of phone number \n e.g 02134310038'))
+    #
+    # @api.one
+    # @api.constrains('cs_number')
+    # def _check_values(self):
+    #     result = re.search('^[a-zA-Z][0-9]$', self.cs_number)
+    #     if not result:
+    #         raise Warning(('Please enter correct format of cs number \n e.g CM00001 or C10001'))
+    #
 
 
 
