@@ -32,25 +32,23 @@ class mutual_projects(osv.osv):
   }
 
   @api.one
-  @api.depends('date_start','date_end')
+  @api.depends('timeIn','timeOut')
   def _compute_total_time(self):
       # set auto-changing field
       # self.total_time = self.date_start * self.date_end
-      print self.date_start
-
       # Time-In calculation
-      if self.date_start and self.date_end:
-          time_in = self.date_start
+      if self.timeIn and self.timeOut:
+          time_in = self.timeIn
           # time_in=time_in[0:20]
           time_in_hr = int(time_in[11:13]) + 5
           time_in_min = int(time_in[14:16])
           time_in_sec = int(time_in[17:20])
           # Time-Out calculation
-          time_out = self.date_end
+          time_out = self.timeOut
           time_out_hr = int(time_out[11:13]) + 5
           time_out_min = int(time_out[14:16])
           time_out_sec = int(time_out[17:20])
-          if time_out_min and self.date_end:
+          if time_out_min and self.timeOut:
               total_hr = time_out_hr - time_in_hr
               total_min = abs(time_out_min - time_in_min)
               total_sec = abs(time_out_sec - time_in_sec)
