@@ -4,6 +4,7 @@
 
 from openerp import api, fields, models
 from dateutil.relativedelta import relativedelta
+import datetime
 
 
 class AccountAnalyticAccount(models.Model):
@@ -26,8 +27,12 @@ class AccountAnalyticAccount(models.Model):
 
     @api.model
     def _insert_markers(self, line, date_start, date_end, date_format):
-        line = line.replace('#START#', date_start.strftime(date_format))
-        line = line.replace('#END#', date_end.strftime(date_format))
+        
+        start_date = date_start + datetime.timedelta(days=20)
+        end_date = date_end + datetime.timedelta(days=20)
+        #end_date = date_end + datetime.timedelta(days=10)
+        line = line.replace('#START#', start_date.strftime(date_format))
+        line = line.replace('#END#', end_date.strftime(date_format))
         return line
 
     @api.model
