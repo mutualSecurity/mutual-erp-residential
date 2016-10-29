@@ -13,6 +13,7 @@ class mutual_projects(osv.osv):
       'city_task': fields.related('partner_id', 'city', type='char', size=12, string='City', readonly=True),
       'monitoring_address_task': fields.related('partner_id', 'street', type='char', string='Monitoring address',readonly=True),
       'cs_number_task': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
+      'uplink_date_task': fields.related('partner_id', 'uplink_date', type='char', size=12, string='Uplink Date',readonly=True),
       'compute_total_time': fields.char('Total Time',store=True,readonly=True,compute='_compute_total_time',old='total_time'),
       'tech_name_tasks': fields.one2many('tech.activities.tasks', 'tech_name_tasks', 'Timesheets', store=True),
       'complaint_reference': fields.integer('Complaint Reference',store=True),

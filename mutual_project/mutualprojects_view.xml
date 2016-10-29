@@ -165,6 +165,7 @@
                     <attribute name="string">Logged by</attribute>
                 </xpath>
                 <xpath expr="//field[@name='date_deadline']" position="before">
+                    <field name="uplink_date_task"/>
                     <field name="complaint_reference"/>
                     <field name="user_id"/>
                     <field name="timeIn"/>
@@ -416,7 +417,10 @@
                 </xpath>
                 <xpath expr='//kanban//field[@name="project_id"]' position="after">
                     <field name="partner_id"/><br/>
-                    <span style="color:green !important; font-weight:bold"><field name="cs_number_task"/></span>
+                    <span style="color:green !important; font-weight:bold"><field name="cs_number_task"/></span><br/>
+                    <span style="color:darkred !important; font-weight:bold">
+                        <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','NewInstallation')]}"/>
+                    </span>
                 </xpath>
             </field>
         </record>
