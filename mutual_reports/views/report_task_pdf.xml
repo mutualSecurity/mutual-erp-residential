@@ -28,7 +28,7 @@
                 <div class="row mt32 mb32">
                     <div class="col-xs-2" t-if="o.name">
                         <strong>Tech Name:</strong>
-                        <p t-field="o.technicians"/>
+                        <p t-field="o.user_id"/>
                     </div>
                     <div class="col-xs-2" t-if="o.id">
                         <strong>Complaint ID:</strong>
