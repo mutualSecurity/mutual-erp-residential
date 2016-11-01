@@ -160,6 +160,8 @@
                     <field name="cs_number_task"/>
                     <field name="city_task"/>
                     <field name="monitoring_address_task"/>
+                    <field name="mobile_task"/>
+                    <field name="phone_task"/>
                 </xpath>
                 <xpath expr="//field[@name='create_uid']" position="attributes">
                     <attribute name="string">Logged by</attribute>
@@ -233,6 +235,8 @@
                      <field name="cs_number_issue"/>
                      <field name="city_issue"/>
                      <field name="monitoring_address_issue"/>
+                     <field name="mobile_issue"/>
+                     <field name="phone_issue"/>
                      <field name="date_start" />
                      <field name="date_end" />
                      <field name='compute_total_time'/>
@@ -356,6 +360,9 @@
                     <field name="create_date"/>
                     <field name="user_id_issue"/>
                     <field name="cs_number_issue"/>
+                    <field name="mobile_issue"/>
+                    <field name="phone_issue"/>
+                    <field name="monitoring_address_issue"/>
                     <group string="Custome Filter">
                         <filter name="user_id_issue" string="Not Forwarded" domain="[('user_id_issue','=',False)]"/>
                         <filter name="user_id" string="Not Assigned" domain="[('user_id','=',False)]"/>
@@ -370,13 +377,15 @@
             <field name="inherit_id" ref="project.view_task_search_form" />
             <field name="arch" type="xml">
                  <search string="Tasks">
-                    <field name="priority"/>
-                    <field name="cs_number_task"/>
-                    <field name="city_task"/>
-                    <field name="monitoring_address_task"/>
+                     <field name="priority"/>
+                     <field name="cs_number_task"/>
+                     <field name="city_task"/>
+                     <field name="monitoring_address_task"/>
+                     <field name="mobile_task"/>
+                     <field name="phone_task"/>
                      <group string="Custome Filter">
-                        <filter name="user_id" string="Not Assigned" domain="[('user_id','=',False)]"/>
-                    </group>
+                         <filter name="user_id" string="Not Assigned" domain="[('user_id','=',False)]"/>
+                     </group>
                 </search>
             </field>
         </record>
