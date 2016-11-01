@@ -123,6 +123,33 @@
                 </search>
             </field>
         </record>
+        <!--====================================== List view of customer form for metrics Begins ====================-->
+        <record id="mutual_customer_tree" model="ir.ui.view">
+              <field name="name">res.partner.tree</field>
+              <field name="model">res.partner</field>
+              <field name="inherit_id" ref="base.view_partner_tree" />
+              <field name="arch" type="xml">
+                  <field name="phone" position="after">
+                      <field name="cs_number"/>
+                      <field name="street"/>
+                      <field name="city"/>
+                  </field>
+              </field>
+        </record>
+         <!--====================================== List view of customer form for metrics Ends ===================-->
 
+        <!--====================================== List view of res.user Begins ==================================-->
+        <record id="mutual_view_users_tree" model="ir.ui.view">
+              <field name="name">res.users.tree</field>
+              <field name="model">res.users</field>
+              <field name="inherit_id" ref="base.view_users_tree" />
+              <field name="arch" type="xml">
+                  <field name="name" position="after">
+                      <field name="city"/>
+                      <field name="mobile"/>
+                  </field>
+              </field>
+        </record>
+        <!--====================================== List view of res.user Ends ==================================-->
     </data>
 </openerp>
