@@ -119,6 +119,7 @@
                     <field name="email"/>
                     <field name="payment_next_action" />
                     <field name="payment_responsible_id" />
+                    <field name="street"/>
                 </search>
             </field>
         </record>

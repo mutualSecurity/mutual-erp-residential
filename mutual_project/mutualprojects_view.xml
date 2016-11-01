@@ -401,6 +401,7 @@
                      <span style="color:royalblue;">
                          <strong><field name="cs_number_issue"/></strong>
                      </span>
+                    <field name="create_date"/>
                 </field>
                 <xpath expr='//kanban'  position="attributes">
                    <attribute name="quick_create">0</attribute>
@@ -430,6 +431,7 @@
                     <span style="color:darkred !important; font-weight:bold">
                         <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','NewInstallation')]}"/>
                     </span>
+                    <field name="create_date"/>
                 </xpath>
             </field>
         </record>
