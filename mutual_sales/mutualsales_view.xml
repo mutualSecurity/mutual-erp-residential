@@ -80,7 +80,7 @@
                     </group>
                 </xpath>
                 <notebook>
-                    <page string="Personal Info" groups="base.group_sale_manager">
+                    <page string="Personal Info" groups="account.group_account_manager">
                         <label for="nic_num">CNIC Number</label>
                         <field string="Nic Card Number" name="nic_num"  placeholder="44204-1234567-8" />
                         <label for="ntn_num">NTN Number</label>
@@ -94,7 +94,7 @@
                     </page>
                 </notebook>
                 <notebook>
-                    <page string="Relatives Info">
+                    <page string="Relatives Info" >
                           <field name="customer_relatives" colspan="4" nolabel="1">
                             <tree editable="top" string="Relative">
                                  <field name="relative"/>
