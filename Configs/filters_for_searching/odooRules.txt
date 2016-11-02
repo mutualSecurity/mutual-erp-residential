@@ -1,0 +1,20 @@
+Rule of seeing own invoices
+[ '|',('user_id','=',user.id),('user_id','=',False)]
+
+Rule of showing technician list
+[(1,'=',1)]
+
+Filters for sales searching 
+  <field name="phone" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('phone','ilike',self)]"/>
+  <field name="mobile" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('mobile','ilike',self)]"/>
+  <field name="phone" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('phone','ilike',self)]"/>
+  <field name="cs_number" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('cs_number','ilike',self)]"/>
+  <field name="fax" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('fax','ilike',self)]"/>
+  <field name="email" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('email','ilike',self)]"/>
+  <field name="riders" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('riders','ilike',self)]"/>
+  <field name="payment_next_action" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('payment_next_action','ilike',self)]"/>
+  <field name="payment_responsible_id" filter_domain="['|','|',('display_name','ilike',self),('ref','=',self),('payment_responsible_id','ilike',self)]"/>
+
+
+Filter for project_module
+ <field name="priority" string="Issue" filter_domain="['|', '|', '|', ('partner_id','child_of',self), ('description','ilike',self),('email_from','ilike',self),('priority','ilike',self)]"/>

@@ -1,0 +1,7 @@
+Stages
+
+1: New			20
+2: Survey Scheduled	40	
+3: Survey Completed	70
+4:Won			100
+5: Lost			0	
