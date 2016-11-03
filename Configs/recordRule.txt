@@ -1,0 +1,6 @@
+Original record rule of res.partner
+['|','|',('company_id.child_ids','child_of',[user.company_id.id]),('company_id','child_of',[user.company_id.id]),('company_id','=',False)]
+
+
+Modified record rule of res.partner
+[(1, '=', 1)]
