@@ -42,14 +42,14 @@
                         <strong>Date:</strong>
                         <span>________________</span>
                     </div>
-                    <div class="col-xs-2 " t-if="o.user_id">
+                    <div class="col-xs-2 " t-if="o.create_uid">
                             <strong>Logged by</strong>
-                            <p t-field="o.user_id"/>
-                        </div>
-<div class="col-xs-2 " t-if="o.create_date">
-                            <strong>logged date</strong>
+                            <p t-field="o.create_uid"/>
+                    </div>
+                    <div class="col-xs-2 " t-if="o.create_date">
+                            <strong>Logged date</strong>
                             <p t-field="o.create_date"/>
-                        </div>
+                    </div>
                 </div>
                 <table class="table table-condensed">
                     <thead>
