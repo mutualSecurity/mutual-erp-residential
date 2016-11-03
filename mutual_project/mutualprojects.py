@@ -30,6 +30,7 @@ class mutual_projects(osv.osv):
                               ('Shifting','Shifting'),
                               ('reconnection', 'Reconnection'),
                               ('NewInstallation', 'NewInstallation'),
+                              ('Disable In SIS', 'Disable In SIS'),
                               ],
                              'Task', required=True, store=True, select=True),
   }

@@ -435,7 +435,7 @@
                     <field name="partner_id"/><br/>
                     <span style="color:green !important; font-weight:bold"><field name="cs_number_task"/></span><br/>
                     <span style="color:darkred !important; font-weight:bold">
-                        <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','NewInstallation')]}"/>
+                        <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','NewInstallation'),('name','=','Disable In SIS')]}"/>
                     </span>
                     <field name="create_date"/>
                 </xpath>
