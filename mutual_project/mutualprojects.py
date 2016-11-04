@@ -1,6 +1,7 @@
 #The file name of this file must match the filename name which we import in __init__.py file
 from openerp.osv import fields, osv
 from openerp import api
+from datetime import date,datetime
 import requests
 import random
 
@@ -36,41 +37,25 @@ class mutual_projects(osv.osv):
   }
 
   @api.one
-  @api.depends('timeIn','timeOut')
+  @api.depends('timeIn', 'timeOut')
   def _compute_total_time(self):
-      # set auto-changing field
-      # self.total_time = self.date_start * self.date_end
-      # Time-In calculation
+      # self.compute_total_time = self.date_start
       if self.timeIn and self.timeOut:
-          time_in = self.timeIn
-          # time_in=time_in[0:20]
-          time_in_hr = int(time_in[11:13]) + 5
-          time_in_min = int(time_in[14:16])
-          time_in_sec = int(time_in[17:20])
-          # Time-Out calculation
-          time_out = self.timeOut
-          time_out_hr = int(time_out[11:13]) + 5
-          time_out_min = int(time_out[14:16])
-          time_out_sec = int(time_out[17:20])
-          if time_out_min and self.timeOut:
-              total_hr = time_out_hr - time_in_hr
-              total_min = abs(time_out_min - time_in_min)
-              total_sec = abs(time_out_sec - time_in_sec)
-
-              self.compute_total_time = str(total_hr) + ":" + str(total_min) + ":" + str(total_sec)
-              # Can optionally return a warning and domains
-              return {
-                  'warning': {
-                      'title': "Something bad happened",
-                      'message': "It was very bad indeed",
-                  }
-              }
+          # set the date and time format
+          date_format = "%Y-%m-%d %H:%M:%S"
+          # convert string to actual date and time
+          _timeIn = datetime.strptime(self.timeIn, date_format)
+          _timeOut = datetime.strptime(self.timeOut, date_format)
+          # find the difference between two dates
+          diff = _timeOut - _timeIn
+          self.compute_total_time = diff
 
 # ======================================== Project.task class implementation Begins =====================================
 class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'finalstatus': fields.char("Final Status", store=True),
       'status': fields.char("Status", store=True,readonly=True),
       'city_issue': fields.related('partner_id', 'city', type='char', size=100, string='City', readonly=True),
       'monitoring_address_issue': fields.related('partner_id', 'street', type='char', size=100, string='Monitoring address', readonly=True),
@@ -188,32 +173,16 @@ class mutual_issues(osv.osv):
   @api.one
   @api.depends('date_start', 'date_end')
   def _compute_total_time(self):
-      print self.date_start
-      # Time-In calculation
+     # self.compute_total_time = self.date_start
       if self.date_start and self.date_end:
-          time_in = self.date_start
-          # time_in=time_in[0:20]
-          time_in_hr = int(time_in[11:13]) + 5
-          time_in_min = int(time_in[14:16])
-          time_in_sec = int(time_in[17:20])
-          # Time-Out calculation
-          time_out = self.date_end
-          time_out_hr = int(time_out[11:13]) + 5
-          time_out_min = int(time_out[14:16])
-          time_out_sec = int(time_out[17:20])
-          if time_out_min and self.date_end:
-              total_hr = time_out_hr - time_in_hr
-              total_min = abs(time_out_min - time_in_min)
-              total_sec = abs(time_out_sec - time_in_sec)
-              self.compute_total_time = str(total_hr) + ":" + str(total_min) + ":" + str(total_sec)
-              # Can optionally return a warning and domains
-              return {
-                  'warning': {
-                      'title': "Something bad happened",
-                      'message': "It was very bad indeed",
-                  }
-              }
-
+          # set the date and time format
+          date_format = "%Y-%m-%d %H:%M:%S"
+          # convert string to actual date and time
+          timeIn = datetime.strptime(self.date_start, date_format)
+          timeOut = datetime.strptime(self.date_end, date_format)
+          # find the difference between two dates
+          diff = timeOut - timeIn
+          self.compute_total_time = diff
 
 class tech_activities_issues(osv.osv):
     _name = "tech.activities.issues"
