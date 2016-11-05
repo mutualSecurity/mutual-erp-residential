@@ -244,6 +244,7 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                  <field name="partner_id" position="after">
+                     <field name="contactperson"/>
                      <field name="cs_number_issue"/>
                      <field name="city_issue"/>
                      <field name="monitoring_address_issue"/>

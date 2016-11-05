@@ -55,6 +55,7 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'contactperson': fields.char("Contact Person", store=True),
       'finalstatus': fields.char("Final Status", store=True),
       'status': fields.char("Status", store=True,readonly=True),
       'city_issue': fields.related('partner_id', 'city', type='char', size=100, string='City', readonly=True),
@@ -71,7 +72,7 @@ class mutual_issues(osv.osv):
       'contact': fields.related('user_id', 'mobile', type='char', size=12, string='Contact', readonly=True),
       'compute_total_time':fields.char('Total Time',store=True,readonly=True,compute='_compute_total_time',old='total_time'),
       'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain="[('customer','=',True)]"),
-      'categ_ids': fields.many2many('project.category', string='Other Complaints',write=['project.group_project_user']),
+      'categ_ids': fields.many2many('project.category', string='Other Complaints'),
       'date_start': fields.datetime('Time In', select=True, copy=True, write=['project.group_project_manager'], read=['project.group_project_user']),
       'date_end': fields.datetime('Time Out', select=True, copy=True, write=['project.group_project_manager'], read=['project.group_project_user']),
       'first_signal_time': fields.datetime('First Signal Time', select=True, copy=True, write=['project.group_project_manager'], read=['project.group_project_user']),
