@@ -6,7 +6,12 @@
                 <div class="page">
             <div class="row">
                 <div class="col-xs-5 col-xs-offset-7">
-                    <address t-field="o.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}"/>
+                   <div class="row">
+                        <div t-if="o.partner_id.street">
+                            <strong>Customer's Address:</strong>
+                            <p t-field="o.partner_id.street"/>
+                        </div>
+                    </div><br/>
                     <div class="row">
                         <div class="col-xs-4 " t-if="o.partner_id.mobile">
                             <strong>Mobile:</strong>
