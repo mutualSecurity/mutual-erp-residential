@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-xs-2" t-if="o.priority">
                         <strong>Date:</strong>
-                        <span>________________</span>
+                        <span>______________</span>
                     </div>
                     <div class="col-xs-2 " t-if="o.create_uid">
                             <strong>Logged by</strong>
