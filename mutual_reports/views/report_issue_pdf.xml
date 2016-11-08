@@ -31,7 +31,7 @@
                     <span>FEEDBACK PROFORMA</span><small> <i> (For Technician)</i></small>
                 </h2>
                 <div class="row mt32 mb32">
-                    <div class="col-xs-2" t-if="o.name">
+                    <div class="col-xs-2" t-if="o.user_id">
                         <strong>Tech Name:</strong>
                         <p t-field="o.user_id"/>
                     </div>
@@ -42,6 +42,10 @@
                     <div class="col-xs-2" t-if="o.priority">
                         <strong>Priority:</strong>
                         <p t-field="o.priority"/>
+                    </div>
+                    <div class="col-xs-2" t-if="o.contactperson">
+                        <strong>Contact Person:</strong>
+                        <p t-field="o.contactperson"/>
                     </div>
                     <div class="col-xs-2" t-if="o.priority">
                         <strong>Date:</strong>
