@@ -10,6 +10,7 @@ class mutual_projects(osv.osv):
   _name="project.task"
   _inherit = "project.task",
   _columns = {
+      'finalstatus': fields.char("Final Status", store=True),
       'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain="[('customer','=',True)]"),
       'city_task': fields.related('partner_id', 'city', type='char', size=12, string='City', readonly=True),
       'monitoring_address_task': fields.related('partner_id', 'street', type='char', string='Monitoring address',readonly=True),

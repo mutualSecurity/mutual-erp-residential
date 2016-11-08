@@ -174,6 +174,7 @@
                     <field name="first_signal_time_task"/>
                     <field name="timeOut"/>
                     <field name="compute_total_time"/>
+                    <field name="finalstatus"/>
                 </xpath>
                 <xpath expr="//field[@name='date_deadline']" position="attributes">
                     <attribute name="invisible">1</attribute>

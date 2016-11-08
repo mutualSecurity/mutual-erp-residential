@@ -90,6 +90,10 @@
                     <span>GSM, PIR, TRANSFORMER, BATTERY, SIRON, SMOKE DETECTOR, PANIC BUTTONS AND WIRES </span><br/><br/>
                 </div>
                 <div class="col-xs-12" >
+                    <strong>Remarks for technician:</strong>
+                    <span t-field="o.description" /><br/>
+                </div>
+                <div class="col-xs-12" >
                     <strong>Any Other Remarks:</strong>
                     <span>_____________________________________________________________________</span><br/><br/>
                 </div>
