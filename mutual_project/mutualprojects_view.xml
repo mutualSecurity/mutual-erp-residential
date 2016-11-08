@@ -15,7 +15,7 @@
             name="Issues Logs"
             action="tech_open_project_attachment_view"
             id="menu_tech_open_project_attachment_view"
-            sequence="20"
+            sequence="30"
             parent="project.menu_project_management">
         </menuitem>
         <record id="tech_activities_form_view" model="ir.ui.view">
@@ -72,7 +72,7 @@
             name="Tasks Logs"
             action="tech_open_project_attachment_task_view"
             id="menu_tech_open_project_attachment_task_view"
-            sequence="30"
+            sequence="40"
             parent="project.menu_project_management">
         </menuitem>
         <record id="tech_activities_form_view" model="ir.ui.view">
