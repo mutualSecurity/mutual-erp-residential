@@ -192,7 +192,8 @@ class tech_activities_issues(osv.osv):
         'technician_name': fields.many2one('res.users', 'Technician Name', required=False, select=1, track_visibility='onchange'),
         'reason': fields.char('Description',size=100,store=True),
         'total_time': fields.float('Total Time', store=True),
-        'date':fields.date('Date',store=True)
+        'date':fields.date('Date',store=True),
+        'issue_id': fields.related('tech_name','id', type='char', string='Complaint ID')
     }
 
 

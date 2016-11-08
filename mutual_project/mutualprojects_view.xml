@@ -41,6 +41,22 @@
         </record>
         <!-- =========================== Issues Logs Ends ================================ -->
 
+        <record model="ir.ui.view" id="project_issue_activities">
+            <field name="name">Technician Issues History</field>
+            <field name="view_type">tree</field>
+            <field name="model">tech.activities.issues</field>
+            <field name="arch" type="xml">
+                <tree string="Technician Activities">
+                    <field name="issue_id"/>
+                    <field name="tech_name"/>
+                    <field name="technician_name"/>
+                    <field name="reason"/>
+                    <field name="date" />
+                    <field name="total_time"/>
+                </tree>
+            </field>
+        </record>
+
 
         <!-- =========================== Tasks Logs Begins ================================ -->
         <record id="tech_open_project_attachment_task_view" model="ir.actions.act_window">

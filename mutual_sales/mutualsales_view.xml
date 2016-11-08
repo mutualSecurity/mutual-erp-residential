@@ -107,22 +107,26 @@
                 </notebook>
             </field>
         </record>
+       <!--==========================Search View Begins=============================-->
         <record  model="ir.ui.view" id="view_res_partner_filter">
             <field name="name">res.partner.select</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_res_partner_filter" />
             <field name="arch" type="xml">
-                <search string="Search Partner">
+                <xpath expr="//search/field[@name='name']" position="before">
                     <field name="cs_number"/>
+                </xpath>
+                <xpath expr="//search/field[@name='name']" position="after">
                     <field name="mobile" />
                     <field name="phone" />
+                    <field name="street"/>
                     <field name="email"/>
                     <field name="payment_next_action" />
                     <field name="payment_responsible_id" />
-                    <field name="street"/>
-                </search>
+                </xpath>
             </field>
         </record>
+         <!--==========================Search View Ends=============================-->
         <!--====================================== List view of customer form for metrics Begins ====================-->
         <record id="mutual_customer_tree" model="ir.ui.view">
               <field name="name">res.partner.tree</field>
