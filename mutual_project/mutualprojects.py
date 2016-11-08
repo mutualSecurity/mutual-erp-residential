@@ -63,7 +63,6 @@ class mutual_issues(osv.osv):
       'monitoring_address_issue': fields.related('partner_id', 'street', type='char', size=100, string='Monitoring address', readonly=True),
       'mobile_issue': fields.related('partner_id', 'mobile', type='char', string='Mobile', readonly=True),
       'phone_issue': fields.related('partner_id', 'phone', type='char', string='Phone', readonly=True),
-      'id': fields.integer('ID', readonly=True),
       'techContact': fields.char('Contact', store=True, size=11),
       'sms': fields.text('SMS', store=True),
       'cs_number_issue': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
