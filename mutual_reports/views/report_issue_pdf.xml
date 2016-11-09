@@ -8,23 +8,25 @@
                 <div class="col-xs-5 col-xs-offset-7"  style="font-size:16px !important">
                     <div class="row">
                         <div t-if="o.partner_id.street">
-                            <strong>Customer's Address:</strong>
+                            <strong>Customer's Information:</strong>
+                            <span t-field="o.partner_id"/><br/>
                             <p t-field="o.partner_id.street"/>
                         </div>
-                    </div><br/>
+                    </div>
                      <div class="row">
-                        <div class="col-xs-4 " t-if="o.partner_id.mobile">
+                        <div class="col-xs-3 " t-if="o.partner_id.mobile">
                             <strong>Mobile:</strong>
                             <p t-field="o.partner_id.mobile"/>
                         </div>
-                        <div class="col-xs-4 " t-if="o.partner_id.mobile">
+                        <div class="col-xs-3 " t-if="o.partner_id.mobile">
                             <strong>Phone:</strong>
                             <p t-field="o.partner_id.phone"/>
                         </div>
-                        <div class="col-xs-4 " t-if="o.partner_id.cs_number">
+                        <div class="col-xs-3 " t-if="o.partner_id.cs_number">
                             <strong>CS Number:</strong>
                             <p t-field="o.partner_id.cs_number"/>
                         </div>
+
                     </div>
                 </div>
                 <h2>
