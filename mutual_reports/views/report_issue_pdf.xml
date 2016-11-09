@@ -14,15 +14,15 @@
                         </div>
                     </div>
                      <div class="row">
-                        <div class="col-xs-3 " t-if="o.partner_id.mobile">
+                        <div class="col-xs-4 " t-if="o.partner_id.mobile">
                             <strong>Mobile:</strong>
                             <p t-field="o.partner_id.mobile"/>
                         </div>
-                        <div class="col-xs-3 " t-if="o.partner_id.mobile">
+                        <div class="col-xs-4 " t-if="o.partner_id.mobile">
                             <strong>Phone:</strong>
                             <p t-field="o.partner_id.phone"/>
                         </div>
-                        <div class="col-xs-3 " t-if="o.partner_id.cs_number">
+                        <div class="col-xs-4 " t-if="o.partner_id.cs_number">
                             <strong>CS Number:</strong>
                             <p t-field="o.partner_id.cs_number"/>
                         </div>
