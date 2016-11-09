@@ -53,9 +53,9 @@
                         <strong>Date:</strong>
                         <span>______________</span>
                     </div>
-                    <div class="col-xs-2 " t-if="o.create_uid">
+                    <div class="col-xs-2 " t-if="o.responsibleperson">
                             <strong>Logged by</strong>
-                            <p t-field="o.create_uid"/>
+                            <p t-field="o.responsibleperson"/>
                     </div>
                     <div class="col-xs-2 " t-if="o.create_date">
                             <strong>Logged date</strong>
