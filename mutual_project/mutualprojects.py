@@ -56,7 +56,7 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
-      'responsibleperson': fields.char("Responsible Person", store=True, required=True),
+      'responsibleperson': fields.char("Responsible Person", store=True),
       'contactperson': fields.char("Contact Person", store=True),
       'finalstatus': fields.char("Final Status", store=True),
       'status': fields.char("Status", store=True,readonly=True),
