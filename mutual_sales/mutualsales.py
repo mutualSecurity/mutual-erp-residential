@@ -27,7 +27,7 @@ class mutual_sales(osv.osv):
         'credit_card_no': fields.char('Credit Card', size=14, store=True),
         'credit_card_exp_date': fields.date('Expiry Date', select=True, copy=False),
         'uplink_date': fields.date('Uplink Date', select=True, copy=False,write=["project.group_project_user"]),
-        'active': fields.boolean('Active', read=["base.group_sale_salesman"], write=["base.group_sale_manager"]),
+        'active': fields.boolean('Active', read=["account.group_account_manager"], write=["account.group_account_manager"]),
     }
 
     @api.one

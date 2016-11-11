@@ -56,6 +56,8 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'task_id': fields.many2one('project.task', ' ', domain="[('project_id','=',project_id)]"),
+      # 'project_id': fields.many2one('project.project', 'Project', track_visibility='onchange', select=True, default='Complaints'),
       'responsibleperson': fields.char("Responsible Person", store=True,required=True),
       'contactperson': fields.char("Contact Person", store=True),
       'finalstatus': fields.char("Final Status", store=True),
@@ -67,6 +69,7 @@ class mutual_issues(osv.osv):
       'techContact': fields.char('Contact', store=True, size=11),
       'sms': fields.text('SMS', store=True),
       'cs_number_issue': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
+      'customer_status': fields.related('partner_id','active', type='boolean',string="Customer's Status",readonly=True),
       'tech_name': fields.one2many('tech.activities.issues', 'tech_name', 'Timesheets', store=True),
       'user_id_issue': fields.many2one('res.users', 'Forwarded to', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',False)]"),
       'user_id': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',True)]" ,default=''),

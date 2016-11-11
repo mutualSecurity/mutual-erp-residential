@@ -245,36 +245,49 @@
                 <field name="version_id" position="replace">
 
                 </field>
+                <xpath expr="//field[@name='priority']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <field name="id" position="after">
+                    <field name="user_id"/>
+                    <field name="user_id_issue"/>
                     <field name="first_signal_time"/>
+                    <field name="date_start" />
+                    <field name="date_end" />
+                    <field name='compute_total_time'/>
+                    <field name="finalstatus"/>
                 </field>
                 <field name="id" position="before">
-                    <field name="responsibleperson" />
+                    <field name="priority" widget="priority"/>
                     <field name="create_uid" readonly="1"/>
                 </field>
                 <xpath expr="//field[@name='create_uid']" position="attributes">
                     <attribute name="string">Logged by</attribute>
                 </xpath>
-                <xpath expr="//field[@name='priority']" position="after">
-                    <field name="finalstatus"/>
-                </xpath>
                 <xpath expr="//page[@string='Extra Info']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+                <xpath expr="//button[@name='case_escalate']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='task_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                  <field name="partner_id" position="after">
+                     <field name="responsibleperson" />
                      <field name="contactperson"/>
                      <field name="cs_number_issue"/>
                      <field name="city_issue"/>
                      <field name="monitoring_address_issue"/>
                      <field name="mobile_issue"/>
                      <field name="phone_issue"/>
-                     <field name="date_start" />
-                     <field name="date_end" />
-                     <field name='compute_total_time'/>
                  </field>
-                <field name="user_id" position="after">
-                    <field name="user_id_issue"/>
-                </field>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="customer_status"/>
+                </xpath>
                 <notebook>
                     <page string="Timesheet">
                           <field name="tech_name" colspan="4" nolabel="1">
@@ -380,47 +393,44 @@
         </record>
         <!--====================================== List view of tasks form for metrics ends ==================================-->
 
-         <!--==========================Search View of Issues=============================-->
+         <!--==========================Search View of Issues Begins=============================-->
         <record  model="ir.ui.view" id="project_issue.view_project_issue_filter_search">
             <field name="name">Project Issue Tracker Search</field>
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.view_project_issue_filter" />
             <field name="arch" type="xml">
-                <search string="Issue Tracker Search">
-                    <field name="priority"/>
-                    <field name="create_date"/>
-                    <field name="user_id_issue"/>
+                <xpath expr="//search/field[@name='partner_id']" position="before">
                     <field name="cs_number_issue"/>
                     <field name="mobile_issue"/>
                     <field name="phone_issue"/>
-                    <field name="monitoring_address_issue"/>
-                    <group string="Custome Filter">
-                        <filter name="user_id_issue" string="Not Forwarded" domain="[('user_id_issue','=',False)]"/>
-                        <filter name="user_id" string="Not Assigned" domain="[('user_id','=',False)]"/>
-                    </group>
-                </search>
+                </xpath>
+                <xpath expr="//search/field[@name='partner_id']" position="after">
+                    <field name="priority"/>
+                    <field name="create_date"/>
+                    <field name="user_id_issue"/>
+                </xpath>
             </field>
         </record>
+         <!--==========================Search View Ends=============================-->
+
          <!--==========================Search View of tasks=============================-->
           <record  model="ir.ui.view" id="project.view_task_search_form_search">
             <field name="name">project.task.search.form</field>
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_search_form" />
             <field name="arch" type="xml">
-                 <search string="Tasks">
-                     <field name="priority"/>
-                     <field name="cs_number_task"/>
-                     <field name="city_task"/>
-                     <field name="monitoring_address_task"/>
-                     <field name="mobile_task"/>
-                     <field name="phone_task"/>
-                     <group string="Custome Filter">
-                         <filter name="user_id" string="Not Assigned" domain="[('user_id','=',False)]"/>
-                     </group>
-                </search>
+                <xpath expr="//search/field[@name='partner_id']" position="before">
+                    <field name="cs_number_task"/>
+                    <field name="mobile_task"/>
+                    <field name="phone_task"/>
+                </xpath>
+                <xpath expr="//search/field[@name='partner_id']" position="after">
+                    <field name="priority"/>
+                    <field name="create_date"/>
+                </xpath>
             </field>
         </record>
-
+        <!--==========================Search View Ends=============================-->
 
         <!--====================================== Kanban view of issue begins ==================================-->
         <record model="ir.ui.view" id="project_issue_kanban_view">

@@ -134,8 +134,10 @@
               <field name="inherit_id" ref="base.view_partner_tree" />
               <field name="arch" type="xml">
                   <field name="phone" position="after">
+                      <field name="mobile"/>
                       <field name="cs_number"/>
                       <field name="street"/>
+                      <field name="active"/>
                       <field name="city"/>
                   </field>
               </field>
