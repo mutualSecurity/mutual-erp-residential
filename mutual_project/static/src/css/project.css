@@ -18,3 +18,6 @@
 .oe_kanban_color_0{
     /*background: red !important;*/
 }
+.oe_form_sheet_full_screen{
+    width: 90% !important;
+}

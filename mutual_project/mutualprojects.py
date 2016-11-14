@@ -10,6 +10,8 @@ class mutual_projects(osv.osv):
   _name="project.task"
   _inherit = "project.task",
   _columns = {
+      'user_id': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange',
+                                 domain="[('is_technician','=',True)]", default='', readonly=True),
       'finalstatus': fields.char("Final Status", store=True),
       'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain="[('customer','=',True)]"),
       'city_task': fields.related('partner_id', 'city', type='char', size=12, string='City', readonly=True),
@@ -56,6 +58,7 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'multi_tech': fields.many2many('res.users', string='Other Technicians', domain="[('is_technician','=',True)]"),
       'task_id': fields.many2one('project.task', ' ', domain="[('project_id','=',project_id)]"),
       # 'project_id': fields.many2one('project.project', 'Project', track_visibility='onchange', select=True, default='Complaints'),
       'responsibleperson': fields.char("Responsible Person", store=True,required=True),
@@ -72,7 +75,7 @@ class mutual_issues(osv.osv):
       'customer_status': fields.related('partner_id','active', type='boolean',string="Customer's Status",readonly=True),
       'tech_name': fields.one2many('tech.activities.issues', 'tech_name', 'Timesheets', store=True),
       'user_id_issue': fields.many2one('res.users', 'Forwarded to', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',False)]"),
-      'user_id': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',True)]" ,default=''),
+      'user_id': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange', domain="[('is_technician','=',True)]" ,default='', readonly=True),
       'contact': fields.related('user_id', 'mobile', type='char', size=12, string='Contact', readonly=True),
       'compute_total_time':fields.char('Total Time',store=True,readonly=True,compute='_compute_total_time',old='total_time'),
       'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain="[('customer','=',True)]"),
@@ -192,24 +195,71 @@ class mutual_issues(osv.osv):
 class tech_activities_issues(osv.osv):
     _name = "tech.activities.issues"
     _columns = {
+        'multi_tech': fields.many2many('res.users', string='Other Tech', domain="[('is_technician','=',True)]"),
         'tech_name': fields.many2one('project.issue', 'Complaint Title'),
-        'technician_name': fields.many2one('res.users', 'Technician Name', required=False, select=1, track_visibility='onchange'),
-        'reason': fields.char('Description',size=100,store=True),
+        'technician_name': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange',domain="[('is_technician','=',True)]"),
+        'reason': fields.char('Remarks',size=100,store=True),
         'total_time': fields.float('Total Time', store=True),
-        'date':fields.date('Date',store=True),
+        'compute_total_time': fields.char('T/T', store=True, readonly=True, compute='_compute_total_time',),
+        'first_signal': fields.datetime('F/T', select=True, copy=True, write=['project.group_project_manager'],
+                                      read=['project.group_project_user']),
+        'date_start': fields.datetime('T/I', select=True, copy=True, write=['project.group_project_manager'],
+                                      read=['project.group_project_user']),
+        'date_end': fields.datetime('T/O', select=True, copy=True, write=['project.group_project_manager'],
+                                    read=['project.group_project_user']),
+        'cs_number': fields.related('tech_name','cs_number_issue', type='char', string='CS Number'),
         'issue_id': fields.related('tech_name','id', type='char', string='Complaint ID')
     }
+
+    @api.one
+    @api.depends('date_start', 'date_end')
+    def _compute_total_time(self):
+        # self.compute_total_time = self.date_start
+        if self.date_start and self.date_end:
+            # set the date and time format
+            date_format = "%Y-%m-%d %H:%M:%S"
+            # convert string to actual date and time
+            timeIn = datetime.strptime(self.date_start, date_format)
+            timeOut = datetime.strptime(self.date_end, date_format)
+            # find the difference between two dates
+            diff = timeOut - timeIn
+            self.compute_total_time = diff
 
 
 class tech_activities_tasks(osv.osv):
     _name = "tech.activities.tasks"
     _columns = {
-        'tech_name_tasks': fields.many2one('project.task', 'Complaint Title'),
-        'technician_name_tasks': fields.many2one('res.users', 'Technician Name', required=False, select=1, track_visibility='onchange'),
+        'task_id': fields.related('tech_name_tasks', 'id', type='char', string='Task ID'),
+        'multi_tech': fields.many2many('res.users', string='Other Tech', domain="[('is_technician','=',True)]"),
+        'compute_total_time': fields.char('T/T', store=True, readonly=True, compute='_compute_total_time', ),
+        'first_signal': fields.datetime('F/T', select=True, copy=True, write=['project.group_project_manager'],
+                                        read=['project.group_project_user']),
+        'date_start': fields.datetime('T/I', select=True, copy=True, write=['project.group_project_manager'],
+                                      read=['project.group_project_user']),
+        'date_end': fields.datetime('T/O', select=True, copy=True, write=['project.group_project_manager'],
+                                    read=['project.group_project_user']),
+        'cs_number': fields.related('tech_name_tasks', 'cs_number_task', type='char', string='CS Number'),
+        'tech_name_tasks': fields.many2one('project.task', 'Task Title'),
+        'technician_name_tasks': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange'),
         'reason_tasks': fields.char('Description', size=100, store=True),
         'total_time_tasks': fields.float('Total Time', store=True),
         'date_tasks': fields.date('Date', store=True)
     }
+
+    @api.one
+    @api.depends('date_start', 'date_end')
+    def _compute_total_time(self):
+        # self.compute_total_time = self.date_start
+        if self.date_start and self.date_end:
+            # set the date and time format
+            date_format = "%Y-%m-%d %H:%M:%S"
+            # convert string to actual date and time
+            timeIn = datetime.strptime(self.date_start, date_format)
+            timeOut = datetime.strptime(self.date_end, date_format)
+            # find the difference between two dates
+            diff = timeOut - timeIn
+            self.compute_total_time = diff
+
 
 
 
