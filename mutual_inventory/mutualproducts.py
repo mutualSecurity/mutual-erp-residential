@@ -27,6 +27,8 @@ class mutual_templates(osv.osv):
                                                "Expressed in the default unit of measure of the product.",string="Cost Price"),
     }
 
-
-mutual_templates()
-#mutual_products()
+class mutual_stock(osv.osv):
+    _inherit = "stock.picking"
+    _columns = {
+        'cs_number': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True)
+    }
