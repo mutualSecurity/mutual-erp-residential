@@ -156,6 +156,18 @@
                   </field>
               </field>
         </record>
-        <!--====================================== List view of res.user Ends ==================================-->
+        <!--====================================== List view of res.user Ends ==================================-->\
+        <record model="ir.ui.view" id="crm.crm_case_kanban_view_leads_mutual">
+            <field name="name">CRM - Leads Kanban</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after"><br/>
+                     <span style="color:royalblue;">
+                         <strong><field name="user_id"/></strong>
+                     </span>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>

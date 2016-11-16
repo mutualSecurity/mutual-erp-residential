@@ -57,6 +57,7 @@
                     <field name="date_end"/>
                     <field name="compute_total_time"/>
                     <field name="multi_tech"/>
+                    <field name="create_date"/>
                 </tree>
             </field>
         </record>
@@ -67,6 +68,9 @@
             <field name="arch" type="xml">
                 <search string="Search Logs">
                     <field name="cs_number"/>
+                    <group string="Custom Filter">
+                        <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
+                    </group>
                 </search>
             </field>
         </record>
@@ -91,22 +95,15 @@
             </field>
         </record>
 
-        <record  model="ir.ui.view" id="Issues_log_Search">
+        <record  model="ir.ui.view" id="Tasks_log_Search">
             <field name="name">Tasks log Search</field>
             <field name="model">tech.activities.tasks</field>
             <field name="arch" type="xml">
                 <search string="Search Logs">
                     <field name="cs_number"/>
-                </search>
-            </field>
-        </record>
-
-        <record  model="ir.ui.view" id="Issues_log_Search">
-            <field name="name">Tasks log Search</field>
-            <field name="model">tech.activities.tasks</field>
-            <field name="arch" type="xml">
-                <search string="Search Logs">
-                    <field name="cs_number"/>
+                    <group string="Custom Filter">
+                        <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
+                    </group>
                 </search>
             </field>
         </record>
@@ -273,8 +270,8 @@
                                 <field name="technician_name_tasks"/>
                                 <field name="multi_tech" widget="many2many_tags"/>
                                 <field name="reason_tasks" />
-                                <field name="date_start"/>
                                 <field name="first_signal"/>
+                                <field name="date_start"/>
                                 <field name="date_end"/>
                                 <field name="compute_total_time"/>
                             </tree>
@@ -361,8 +358,8 @@
                                 <field name="technician_name"/>
                                 <field name="multi_tech" widget="many2many_tags"/>
                                 <field name="reason" />
-                                <field name="date_start"/>
                                 <field name="first_signal"/>
+                                <field name="date_start"/>
                                 <field name="date_end"/>
                                 <field name="compute_total_time"/>
                             </tree>

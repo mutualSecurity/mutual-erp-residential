@@ -69,28 +69,10 @@ class mutual_sales(osv.osv):
         else:
             return True
 
-
-    #
-    # @api.one
-    # @api.constrains('phone')
-    # def _check_values(self):
-    #     result = re.search('^[0-9]*$', self.phone)
-    #     if not result:
-    #         raise Warning(('Please enter correct format of phone number \n e.g 02134310038'))
-    #
-    # @api.one
-    # @api.constrains('cs_number')
-    # def _check_values(self):
-    #     result = re.search('^[a-zA-Z][0-9]$', self.cs_number)
-    #     if not result:
-    #         raise Warning(('Please enter correct format of cs number \n e.g CM00001 or C10001'))
-    #
-
-
-
 class duedeligence(osv.osv):
     _inherit = "sale.order"
     _columns = {
+        'cs_number': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
         'behalf_of_customer': fields.char('Spoke To', size=30, store=True),
         'How_much_you_paid': fields.float("How much you paid?", store=True),
         'date': fields.datetime("Date", store=True),
@@ -100,7 +82,7 @@ class duedeligence(osv.osv):
         'owner_tenant': fields.selection([('owner', 'Owner'), ('tenant', 'Tenant')], 'Is Customer owner or tenant?',store=True),
         'terms': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Do you agree with terms and conditions?',store=True),
     }
-duedeligence()
+
 
 class customer_relatives(osv.osv):
     _name="customer.relatives"
@@ -113,4 +95,12 @@ class customer_relatives(osv.osv):
         'contact_2': fields.char('Contact#2', size=64, store=True),
     }
 
-
+class crm_lead(osv.osv):
+    _inherit = 'crm.lead'
+# class sale_order_line(osv.osv):
+#     _inherit = "sale.order.line"
+#     def _calc_line_base_price(self, cr, uid, line, context=None):
+#         discount = line.discount
+#         quantity = line.product_uom_qty
+#         self.amount_discount = line.discount/quantity
+#         return line.price_unit-(line.discount/quantity)

@@ -27,7 +27,7 @@ class mutual_projects(osv.osv):
       'timeOut': fields.datetime('Time Out', select=True, copy=False, write=['project.group_project_manager'], read=['project.group_project_user']),
       'priority': fields.selection([('0', 'Normal'), ('1', 'Urgent'), ('2', 'Most Urgent')], 'Priority', select=True,required=True),
       'first_signal_time_task': fields.datetime('First Signal Time', select=True, copy=True, write=['project.group_project_manager'], read=['project.group_project_user']),
-      'name': fields.selection([('uplink','Uplink'),
+      'name': fields.selection([
                               ('survey', 'Survey'),
                               ('disco','Disco'),
                               ('additional','Additional'),
