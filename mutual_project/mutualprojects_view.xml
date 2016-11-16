@@ -487,7 +487,8 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_search_form" />
             <field name="arch" type="xml">
-                <xpath expr="//search/field[@name='partner_id']" position="before">
+                <xpath expr="//search/field[@name='categ_ids']" position="before">
+                    <field name="id"/>
                     <field name="cs_number_task"/>
                     <field name="mobile_task"/>
                     <field name="phone_task"/>
@@ -538,7 +539,7 @@
                     <field name="partner_id"/><br/>
                     <span style="color:green !important; font-weight:bold"><field name="cs_number_task"/></span><br/>
                     <span style="color:darkred !important; font-weight:bold">
-                        <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','NewInstallation'),('name','=','Disable In SIS')]}"/>
+                        <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','Disable In SIS')]}"/>
                     </span>
                     <field name="create_date"/>
                 </xpath>

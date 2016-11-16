@@ -30,6 +30,10 @@
                   <field name="partner_id" position="after">
                       <field name="css"/>
                   </field>
+                  <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="journal_id"/>
+                    <field name="account_id"/>
+                  </xpath>
               </field>
         </record>
         <record  model="ir.ui.view" id="view_account_invoice_filter">
