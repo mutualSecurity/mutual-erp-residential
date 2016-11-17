@@ -37,7 +37,7 @@
                         <p t-field="o.user_id"/>
                     </div>
                     <div class="col-xs-2" t-if="o.id">
-                        <strong>Complaint ID:</strong>
+                        <strong>Task ID:</strong>
                         <p t-field="o.id"/>
                     </div>
                     <div class="col-xs-2" t-if="o.priority">
@@ -60,7 +60,7 @@
                 <table class="table table-condensed">
                     <thead>
                     <tr>
-                        <th>Complaint Type</th>
+                        <th>Task Type</th>
                     </tr>
                     </thead>
                     <tbody class="invoice_tbody">
