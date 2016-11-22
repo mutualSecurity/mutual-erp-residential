@@ -50,6 +50,7 @@
                     <field string="Uplink Date" name="uplink_date"  placeholder="Uplink Date" />
                 </field>
                 <field name="title" position="after">
+                    <field name="application_user"/>
                     <field name="is_technician" attrs="{'invisible': [('customer','=',True)]}"/>
                     <field name="is_rider" attrs="{'invisible': [('customer','=',True)]}"/>
                 </field>
@@ -124,6 +125,9 @@
                     <field name="payment_next_action" />
                     <field name="payment_responsible_id" />
                 </xpath>
+                 <!--<group string="Custom Filter">-->
+                     <!--<filter string="New" domain="[('stage_id','=','New')]"/>-->
+                 <!--</group>-->
             </field>
         </record>
          <!--==========================Search View Ends=============================-->

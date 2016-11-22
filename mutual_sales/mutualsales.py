@@ -6,6 +6,7 @@ import re
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
+        'application_user': fields.boolean('Is a application user?', help="Check if the contact is a company, otherwise it is a person"),
         'mobile': fields.char('Mobile', store=True, size=11, on_change='validate_mobile()'),
         'phone': fields.char('Phone', store=True, size=11, on_change='validate_phone()'),
         'is_rider': fields.boolean('Is a Rider?', help="Check if the contact is a company, otherwise it is a person"),

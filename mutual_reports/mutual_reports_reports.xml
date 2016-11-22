@@ -19,6 +19,17 @@
                 attachment_use="False"
                 file="mutual_reports.report_issue_pdf"
         />
+
+         <report
+                id="custom_report_history_pdf"
+                model="project.issue"
+                string="Technician History"
+                report_type="qweb-pdf"
+                name="mutual_reports.report_history_pdf"
+                attachment_use="False"
+                file="mutual_reports.report_history_pdf"
+        />
+
         <report
                 id="custom_report_task_pdf"
                 model="project.task"

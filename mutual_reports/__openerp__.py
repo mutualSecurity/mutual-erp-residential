@@ -20,13 +20,12 @@
         'mutual_project'
     ],
     'data': [
+            'mutual_reports_reports.xml',
             'views/custom_layouts.xml',
             'views/report_acknowledgment_receipt.xml',
             'views/report_issue_pdf.xml',
             'views/report_task_pdf.xml',
-             'mutual_reports_reports.xml',
-
-
+            'views/report_history_pdf.xml',
     ]
 
 }

@@ -243,11 +243,11 @@
                     <field name="uplink_date_task"/>
                     <field name="complaint_reference"/>
                     <field name="user_id"/>
-                    <field name="timeIn"/>
-                    <field name="first_signal_time_task"/>
-                    <field name="timeOut"/>
-                    <field name="compute_total_time"/>
-                    <field name="finalstatus"/>
+                    <!--<field name="timeIn"/>-->
+                    <!--<field name="first_signal_time_task"/>-->
+                    <!--<field name="timeOut"/>-->
+                    <!--<field name="compute_total_time"/>-->
+                    <!--<field name="finalstatus"/>-->
                 </xpath>
                 <xpath expr="//field[@name='date_deadline']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -312,7 +312,7 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <field name="id" position="after">
-                    <field name="user_id"/>
+                    <!--<field name="user_id"/>-->
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="user_id_issue"/>
                     <field name="first_signal_time"/>
@@ -337,7 +337,22 @@
                 <xpath expr="//field[@name='task_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <xpath expr="//field[@name='user_id']" position="attributes">
+                <xpath expr="//field[@name='first_signal_time']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_start']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_end']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='compute_total_time']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='compute_total_time']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='multi_tech']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
                  <field name="partner_id" position="after">
@@ -358,7 +373,7 @@
                             <tree editable="top" string="Timesheets" >
                                 <field name="technician_name"/>
                                 <field name="multi_tech" widget="many2many_tags"/>
-                                <field name="reason" />
+                                <field name="reason"/>
                                 <field name="first_signal"/>
                                 <field name="date_start"/>
                                 <field name="date_end"/>
@@ -378,11 +393,38 @@
                             <button name="smsSent" string="Sent" type="object" class="btn-link"  />
                     </page>
                 </notebook>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='finalstatus']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
             </field>
         </record>
         <!--====================================== Issue form view Ending ==================================-->
 
         <!--====================================== List view of Issue form for metrics Begins ==================================-->
+         <record id="project_issue.project_issue_tree_view_mutual" model="ir.ui.view">
+              <field name="name">Project Issue Tracker Tree</field>
+              <field name="model">project.issue</field>
+              <field name="inherit_id" ref="project_issue.project_issue_tree_view" />
+              <field name="priority" eval="20"/>
+              <field name="arch" type="xml">
+                  <field name="version_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </field>
+                  <field name="project_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </field>
+                  <field name="progress" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </field>
+                  <field name="user_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </field>
+              </field>
+        </record>
+
         <record id="mutual_issue_tree" model="ir.ui.view">
               <field name="name">Project Issue-Feature Tracker Tree</field>
               <field name="model">project.issue</field>
@@ -390,11 +432,11 @@
               <field name="priority" eval="20"/>
               <field name="arch" type="xml">
                   <field name="priority" position="after">
-                      <field name="user_id_issue"/>
+                      <!--<field name="user_id_issue"/>-->
                       <field name="cs_number_issue"/>
-                      <field name="city_issue"/>
+                      <!--<field name="city_issue"/>-->
                       <field name="monitoring_address_issue"/>
-                      <field name="task_id" />
+                      <!--<field name="task_id" />-->
                       <field name="date_start"/>
                       <field name="date_end"/>
                       <field name="compute_total_time"/>
@@ -411,6 +453,16 @@
                   <field name="partner_id" position="attributes">
                       <attribute name="invisible">1</attribute>
                   </field>
+                   <field name="user_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </field>
+                  <xpath expr="//field[@name='stage_id']" position="attributes">
+                      <attribute name="string">Complaint Status</attribute>
+                  </xpath>
+                  <xpath expr="//tree[@string='Feature Tracker Tree']" position="attributes">
+                    <attribute name="colors">blue:stage_id=='New'</attribute>
+                      <field name="stage_id"/>
+                  </xpath>
             </field>
         </record>
         <!--====================================== List view of Issue form for metrics ends ==================================-->
@@ -477,6 +529,16 @@
                     <field name="user_id_issue"/>
                     <field name="tech_name" />
                 </xpath>
+                 <search string="Issue Tracker Search">
+                     <group string="Complaint Status">
+                         <filter string="New" domain="[('stage_id','=','New')]"/>
+                         <filter string="Printout Forwarded" domain="[('stage_id','=','Printout Forwarded')]"/>
+                         <filter string="Assigned to Technician" domain="[('stage_id','=','Assigned to Technician')]"/>
+                         <filter string="In Progress" domain="[('stage_id','=','In Progress')]"/>
+                         <filter string="Completed by CMS" domain="[('stage_id','=','Completed by CMS')]"/>
+                         <filter string="Resolved" domain="[('stage_id','=','Resolved')]"/>
+                     </group>
+                </search>
             </field>
         </record>
          <!--==========================Search View Ends=============================-->
@@ -506,6 +568,7 @@
             <field name="name">Project Issue Kanban</field>
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_kanban_view"/>
+            <field name="context">{'search_default_cs_number_issue':1}</field>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after"><br/>
                      <span style="color:royalblue;">
@@ -515,6 +578,9 @@
                 </field>
                 <xpath expr='//kanban'  position="attributes">
                    <attribute name="quick_create">0</attribute>
+                </xpath>
+                <xpath expr='//kanban' position="attributes">
+                    <attribute name="colors">grey:id==503</attribute>
                 </xpath>
             </field>
         </record>
