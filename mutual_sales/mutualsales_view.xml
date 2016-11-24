@@ -125,9 +125,13 @@
                     <field name="payment_next_action" />
                     <field name="payment_responsible_id" />
                 </xpath>
-                 <!--<group string="Custom Filter">-->
-                     <!--<filter string="New" domain="[('stage_id','=','New')]"/>-->
-                 <!--</group>-->
+                <search string="Search Partner">
+                     <group string="Custom Filter">
+                         <filter string="Active" domain="[('active','=',True)]"/>
+                         <filter string="Inactive" domain="[('active','=',False)]"/>
+                         <filter string="Mobile application User" domain="[('application_user','=',True)]"/>
+                     </group>
+                </search>
             </field>
         </record>
          <!--==========================Search View Ends=============================-->
@@ -143,7 +147,11 @@
                       <field name="street"/>
                       <field name="active"/>
                       <field name="city"/>
+                      <field name="application_user"/>
                   </field>
+                  <xpath expr="//field[@name='application_user']" position="attributes">
+                      <attribute name="string">App User</attribute>
+                  </xpath>
               </field>
         </record>
          <!--====================================== List view of customer form for metrics Ends ===================-->
