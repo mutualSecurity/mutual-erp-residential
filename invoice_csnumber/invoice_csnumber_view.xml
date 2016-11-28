@@ -46,5 +46,15 @@
                 </xpath>
             </field>
         </record>
+         <record  model="ir.ui.view" id="account.view_move">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
