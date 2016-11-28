@@ -40,9 +40,8 @@ class mutual_sales(osv.osv):
             if cs:
                 return True
             else:
-                raise Warning(('Please enter correct format of cs number \n e.g CM0001 C10001'))
-        else:
-            return True
+                raise osv.except_osv('Invalid CS Number', 'Please enter a valid CS number like CM0001 or C20001')
+                return False
 
     @api.one
     @api.depends('phone')
@@ -50,12 +49,13 @@ class mutual_sales(osv.osv):
     def validate_phone(self):
         if self.phone:
             phone = re.search('^[0-9]*$', self.phone)
-            if phone:
+            _length = len(self.phone)
+            if phone and _length == 11:
                 return True
             else:
-                raise Warning(('Please enter correct format of phone number \n e.g 02134310098'))
-        else:
-            return True
+                raise osv.except_osv('Invalid Phone Number','Please enter correct format of phone number \n e.g 0213xxxxxxx')
+                return False
+
 
     @api.one
     @api.depends('mobile')
@@ -63,12 +63,14 @@ class mutual_sales(osv.osv):
     def validate_mobile(self):
         if self.mobile:
             mobile = re.search('^[0-9]*$', self.mobile)
-            if mobile:
+            _length = len(self.mobile)
+            if mobile and _length == 11:
                 return True
             else:
-                raise Warning(('Please enter correct format of mobile number \n e.g 03413326418'))
-        else:
-            return True
+                raise osv.except_osv('Invalid Mobile Number','Please enter correct format of mobile number \n e.g 0341xxxxxxx')
+                return False
+
+
 
 class duedeligence(osv.osv):
     _inherit = "sale.order"
