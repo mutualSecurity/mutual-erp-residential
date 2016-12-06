@@ -12,7 +12,7 @@
             </field>
         </record>
         <menuitem
-            name="Issues Logs"
+            name="Issues TimeIn/Out Activities"
             action="tech_open_project_attachment_view"
             id="menu_tech_open_project_attachment_view"
             sequence="30"
@@ -46,18 +46,18 @@
             <field name="view_type">tree</field>
             <field name="model">tech.activities.issues</field>
             <field name="arch" type="xml">
-                <tree string="Technician Activities">
-                    <field name="issue_id"/>
-                    <field name="cs_number"/>
-                    <field name="tech_name"/>
+                <tree string="Technician Activities" editable="top">
+                    <field name="issue_id" readonly="1"/>
+                    <field name="cs_number" readonly="1"/>
+                    <field name="tech_name" readonly="0"/>
                     <field name="technician_name"/>
-                    <field name="reason"/>
+                    <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
-                    <field name="first_signal"/>
                     <field name="date_end"/>
                     <field name="compute_total_time"/>
-                    <field name="multi_tech"/>
-                    <field name="create_date"/>
+                    <field name="first_signal"/>
+                    <field name="reason"/>
+                    <!--<field name="create_date" readonly="1"/>-->
                 </tree>
             </field>
         </record>
@@ -85,12 +85,12 @@
                     <field name="cs_number"/>
                     <field name="tech_name_tasks"/>
                     <field name="technician_name_tasks"/>
-                    <field name="reason_tasks"/>
+                    <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
-                    <field name="first_signal"/>
                     <field name="date_end"/>
                     <field name="compute_total_time"/>
-                    <field name="multi_tech"/>
+                    <field name="first_signal"/>
+                    <field name="reason_tasks"/>
                 </tree>
             </field>
         </record>
@@ -121,7 +121,7 @@
             </field>
         </record>
         <menuitem
-            name="Tasks Logs"
+            name="Tasks TimeIn/Out Activities"
             action="tech_open_project_attachment_task_view"
             id="menu_tech_open_project_attachment_task_view"
             sequence="40"
