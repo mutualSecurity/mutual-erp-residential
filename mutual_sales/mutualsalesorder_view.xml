@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="cs_number"/>
+                    <field name="payment_received"/>
                 </xpath>
                 <notebook>
                     <page string="Due Deligence" groups="base.group_sale_salesman_all_leads">
@@ -27,6 +28,29 @@
                         </group>
                     </page>
                 </notebook>
+            </field>
+        </record>
+        <record id="view_order_tree" model="ir.ui.view">
+              <field name="name">sale.order.tree</field>
+              <field name="model">sale.order</field>
+              <field name="inherit_id" ref="sale.view_order_tree" />
+              <field name="arch" type="xml">
+                  <field name="partner_id" position="after">
+                      <field name="payment_received"/>
+                  </field>
+              </field>
+        </record>
+        <record  model="ir.ui.view" id="_sales_order_filter">
+            <field name="name">sale.order.list.select</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter" />
+            <field name="arch" type="xml">
+                <search string="Search Sales Order">
+                     <group string="Custom Filter">
+                         <filter string="Payment Received" domain="[('payment_received','=',True)]"/>
+                         <filter string="Payment Not Received" domain="[('payment_received','=',False)]"/>
+                     </group>
+                </search>
             </field>
         </record>
     </data>

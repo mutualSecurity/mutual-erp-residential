@@ -10,6 +10,8 @@ class mutual_projects(osv.osv):
   _name="project.task"
   _inherit = "project.task",
   _columns = {
+      'task_status': fields.boolean('Task Status', store=True),
+      'task_status_confirm': fields.char('', store=True, compute='_task_status'),
       'user_id': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange',
                                  domain="[('is_technician','=',True)]", default='', readonly=True),
       'finalstatus': fields.char("Final Status", store=True),
@@ -33,11 +35,20 @@ class mutual_projects(osv.osv):
                               ('additional','Additional'),
                               ('Shifting','Shifting'),
                               ('reconnection', 'Reconnection'),
-                              ('NewInstallation', 'NewInstallation'),
+                              ('NewInstallation (Constructed)', 'NewInstallation (Constructed)'),
+                              ('NewInstallation (Under Construction)', 'NewInstallation (Under Construction)'),
                               ('Disable In SIS', 'Disable In SIS'),
                               ],
                              'Task', required=True, store=True, select=True),
   }
+
+  @api.one
+  @api.depends('task_status')
+  def _task_status(self):
+      if self.task_status == True:
+          self.task_status_confirm = "Done"
+          return True
+
 
   @api.one
   @api.depends('timeIn', 'timeOut')

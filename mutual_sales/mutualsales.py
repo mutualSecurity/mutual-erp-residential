@@ -76,6 +76,7 @@ class duedeligence(osv.osv):
     _inherit = "sale.order"
     _columns = {
         'cs_number': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
+        'payment_received': fields.boolean('Payment Received', store=True),
         'behalf_of_customer': fields.char('Spoke To', size=30, store=True),
         'How_much_you_paid': fields.float("How much you paid?", store=True),
         'date': fields.datetime("Date", store=True),

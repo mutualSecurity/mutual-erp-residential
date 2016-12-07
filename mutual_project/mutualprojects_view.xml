@@ -243,11 +243,16 @@
                     <field name="uplink_date_task"/>
                     <field name="complaint_reference"/>
                     <field name="user_id"/>
+                    <field name="task_status"/>
+                    <field name="task_status_confirm"/>
                     <!--<field name="timeIn"/>-->
                     <!--<field name="first_signal_time_task"/>-->
                     <!--<field name="timeOut"/>-->
                     <!--<field name="compute_total_time"/>-->
                     <!--<field name="finalstatus"/>-->
+                </xpath>
+                <xpath expr="//field[@name='task_status_confirm']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='date_deadline']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -607,7 +612,10 @@
                     <span style="color:darkred !important; font-weight:bold">
                         <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','Disable In SIS')]}"/>
                     </span>
-                    <field name="create_date"/>
+                    <field name="create_date"/><br/>
+                    <span style="color:red !important; font-weight:bold">
+                        <field name="task_status_confirm"/>
+                    </span>
                 </xpath>
             </field>
         </record>
