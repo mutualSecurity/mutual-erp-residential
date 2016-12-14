@@ -219,7 +219,7 @@ class tech_activities_issues(osv.osv):
         'date_end': fields.datetime('T/O', select=True, copy=True, write=['project.group_project_manager'],
                                     read=['project.group_project_user']),
         'cs_number': fields.related('tech_name','cs_number_issue', type='char', string='CS Number'),
-        'issue_id': fields.related('tech_name','id', type='char', string='Complaint ID')
+        'issue_id': fields.related('tech_name','id', type='integer', string='Complaint ID')
     }
 
     @api.one
@@ -240,7 +240,7 @@ class tech_activities_issues(osv.osv):
 class tech_activities_tasks(osv.osv):
     _name = "tech.activities.tasks"
     _columns = {
-        'task_id': fields.related('tech_name_tasks', 'id', type='char', string='Task ID'),
+        'task_id': fields.related('tech_name_tasks', 'id', type='integer', string='Task ID'),
         'multi_tech': fields.many2many('res.users', string='Other Tech', domain="[('is_technician','=',True)]"),
         'compute_total_time': fields.char('T/T', store=True, readonly=True, compute='_compute_total_time', ),
         'first_signal': fields.datetime('F/T', select=True, copy=True, write=['project.group_project_manager'],

@@ -36,6 +36,7 @@
               <field name="inherit_id" ref="sale.view_order_tree" />
               <field name="arch" type="xml">
                   <field name="partner_id" position="after">
+                      <field name="cs_number"/>
                       <field name="payment_received"/>
                   </field>
               </field>

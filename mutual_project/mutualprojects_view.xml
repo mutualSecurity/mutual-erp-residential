@@ -67,6 +67,7 @@
             <field name="model">tech.activities.issues</field>
             <field name="arch" type="xml">
                 <search string="Search Logs">
+                    <field name="issue_id"/>
                     <field name="cs_number"/>
                     <group string="Custom Filter">
                         <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
@@ -100,6 +101,7 @@
             <field name="model">tech.activities.tasks</field>
             <field name="arch" type="xml">
                 <search string="Search Logs">
+                    <field name="task_id"/>
                     <field name="cs_number"/>
                     <group string="Custom Filter">
                         <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
