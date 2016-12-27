@@ -38,6 +38,7 @@ class mutual_projects(osv.osv):
                               ('NewInstallation (Constructed)', 'NewInstallation (Constructed)'),
                               ('NewInstallation (Under Construction)', 'NewInstallation (Under Construction)'),
                               ('Disable In SIS', 'Disable In SIS'),
+                              ('Renovation', 'Renovation'),
                               ],
                              'Task', required=True, store=True, select=True),
   }
