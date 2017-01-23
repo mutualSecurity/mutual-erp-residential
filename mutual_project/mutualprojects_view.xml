@@ -49,7 +49,7 @@
                 <tree string="Technician Activities" editable="top">
                     <field name="issue_id" readonly="1"/>
                     <field name="cs_number" readonly="1"/>
-                    <field name="tech_name" readonly="0"/>
+                    <field name="tech_name" readonly="1"/>
                     <field name="technician_name"/>
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
@@ -57,6 +57,7 @@
                     <field name="compute_total_time"/>
                     <field name="first_signal"/>
                     <field name="reason"/>
+                    <field name="status"/>
                     <!--<field name="create_date" readonly="1"/>-->
                 </tree>
             </field>
@@ -71,6 +72,8 @@
                     <field name="cs_number"/>
                     <group string="Custom Filter">
                         <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
+                        <filter string="Create Month" context="{'group_by':'create_date:month'}" help="Create Month"/>
+                        <filter string="Create year" context="{'group_by':'create_date:year'}" help="Create Year"/>
                     </group>
                 </search>
             </field>
@@ -81,10 +84,10 @@
             <field name="view_type">tree</field>
             <field name="model">tech.activities.tasks</field>
             <field name="arch" type="xml">
-                <tree string="Technician Activities">
-                    <field name="task_id"/>
-                    <field name="cs_number"/>
-                    <field name="tech_name_tasks"/>
+                <tree string="Technician Activities" editable="top">
+                    <field name="task_id" readonly="1"/>
+                    <field name="cs_number" readonly="1"/>
+                    <field name="tech_name_tasks" readonly="1"/>
                     <field name="technician_name_tasks"/>
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
@@ -92,6 +95,7 @@
                     <field name="compute_total_time"/>
                     <field name="first_signal"/>
                     <field name="reason_tasks"/>
+                    <field name="status"/>
                 </tree>
             </field>
         </record>
@@ -242,6 +246,7 @@
                 </xpath>
                 <xpath expr="//field[@name='date_deadline']" position="before">
                     <field name="id"/>
+                    <field name="create_date"/>
                     <field name="uplink_date_task"/>
                     <field name="complaint_reference"/>
                     <field name="user_id"/>
@@ -330,6 +335,7 @@
                 </field>
                 <field name="id" position="before">
                     <field name="priority" widget="priority"/>
+                    <field name="create_date"/>
                     <field name="create_uid" readonly="1"/>
                 </field>
                 <xpath expr="//field[@name='create_uid']" position="attributes">

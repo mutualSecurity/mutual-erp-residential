@@ -181,5 +181,29 @@
                 </field>
             </field>
         </record>
+
+         <record id="mutual_filter" model="ir.ui.view">
+              <field name="name">sale.order.list.select</field>
+              <field name="model">sale.order</field>
+              <field name="inherit_id" ref="sale.view_sales_order_filter" />
+              <field name="arch" type="xml">
+                  <field name="name" position="before">
+                      <field name="cs_number"/>
+                  </field>
+              </field>
+        </record>
+
+        <!--====================================== Kanban view of partner begins ==================================-->
+        <!--<record model="ir.ui.view" id="base.res_partner_kanban">-->
+            <!--<field name="name">res.partner.kanban</field>-->
+            <!--<field name="model">res.partner</field>-->
+            <!--<field name="inherit_id" ref="base.res_partner_kanban_view"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr='//kanban/field[@name="email"]' position="after">-->
+                    <!--<field name="cs_number"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--====================================== Kanban view of partner ends ==================================-->
     </data>
 </openerp>

@@ -6,15 +6,15 @@ import re
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
-        'application_user': fields.boolean('Is a mobile application user?', help="Check if the contact is a company, otherwise it is a person"),
-        'mobile': fields.char('Mobile', store=True, size=11, on_change='validate_mobile()'),
+        'application_user': fields.boolean('Is a mobile application user?', help="Check if the contact is a company, otherwise it is a person", track_visibility='onchange'),
+        'mobile': fields.char('Mobile', store=True, size=11, on_change='validate_mobile()',track_visibility='onchange'),
         'phone': fields.char('Phone', store=True, size=11, on_change='validate_phone()'),
         'is_rider': fields.boolean('Is a Rider?', help="Check if the contact is a company, otherwise it is a person"),
         'is_technician': fields.boolean('Is a Technician?', help="Check if the contact is a company, otherwise it is a person"),
         'customer_relatives': fields.one2many('customer.relatives','customer_r','Relative'),
         'disco': fields.boolean('Disconnection', store=True),
         'reco': fields.boolean('Reconnection', store=True),
-        'cs_number': fields.char('Cs Number', size=6, read=["account.group_account_user"], write=["account.group_account_manager"], on_change='validate_csnumber()'),
+        'cs_number': fields.char('Cs Number', size=6, read=["account.group_account_user"], write=["account.group_account_manager"], on_change='validate_csnumber()',track_visibility='onchange'),
         'c_street': fields.char('Corresponding Street'),
         'office': fields.char('Office Number',store=True),
         'c_street2': fields.char('Corresponding Street2'),
@@ -27,8 +27,8 @@ class mutual_sales(osv.osv):
         'gst_num': fields.char('GST Number', size=9, store=True),
         'credit_card_no': fields.char('Credit Card', size=14, store=True),
         'credit_card_exp_date': fields.date('Expiry Date', select=True, copy=False),
-        'uplink_date': fields.date('Uplink Date', select=True, copy=False,write=["project.group_project_user"]),
-        'active': fields.boolean('Active', read=["account.group_account_manager"], write=["account.group_account_manager"]),
+        'uplink_date': fields.date('Uplink Date', select=True, copy=False,write=["project.group_project_user"],track_visibility='onchange'),
+        'active': fields.boolean('Active', read=["account.group_account_manager"], write=["account.group_account_manager"],track_visibility='onchange'),
     }
 
     @api.one

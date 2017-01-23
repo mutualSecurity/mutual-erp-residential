@@ -218,7 +218,14 @@ class tech_activities_issues(osv.osv):
         'date_end': fields.datetime('T/O', select=True, copy=True, write=['project.group_project_manager'],
                                     read=['project.group_project_user']),
         'cs_number': fields.related('tech_name','cs_number_issue', type='char', string='CS Number'),
-        'issue_id': fields.related('tech_name','id', type='integer', string='Complaint ID')
+        'issue_id': fields.related('tech_name','id', type='integer', string='Complaint ID'),
+        'status': fields.selection(
+            [('Assigned to Technician', 'Assigned to Technician'), ('In Progress', 'In Progress'),
+             ('Completed by CMS', 'Completed by CMS'),
+             ('Resolved', 'Resolved'),
+             ], 'Complaint Marking', store=True,
+            onchange='changestatus()'),
+
     }
 
     @api.one
@@ -234,6 +241,25 @@ class tech_activities_issues(osv.osv):
             # find the difference between two dates
             diff = timeOut - timeIn
             self.compute_total_time = diff
+
+    @api.one
+    @api.onchange('status')
+    def changestatus(self):
+        if self.status == "Resolved":
+            self.env.cr.execute('UPDATE project_issue SET stage_id = 12 WHERE id =' + str(self.issue_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        elif self.status == "Completed by CMS":
+            self.env.cr.execute('UPDATE project_issue SET stage_id = 18 WHERE id =' + str(self.issue_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        elif self.status == "Assigned to Technician":
+            self.env.cr.execute('UPDATE project_issue SET stage_id = 10 WHERE id =' + str(self.issue_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        elif self.status == "In Progress":
+            self.env.cr.execute('UPDATE project_issue SET stage_id = 11 WHERE id =' + str(self.issue_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 
 class tech_activities_tasks(osv.osv):
@@ -253,7 +279,13 @@ class tech_activities_tasks(osv.osv):
         'technician_name_tasks': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange'),
         'reason_tasks': fields.char('Description', size=100, store=True),
         'total_time_tasks': fields.float('Total Time', store=True),
-        'date_tasks': fields.date('Date', store=True)
+        'date_tasks': fields.date('Date', store=True),
+        'status': fields.selection(
+            [('Assigned to Technician', 'Assigned to Technician'), ('In Progress', 'In Progress'),
+             ('Completed by CMS', 'Completed by CMS'),
+             ('Resolved', 'Resolved'),
+             ], 'Complaint Marking', store=True,
+            onchange='changestatus()'),
     }
 
     @api.one
@@ -269,6 +301,26 @@ class tech_activities_tasks(osv.osv):
             # find the difference between two dates
             diff = timeOut - timeIn
             self.compute_total_time = diff
+
+    @api.one
+    @api.onchange('status')
+    def changestatus(self):
+        if self.status == "Resolved":
+            self.env.cr.execute('UPDATE project_task SET stage_id = 12 WHERE id =' + str(self.task_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        elif self.status == "Completed by CMS":
+            self.env.cr.execute('UPDATE project_task SET stage_id = 18 WHERE id =' + str(self.task_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        elif self.status == "Assigned to Technician":
+            self.env.cr.execute('UPDATE project_task SET stage_id = 10 WHERE id =' + str(self.task_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        elif self.status == "In Progress":
+            self.env.cr.execute('UPDATE project_task SET stage_id = 11 WHERE id =' + str(self.task_id))
+            print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
 
 
 
