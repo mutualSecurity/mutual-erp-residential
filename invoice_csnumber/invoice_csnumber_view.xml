@@ -13,6 +13,7 @@
                     <field name="phone" />
                     <field name="mobile" />
                     <field name="uplink_date" />
+                    <!--<field name="custom_account_id"/>-->
                 </field>
                 <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="context">"{'show_address':0}"</attribute>
@@ -20,12 +21,17 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="address"/>
                 </xpath>
+                <xpath expr="//field[@name='fiscal_position']" position="after">
+                    <separator string="Reset Account Heads"/><br/>
+                    <button name="account_head" string="Reset Heads" type="object" class="oe_highlight" />
+                </xpath>
             </field>
         </record>
         <record id="account.invoice_tree_mutual" model="ir.ui.view">
               <field name="name">account.invoice.tree</field>
               <field name="model">account.invoice</field>
               <field name="inherit_id" ref="account.invoice_tree" />
+              <field name="code">self.account_head()</field>
               <field name="arch" type="xml">
                   <field name="partner_id" position="after">
                       <field name="css"/>
