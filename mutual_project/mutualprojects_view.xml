@@ -450,9 +450,9 @@
                       <!--<field name="city_issue"/>-->
                       <field name="monitoring_address_issue"/>
                       <!--<field name="task_id" />-->
-                      <field name="date_start"/>
-                      <field name="date_end"/>
-                      <field name="compute_total_time"/>
+                      <field name="responsibleperson"/>
+                      <field name="contactperson"/>
+                      <!--<field name="compute_total_time"/>-->
                   </field>
                   <field name="user_id" position="after">
                       <field name="create_date"/>
