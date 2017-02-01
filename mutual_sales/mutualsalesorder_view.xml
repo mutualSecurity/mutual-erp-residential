@@ -10,6 +10,9 @@
                     <field name="cs_number"/>
                     <field name="payment_received"/>
                 </xpath>
+                <xpath expr="//button[@string='Create Invoice']" position="attributes">
+                    <attribute name="groups">base.group_sale_manager</attribute>
+                </xpath>
                 <notebook>
                     <page string="Due Deligence" groups="base.group_sale_salesman_all_leads">
                         <group col="4">
