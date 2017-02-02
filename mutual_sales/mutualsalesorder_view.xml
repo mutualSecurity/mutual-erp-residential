@@ -23,6 +23,7 @@
                         <group style="margin-top:10px">
                             <field name="ptcl_gsm" widget="radio" style="margin-top:20px"/>
                             <field name="ptcl_inorder" widget="radio" style="margin-top:20px"/>
+                            <field name="bentel_gsm" widget="radio" style="margin-top:20px"/>
                             <field name="owner_tenant" widget="radio" style="margin-top:20px"/>
                             <field name="terms" widget="radio" style="margin-top:20px"/>
                         </group>
