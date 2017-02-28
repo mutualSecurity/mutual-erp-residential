@@ -6,6 +6,9 @@ import re
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
+        'contactperson': fields.char('Contact Person', store=True,track_visibility='onchange'),
+        'contactpersondetails': fields.char('Contact Person Details', store=True,track_visibility='onchange'),
+        'tempaddress': fields.char('Temporary Address',store=True,track_visibility='onchange'),
         'application_user': fields.boolean('Is a mobile application user?', help="Check if the contact is a company, otherwise it is a person", track_visibility='onchange'),
         'mobile': fields.char('Mobile', store=True, size=11, on_change='validate_mobile()',track_visibility='onchange'),
         'phone': fields.char('Phone', store=True, size=11, on_change='validate_phone()'),
@@ -15,9 +18,9 @@ class mutual_sales(osv.osv):
         'disco': fields.boolean('Disconnection', store=True),
         'reco': fields.boolean('Reconnection', store=True),
         'cs_number': fields.char('Cs Number', size=6, read=["account.group_account_user"], write=["account.group_account_manager"], on_change='validate_csnumber()',track_visibility='onchange'),
-        'c_street': fields.char('Corresponding Street'),
+        'c_street': fields.char('Corresponding Street',store=True,track_visibility='onchange'),
         'office': fields.char('Office Number',store=True),
-        'c_street2': fields.char('Corresponding Street2'),
+        'c_street2': fields.char('Corresponding Street2',store=True,track_visibility='onchange'),
         'c_zip': fields.char('Zip', change_default=True, size=24),
         'c_city': fields.char('City'),
         'c_state_id': fields.many2one("res.country.state", 'State'),
