@@ -75,6 +75,18 @@
                         <filter string="Create Month" context="{'group_by':'create_date:month'}" help="Create Month"/>
                         <filter string="Create year" context="{'group_by':'create_date:year'}" help="Create Year"/>
                     </group>
+                    <group string="TimeIn/TimeOut">
+                        <filter string="No TimeIn" domain="[('date_start','=',False)]"/>
+                        <filter string="No TimeOut" domain="[('date_end','=',False)]"/>
+                        <filter string="No TimeIn/Out" domain="[('date_start','=',False),('date_end','=',False)]"/>
+                        <filter string="Both TimeIn/Out" domain="[('date_start','!=',False),('date_end','!=',False)]"/>
+                    </group>
+                    <group string="TimeIn/Out By Day/Month">
+                        <filter string="TimeIn By Day" context="{'group_by':'date_start:day'}" />
+                        <filter string="TimeIn By Month" context="{'group_by':'date_start:month'}" />
+                        <filter string="TimeOut By Day" context="{'group_by':'date_end:day'}" />
+                        <filter string="TimeOut By Month" context="{'group_by':'date_end:month'}" />
+                    </group>
                 </search>
             </field>
         </record>
@@ -109,6 +121,20 @@
                     <field name="cs_number"/>
                     <group string="Custom Filter">
                         <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
+                        <filter string="Create Month" context="{'group_by':'create_date:month'}" help="Create Month"/>
+                        <filter string="Create year" context="{'group_by':'create_date:year'}" help="Create Year"/>
+                    </group>
+                    <group string="TimeIn/TimeOut">
+                        <filter string="No TimeIn" domain="[('date_start','=',False)]"/>
+                        <filter string="No TimeOut" domain="[('date_end','=',False)]"/>
+                        <filter string="No TimeIn/Out" domain="[('date_start','=',False),('date_end','=',False)]"/>
+                        <filter string="Both TimeIn/Out" domain="[('date_start','!=',False),('date_end','!=',False)]"/>
+                    </group>
+                    <group string="TimeIn/Out By Day/Month">
+                        <filter string="TimeIn By Day" context="{'group_by':'date_start:day'}" />
+                        <filter string="TimeIn By Month" context="{'group_by':'date_start:month'}" />
+                        <filter string="TimeOut By Day" context="{'group_by':'date_end:day'}" />
+                        <filter string="TimeOut By Month" context="{'group_by':'date_end:month'}" />
                     </group>
                 </search>
             </field>
@@ -551,6 +577,11 @@
                          <filter string="Completed by CMS" domain="[('stage_id','=','Completed by CMS')]"/>
                          <filter string="Resolved" domain="[('stage_id','=','Resolved')]"/>
                      </group>
+                     <group string="By Day Update Stages">
+                        <filter name="date_last_stage_update" string="Daily" context="{'group_by':'date_last_stage_update:day'}"/>
+                        <filter name="date_last_stage_update" string="Monthly" context="{'group_by':'date_last_stage_update:month'}"/>
+                        <filter name="date_last_stage_update" string="Yearly" context="{'group_by':'date_last_stage_update:year'}"/>
+                     </group>
                 </search>
             </field>
         </record>
@@ -565,6 +596,7 @@
                 <xpath expr="//search/field[@name='categ_ids']" position="before">
                     <field name="id"/>
                     <field name="cs_number_task"/>
+                    <field name="create_uid"/>
                     <field name="mobile_task"/>
                     <field name="phone_task"/>
                 </xpath>
@@ -572,6 +604,21 @@
                     <field name="priority"/>
                     <field name="create_date"/>
                 </xpath>
+                <search string="Tasks">
+                    <group string="Tasks Status">
+                         <filter string="New" domain="[('stage_id','=','New')]"/>
+                         <filter string="Printout Forwarded" domain="[('stage_id','=','Printout Forwarded')]"/>
+                         <filter string="Assigned to Technician" domain="[('stage_id','=','Assigned to Technician')]"/>
+                         <filter string="In Progress" domain="[('stage_id','=','In Progress')]"/>
+                         <filter string="Completed by CMS" domain="[('stage_id','=','Completed by CMS')]"/>
+                         <filter string="Resolved" domain="[('stage_id','=','Resolved')]"/>
+                    </group>
+                    <group string="By Day Update Stages">
+                        <filter name="date_last_stage_update" string="Daily" context="{'group_by':'date_last_stage_update:day'}"/>
+                        <filter name="date_last_stage_update" string="Monthly" context="{'group_by':'date_last_stage_update:month'}"/>
+                        <filter name="date_last_stage_update" string="Yearly" context="{'group_by':'date_last_stage_update:year'}"/>
+                    </group>
+                </search>
             </field>
         </record>
         <!--==========================Search View Ends=============================-->
