@@ -42,16 +42,16 @@ class mutual_projects(osv.osv):
                               ],
                              'Task', required=True, store=True, select=True),
      'disco_reasons': fields.selection([
-          ('reason1', 'Client Going Abroad'),
-          ('reason2', 'Client Left the Site'),
-          ('reason3', 'Patrolling Issue/ Force Issue'),
-          ('reason4', 'Poor Service'),
-          ('reason5', 'Complaint Issues'),
-          ('reason6', 'Hier Guards For Security Purpose'),
-          ('reason7', 'No Need'),
-          ('reason8', 'Shifting'),
+          ('reason1', 'Non Payment'),
+          ('reason2', 'No Need'),
+          ('reason3', 'Shifting'),
+          ('reason4', 'Force Issue / Patrolling Issue'),
+          ('reason5', 'Hier Guards For Security Purpose'),
+          ('reason6', 'Client Going Abroad/Left the Site'),
+          ('reason7', 'Poor Service'),
+          ('reason8', 'Complaint Issues'),
           ('reason9', 'Renovation Work'),
-      ],'Disco Reasons', store=True, select=True),
+          ],'Disco Reasons', store=True, select=True),
   }
 
   @api.one
