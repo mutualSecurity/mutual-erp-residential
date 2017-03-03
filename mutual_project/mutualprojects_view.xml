@@ -278,6 +278,7 @@
                     <field name="user_id"/>
                     <field name="task_status"/>
                     <field name="task_status_confirm"/>
+                    <field name="disco_reasons"/>
                     <!--<field name="timeIn"/>-->
                     <!--<field name="first_signal_time_task"/>-->
                     <!--<field name="timeOut"/>-->
@@ -599,6 +600,7 @@
                     <field name="create_uid"/>
                     <field name="mobile_task"/>
                     <field name="phone_task"/>
+                    <field name="disco_reasons"/>
                 </xpath>
                 <xpath expr="//search/field[@name='partner_id']" position="after">
                     <field name="priority"/>
