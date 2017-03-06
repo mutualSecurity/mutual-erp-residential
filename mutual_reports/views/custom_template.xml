@@ -31,7 +31,7 @@
         <tr class="text-right">
             <td colspan="100">
                 <strong>Subtotal:   </strong>
-                <span t-esc="p['subtotal']-sale_order.additional_discount" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
+                <span t-esc="p['subtotal']-sale_order.discounted_amount+sale_order.monitoring_tax" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
             </td>
         </tr>
     </t>
@@ -49,8 +49,8 @@
     <t t-if="p['category'].name=='Monitoring Charges'">
         <tr class="text-right">
             <td colspan="100">
-                <strong>Special Discount:  </strong><span t-field="sale_order.discounted_amount"/>Rs.<br/>
-                <strong>SRB 19%:  </strong><span t-field="sale_order.monitoring_tax"/>Rs.
+                <strong>SRB 19%:  </strong><span t-field="sale_order.monitoring_tax"/>Rs.<br/>
+                <strong>Special Discount:  </strong><span t-field="sale_order.discounted_amount"/>Rs.
             </td>
         </tr>
     </t>
