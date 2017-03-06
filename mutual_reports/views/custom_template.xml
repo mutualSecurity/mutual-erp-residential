@@ -30,7 +30,7 @@
     <t t-if="p['category'].name=='Monitoring Charges'">
         <tr class="text-right">
             <td colspan="100">
-                <strong>Subtotal: </strong>
+                <strong>Subtotal:   </strong>
                 <span t-esc="p['subtotal']-sale_order.additional_discount" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
             </td>
         </tr>
@@ -42,15 +42,15 @@
      <t t-if="p['category'].name=='Additional'">
         <tr class="text-right">
             <td colspan="100">
-                <strong>Special Discount:</strong><span t-field="sale_order.additional_discount"/>Rs.
+                <strong>Special Discount:  </strong><span t-field="sale_order.additional_discount"/>Rs.
             </td>
         </tr>
      </t>
     <t t-if="p['category'].name=='Monitoring Charges'">
         <tr class="text-right">
             <td colspan="100">
-                <strong>Special Discount:</strong><span t-field="sale_order.discounted_amount"/>Rs.<br/>
-                <strong>SRB 19%:</strong><span t-field="sale_order.monitoring_tax"/>Rs.
+                <strong>Special Discount:  </strong><span t-field="sale_order.discounted_amount"/>Rs.<br/>
+                <strong>SRB 19%:  </strong><span t-field="sale_order.monitoring_tax"/>Rs.
             </td>
         </tr>
     </t>

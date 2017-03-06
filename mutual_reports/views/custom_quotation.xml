@@ -7,8 +7,8 @@
                    <t>
                       <div class="page">
                           <div class="row">
-                              <strong style="font-size:18px">Customer's Information:</strong><br/>
-                              <span style="font-size:18px">
+                              <strong style="font-size:12px">Customer's Information:</strong><br/>
+                              <span style="font-size:12px">
                                   <span t-field="sale_order.partner_id.name"/><br/>
                                   <span t-if="sale_order.partner_id.street">
                                       <span t-field="sale_order.partner_id.street"/><br/>
@@ -20,7 +20,7 @@
                                       <span t-field="sale_order.partner_id.city"/><br/>
                                   </span>
                               </span>
-                              <div class="row mt32 mb32" style="font-size:18px">
+                              <div class="row mt32 mb32" style="font-size:12px">
                                   <div class="col-xs-3" t-if="sale_order.date_order">
                                       <strong>Quotation Date</strong>
                                       <p t-field="sale_order.date_order"/>
@@ -30,9 +30,9 @@
                                       <p t-field="sale_order.create_uid"/>
                                   </div>
                               </div>
-                              <h2>Quotation <span t-field="sale_order.name"/>
-                              </h2>
-                              <table class="table table-condensed" style="font-size:16px">
+                              <h3>Quotation <span t-field="sale_order.name"/>
+                              </h3>
+                              <table class="table table-condensed" style="font-size:12px">
                                   <thead>
                                       <tr>
                                           <th>Description</th>
@@ -79,7 +79,7 @@
                           </div>
                           <div class="row">
                               <div class="col-xs-4 pull-right">
-                                  <table class="table table-condensed" style="font-size:16px">
+                                  <table class="table table-condensed" style="font-size:12px">
                                       <tr class="border-black">
                                          <td><strong>Total</strong></td>
                                           <td class="text-right">
