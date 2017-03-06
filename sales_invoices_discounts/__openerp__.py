@@ -7,7 +7,7 @@
     'version': '1.1',
     'website': 'https://eg.linkedin.com/in/mostafa-mohammed-449a8786',
     'author': 'Mostafa Mohamed',
-    'depends': ['base', 'account', 'account_accountant', 'sale'],
+    'depends': ['base', 'mutual_sales', 'invoice_csnumber'],
     'data': ['invoice_discount/invoice_discount_view.xml',
              'sale_discount/sale_discount_view.xml',
              'reports/invoice_report_edit.xml',

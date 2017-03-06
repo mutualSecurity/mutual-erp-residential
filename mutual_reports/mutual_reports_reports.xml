@@ -39,5 +39,15 @@
                 attachment_use="False"
                 file="mutual_reports.report_task_pdf"
         />
+
+        <report
+                id="custom_quotation_pdf"
+                model="sale.order"
+                string="Custom Quotation"
+                report_type="qweb-pdf"
+                name="mutual_reports.custom_quotation"
+                attachment_use="False"
+                file="mutual_reports.custom_quotation"
+        />
     </data>
 </openerp>

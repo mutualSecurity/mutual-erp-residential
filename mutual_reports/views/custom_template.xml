@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="custom_category_template">
+    <!-- Category name -->
+    <t t-if="p['category']">
+        <tr>
+            <td colspan="100" class="active" style="font-weight: bold; border-bottom: 1px solid black;">&amp;bull;
+                <t t-if="p['category'].name">
+                    <t t-esc="p['category'].name"></t>
+                </t>
+                <t t-if="not p['category'].name">
+                    Uncategorized
+                </t>
+            </td>
+        </tr>
+    </t>
+</template>
+
+<template id="custom_subtotal_template">
+    <!-- Subtotal -->
+    <t t-if="'subtotal' in p['category'] and p['category'].subtotal is True and p['category'].name !='Monitoring Charges'">
+        <tr class="text-right">
+            <td colspan="100">
+                <strong>Subtotal: </strong>
+                <span t-esc="p['subtotal']" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
+            </td>
+        </tr>
+    </t>
+    <t t-if="p['category'].name=='Monitoring Charges'">
+        <tr class="text-right">
+            <td colspan="100">
+                <strong>Subtotal: </strong>
+                <span t-esc="p['subtotal']-sale_order.additional_discount" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
+            </td>
+        </tr>
+    </t>
+</template>
+
+<template id="custom_discount_template">
+    <!-- Subtotal -->
+     <t t-if="p['category'].name=='Additional'">
+        <tr class="text-right">
+            <td colspan="100">
+                <strong>Special Discount:</strong><span t-field="sale_order.additional_discount"/>Rs.
+            </td>
+        </tr>
+     </t>
+    <t t-if="p['category'].name=='Monitoring Charges'">
+        <tr class="text-right">
+            <td colspan="100">
+                <strong>Special Discount:</strong><span t-field="sale_order.discounted_amount"/>Rs.<br/>
+                <strong>SRB 19%:</strong><span t-field="sale_order.monitoring_tax"/>Rs.
+            </td>
+        </tr>
+    </t>
+</template>
+
+<template id="custom_separator_template">
+    <!-- Separator -->
+    <t t-if="'separator' in p['category'] and p['category'].separator is True">
+        <tr class="text-center">
+            <td colspan="100">
+                ***
+            </td>
+        </tr>
+    </t>
+</template>
+</data>
+</openerp>

@@ -1,7 +1,23 @@
 #The file name of this file must match the filename name which we import in __init__.py file
 from openerp.osv import fields, osv
 from openerp import api
+from itertools import groupby
 import re
+
+def grouplines(self, ordered_lines, sortkey):
+    """Return lines from a specified invoice or sale order grouped by category"""
+    grouped_lines = []
+    for key, valuesiter in groupby(ordered_lines, sortkey):
+        group = {}
+        group['category'] = key
+        group['lines'] = list(v for v in valuesiter)
+
+        if 'subtotal' in key and key.subtotal is True:
+            group['subtotal'] = sum(line.price_subtotal for line in group['lines'])
+        grouped_lines.append(group)
+
+    return grouped_lines
+
 
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
@@ -74,10 +90,12 @@ class mutual_sales(osv.osv):
                 return False
 
 
-
 class duedeligence(osv.osv):
     _inherit = "sale.order"
     _columns = {
+        'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=True,
+                                      states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+                                      copy=True),
         'cs_number': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
         'payment_received': fields.boolean('Payment Received', store=True),
         'behalf_of_customer': fields.char('Spoke To', size=30, store=True),
@@ -89,7 +107,49 @@ class duedeligence(osv.osv):
         'ptcl_inorder': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Is PTCL number in order?',store=True),
         'owner_tenant': fields.selection([('owner', 'Owner'), ('tenant', 'Tenant')], 'Is Customer owner or tenant?',store=True),
         'terms': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Do you agree with terms and conditions?',store=True),
+        'additional_discount': fields.float('Additional Discount', store=True, compute='add_discount', default=0.00),
+        'monitoring_discount': fields.float('Monitoring Discount',store=True, default=0.00),
+        'monitoring_tax': fields.float('Monitoring Tax',store=True, default=0.00, compute='add_tax'),
+        'discount_type' : fields.selection([('Fixed', 'Fixed'), ('Percentage', 'Percentage')], string='Discount Method'),
+        'discount_value' : fields.float(string='Discount Value', states={'draft': [('readonly', False)]},
+                                      help='Choose the value of the Discount')
     }
+
+    def sale_layout_lines(self, cr, uid, ids, order_id=None, context=None):
+        """
+        Returns order lines from a specified sale ordered by
+        sale_layout_category sequence. Used in sale_layout module.
+
+        :Parameters:
+            -'order_id' (int): specify the concerned sale order.
+        """
+        ordered_lines = self.browse(cr, uid, order_id, context=context).order_line
+        sortkey = lambda x: x.sale_layout_cat_id if x.sale_layout_cat_id else ''
+
+        return grouplines(self, ordered_lines, sortkey)
+
+    @api.one
+    @api.depends('order_line.sale_layout_cat_id','order_line.discount')
+    def add_discount(self):
+        for line in self.order_line:
+            if line.sale_layout_cat_id.name == 'Additional':
+                add_amount = line.product_uom_qty*line.price_unit
+                add_discount=(line.discount*add_amount)/100
+                self.additional_discount = self.additional_discount+ add_discount
+
+            elif line.sale_layout_cat_id.name == 'Monitoring Charges':
+                moni_amount = line.product_uom_qty*line.price_unit
+                moni_discount=(line.discount*moni_amount)/100
+                self.monitoring_discount = self.monitoring_discount + moni_discount
+
+    @api.one
+    @api.depends('order_line.sale_layout_cat_id', 'order_line.tax_id')
+    def add_tax(self):
+        for line in self.order_line:
+            if line.tax_id.description == 'SRB 19%':
+                tax = line.price_subtotal*19/100
+                self.monitoring_tax = tax
+
 
 
 class customer_relatives(osv.osv):

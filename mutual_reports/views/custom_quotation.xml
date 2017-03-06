@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+       <template id="custom_quotation">
+           <t t-call='report.html_container'>
+               <t t-foreach="docs" t-as="sale_order">
+                   <t>
+                      <div class="page">
+                          <div class="row">
+                              <strong style="font-size:18px">Customer's Information:</strong><br/>
+                              <span style="font-size:18px">
+                                  <span t-field="sale_order.partner_id.name"/><br/>
+                                  <span t-if="sale_order.partner_id.street">
+                                      <span t-field="sale_order.partner_id.street"/><br/>
+                                  </span>
+                                  <span t-if="sale_order.partner_id.street2">
+                                      <span t-field="sale_order.partner_id.street2"/><br/>
+                                  </span>
+                                  <span t-if="sale_order.partner_id.city">
+                                      <span t-field="sale_order.partner_id.city"/><br/>
+                                  </span>
+                              </span>
+                              <div class="row mt32 mb32" style="font-size:18px">
+                                  <div class="col-xs-3" t-if="sale_order.date_order">
+                                      <strong>Quotation Date</strong>
+                                      <p t-field="sale_order.date_order"/>
+                                  </div>
+                                  <div class="col-xs-3" t-if="sale_order.create_uid">
+                                      <strong>Sales Person</strong>
+                                      <p t-field="sale_order.create_uid"/>
+                                  </div>
+                              </div>
+                              <h2>Quotation <span t-field="sale_order.name"/>
+                              </h2>
+                              <table class="table table-condensed" style="font-size:16px">
+                                  <thead>
+                                      <tr>
+                                          <th>Description</th>
+                                          <th>Quantity</th>
+                                          <th class="text-right">Unit Price</th>
+                                          <th class="text-right" groups="sale.group_discount_per_so_line">Discount%</th>
+                                          <th class="text-right">Amount</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="invoice_tbody">
+                                      <t t-foreach="sale_order.sale_layout_lines(order_id = sale_order.id)" t-as="p">
+                                          <t t-call="mutual_reports.custom_category_template" />
+                                          <t t-foreach="p['lines']" t-as="l">
+                                              <tr>
+                                                  <td>
+                                                      <span t-field="l.name"/>
+                                                  </td>
+                                                  <td>
+                                                      <span t-field="l.product_uom_qty"/>
+                                                      <span t-if="l.product_uom.name=='Hour(s)'">
+                                                          Month(s)
+                                                      </span>
+                                                      <span t-if="not l.product_uom.name=='Hour(s)'">
+                                                          <span t-field="l.product_uom"/>
+                                                      </span>
+                                                  </td>
+                                                  <td class="text-right">
+                                                      <span t-field="l.price_unit"/>
+                                                  </td>
+                                                  <td class="text-right" groups="sale.group_discount_per_so_line">
+                                                      <span t-esc="'%.2f'%(l.discount)"/>
+                                                  </td>
+                                                  <td class="text-right">
+                                                      <span t-esc="l.price_subtotal"/>
+                                                  </td>
+                                              </tr>
+                                          </t>
+                                           <!-- Subtotal -->
+                                          <t t-call="mutual_reports.custom_discount_template"/>
+                                          <t t-call="mutual_reports.custom_subtotal_template" />
+                                      </t>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-4 pull-right">
+                                  <table class="table table-condensed" style="font-size:16px">
+                                      <tr class="border-black">
+                                         <td><strong>Total</strong></td>
+                                          <td class="text-right">
+                                              <strong><span t-esc="round(sale_order.amount_total)"/></strong>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                   </t>
+               </t>
+           </t>
+       </template>
+    </data>
+</openerp>
