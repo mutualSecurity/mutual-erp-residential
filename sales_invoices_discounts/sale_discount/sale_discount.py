@@ -5,10 +5,10 @@ import openerp.addons.decimal_precision as dp
 
 class saleorder_discount(models.Model):
     _inherit = 'sale.order'
-    discount_view = fields.Selection([('After Tax', 'After Tax'), ('Before Tax', 'Before Tax')], string='Discount Type',
+    discount_criteria = fields.Selection([('After Tax', 'After Tax'), ('Before Tax', 'Before Tax')], string='Discount Criteria',
                                      states={'draft': [('readonly', False)]},
                                      help='Choose If After or Before applying Taxes type of the Discount')
-    discount_type = fields.Selection([('Fixed', 'Fixed'), ('Percentage', 'Percentage')], string='Discount Method',
+    discount_method = fields.Selection([('Fixed', 'Fixed'), ('Percentage', 'Percentage')], string='Discount Method',
                                      states={'draft': [('readonly', False)]})
     discount_value = fields.Float(string='Discount Value', states={'draft': [('readonly', False)]},
                                   help='Choose the value of the Discount')
@@ -18,25 +18,25 @@ class saleorder_discount(models.Model):
 
     #
     @api.one
-    @api.depends('order_line.price_subtotal', 'discount_type', 'discount_value')
+    @api.depends('order_line.price_subtotal', 'discount_method', 'discount_value')
     def _compute_amounts(self):
         self.amount_untaxed = sum(line.price_subtotal for line in self.order_line)
         val = 0
         for line in self.order_line:
             val += self._amount_line_tax(line)
-        if self.discount_view == 'After Tax':
-            if self.discount_type == 'Fixed':
+        if self.discount_criteria == 'After Tax':
+            if self.discount_method == 'Fixed':
                 self.amount_total = self.amount_untaxed + val - self.discount_value
-            elif self.discount_type == 'Percentage':
+            elif self.discount_method == 'Percentage':
                 amount_to_dis = (self.amount_untaxed + val) * (self.discount_value / 100)
                 self.amount_total = (self.amount_untaxed+ val) - amount_to_dis
             else:
                 self.amount_total = self.amount_untaxed + val
-        elif self.discount_view == 'Before Tax':
-            if self.discount_type == 'Fixed':
+        elif self.discount_criteria == 'Before Tax':
+            if self.discount_method == 'Fixed':
                 the_value_before = self.amount_untaxed - self.discount_value
                 self.amount_total = the_value_before + val
-            elif self.discount_type == 'Percentage':
+            elif self.discount_method == 'Percentage':
                 amount_to_dis = (self.amount_untaxed) * (self.discount_value / 100)
                 self.amount_total = self.amount_untaxed + val - amount_to_dis
             else:
@@ -45,23 +45,23 @@ class saleorder_discount(models.Model):
             self.amount_total = self.amount_untaxed + val
 
     @api.one
-    @api.depends('order_line.price_subtotal', 'discount_type', 'discount_value')
+    @api.depends('order_line.price_subtotal', 'discount_method', 'discount_value')
     def disc_amount(self):
         val = 0
         for line in self.order_line:
             val += self._amount_line_tax(line)
-        if self.discount_view == 'After Tax':
-            if self.discount_type == 'Fixed':
+        if self.discount_criteria == 'After Tax':
+            if self.discount_method == 'Fixed':
                 self.discounted_amount = self.discount_value
-            elif self.discount_type == 'Percentage':
+            elif self.discount_method == 'Percentage':
                 amount_to_dis = (self.amount_untaxed + val) * (self.discount_value / 100)
                 self.discounted_amount = amount_to_dis
             else:
                 self.discounted_amount = 0
-        elif self.discount_view == 'Before Tax':
-            if self.discount_type == 'Fixed':
+        elif self.discount_criteria == 'Before Tax':
+            if self.discount_method == 'Fixed':
                 self.discounted_amount = self.discount_value
-            elif self.discount_type == 'Percentage':
+            elif self.discount_method == 'Percentage':
                 amount_to_dis = self.amount_untaxed * (self.discount_value / 100)
                 self.discounted_amount = amount_to_dis
             else:
