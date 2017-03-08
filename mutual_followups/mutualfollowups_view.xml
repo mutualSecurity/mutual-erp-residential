@@ -8,6 +8,19 @@
             <field name="arch" type="xml">
                 <field name="payment_responsible_id" position="after">
                     <field name="riders" />
+                    <field name="payment_received"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_followup.customer_followup_tree_mutual">
+            <field name="name">res.partner.followup.inherit.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account_followup.customer_followup_tree" />
+            <field name="arch" type="xml">
+                <field name="payment_responsible_id" position="after">
+                    <field name="riders" />
+                    <field name="payment_received"/>
                 </field>
             </field>
         </record>
