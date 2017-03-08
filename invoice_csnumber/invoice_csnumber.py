@@ -14,6 +14,10 @@ class invoice_csnumber(osv.osv):
         'uplink_date': fields.related('partner_id','uplink_date',type='char', size=20,string='Uplink Date',readonly=True),
         'address': fields.related('partner_id', 'c_street', type='char', string='Address', readonly=True),
         'custom_account_id':fields.char('account_id', store=True),
+        'address_criteria':fields.selection([('Monitoring Address','Monitoring Address'),
+                                             ('Mailing Address','Mailing Address'),
+                                             ('Temporary Address','Temporary Address')],
+                                            'Address Criteria',store=True)
     }
 
     @api.multi

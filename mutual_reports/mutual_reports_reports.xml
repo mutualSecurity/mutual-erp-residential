@@ -6,9 +6,9 @@
                 model="account.invoice"
                 string="Print Acknowledgment Receipt"
                 report_type="qweb-pdf"
-                name="mutual_reports.report_acknowledgment_receipt"
+                name="mutual_reports.acknowledgement_receipt"
                 attachment_use="False"
-                file="mutual_reports.report_acknowledgment_receipt"
+                file="mutual_reports.acknowledgement_receipt"
         />
         <report
                 id="custom_report_issue_pdf"
