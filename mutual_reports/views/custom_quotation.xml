@@ -52,10 +52,10 @@
                                                   </td>
                                                   <td>
                                                       <span t-field="l.product_uom_qty"/>
-                                                      <span t-if="l.product_uom.name=='Hour(s)'">
+                                                      <span t-if="l.product_uom.name=='Month(s)'">
                                                           Month(s)
                                                       </span>
-                                                      <span t-if="not l.product_uom.name=='Hour(s)'">
+                                                      <span t-if="not l.product_uom.name=='Month(s)'">
                                                           <span t-field="l.product_uom"/>
                                                       </span>
                                                   </td>
