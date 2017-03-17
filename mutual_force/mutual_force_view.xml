@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <menuitem
+                name="Force"
+                id="force_top_menu"
+                sequence="50"/>
+
+        <menuitem
+                name="Force"
+                id="force_side_top_menu"
+                parent="force_top_menu"
+                sequence="10"/>
+
+        <!-- ================================================== Begin menuitem of Force Details ================================================ -->
+        <record id="mutual_force_details" model="ir.actions.act_window">
+	        <field name="name">Force Details</field>
+            <field name="res_model">force.details</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+
+        <menuitem name="Force Details"
+                  action="mutual_force_details"
+                  id="menu_mutual_force_details"
+                  sequence="10"
+                  parent="force_side_top_menu"/>
+
+        <!-- ================================================== End menuitem of Force Details ================================================ -->
+
+ <!-- ================================================== Begin menuitem of guard Details ================================================ -->
+        <record id="mutual_guard_details" model="ir.actions.act_window">
+	        <field name="name">Guard Details</field>
+            <field name="res_model">guard.details</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+
+        <menuitem name="Guard Details"
+                  action="mutual_guard_details"
+                  id="menu_mutual_guard_details"
+                  sequence="20"
+                  parent="force_side_top_menu"/>
+
+        <!-- ==================================================  End menuitem of guard Details ================================================ -->
+
+        <!-- ================================================== Begin menuitem of response time ================================================ -->
+        <record id="mutual_response_time" model="ir.actions.act_window">
+	        <field name="name">Response Time</field>
+            <field name="res_model">response.time</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+
+        <menuitem name="Response TimeIn/Out"
+                  action="mutual_response_time"
+                  id="menu_mutual_response_time"
+                  sequence="30"
+                  parent="force_side_top_menu"/>
+
+        <!-- ==================================================  End menuitem of response time ================================================ -->
+
+          <!-- ================================================== Begin menuitem of New Visits ================================================ -->
+        <record id="mutual_new_visits" model="ir.actions.act_window">
+	        <field name="name">New Visits</field>
+            <field name="res_model">new.visits</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+
+        <menuitem name="New Site Visits"
+                  action="mutual_new_visits"
+                  id="menu_mutual_new_visits"
+                  sequence="40"
+                  parent="force_side_top_menu"/>
+
+        <!-- ==================================================  End menuitem of New Visits ================================================ -->
+
+        <!-- ================================================== Begin Form view of Force Details ================================================ -->
+
+       <record id="force_details_form_view" model="ir.ui.view">
+            <field name="name">force_details.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">force.details</field>
+            <field name="arch" type="xml">
+                <form string="Force Details">
+                    <sheet>
+                        <group string="Force Details">
+                            <group>
+                                 <field name="force_name"/>
+                                 <field name="supervisor"/>
+                                 <field name="contact"/>
+                            </group>
+                            <group>
+                                <field name="covered_area"/>
+                                <field name="force_code"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form view of Force Details ================================================ -->
+
+        <!-- ================================================== Begin tree view of Force Details ================================================ -->
+        <record id="force_details_tree_view" model="ir.ui.view">
+            <field name="name">force_details.form.view</field>
+            <field name="model">force.details</field>
+            <field name="arch" type="xml">
+                <tree string="Force Details Tree" version="8.0">
+                    <field name="force_name"/>
+                    <field name="supervisor"/>
+                    <field name="contact"/>
+                    <field name="covered_area"/>
+                    <field name="force_code"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End tree view of Force Details ================================================ -->
+
+
+
+        <!-- ================================================== Begin Form view of Guard Details ================================================ -->
+
+       <record id="guard_details_form_view" model="ir.ui.view">
+            <field name="name">guard_details.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">guard.details</field>
+            <field name="arch" type="xml">
+                <form string="Guard Details">
+                    <sheet>
+                        <group string="Guard Details">
+                            <group>
+                                 <field name="guard_name"/>
+                                 <field name="nic"/>
+                                 <field name="contact"/>
+                            </group>
+                            <group>
+                                <field name="address"/>
+                                <field name="force_details"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form view of Force Details ================================================ -->
+
+        <!-- ================================================== Begin tree view of Force Details ================================================ -->
+        <record id="guard_details_tree_view" model="ir.ui.view">
+            <field name="name">guard_details.form.view</field>
+            <field name="model">guard.details</field>
+            <field name="arch" type="xml">
+                <tree string="Guard Details Tree" version="8.0">
+                    <field name="guard_name"/>
+                    <field name="nic"/>
+                    <field name="contact"/>
+                    <field name="address"/>
+                    <field name="force_details"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End tree view of Force Details ================================================ -->
+
+         <!-- ================================================== Begin tree view of Response Time ================================================ -->
+        <record id="response_tree_view" model="ir.ui.view">
+            <field name="name">response_time.tree.view</field>
+            <field name="model">response.time</field>
+            <field name="arch" type="xml">
+                <tree string="Response Time Tree" version="8.0" editable="top">
+                    <field name="cs_number" readonly="1"/>
+                    <field name="customer"/>
+                    <field name="force_name"/>
+                    <field name="dispatch_time"/>
+                    <field name="reach_time"/>
+                    <field name="minutes"/>
+                    <field name="remarks"/>
+                    <field name="create_uid"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End tree view of Response Time ================================================ -->
+
+
+        <!-- ================================================== Begin kanban view of new visits ================================================ -->
+        <record model="ir.ui.view" id="new_visits_kanban">
+            <field name="name">New Visit Kanban</field>
+            <field name="model">new.visits</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by='stages' quick_create="0">
+                    <!-- write fields here to be used in kanban box-->
+					<field name='name'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_semantic_html_override">
+                                <!--<a type="open">-->
+									<!--&lt;!&ndash; set image here&ndash;&gt;-->
+                                        <!--<img t-att-src="kanban_image('new.visits', 'image', record.id.value)" class="oe_kanban_image"/>-->
+                                <!--</a>-->
+                                <a type="open">
+                                <div class="oe_kanban_details">
+                                        <strong><field name='name'/></strong><br/>
+                                        <strong><field name='cs_number'/></strong><br/>
+                                </div>
+                                </a>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- ================================================== End kanban view of new visits ================================================ -->
+
+         <!-- ================================================== Begin Form view of New visits ================================================ -->
+
+       <record id="new_visits_form_view" model="ir.ui.view">
+            <field name="name">new_visits.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">new.visits</field>
+            <field name="arch" type="xml">
+                <form string="New Site Visits">
+                    <sheet>
+                        <group string="New Site Visits">
+                            <group>
+                                 <field name="name"/>
+                                 <field name="cs_number"/>
+                                 <field name="address"/>
+                            </group>
+                            <group>
+                                <field name="stages"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form view of New Visits ================================================ -->
+
+        <!-- ================================================== Begin tree view of New Visits ================================================ -->
+        <record id="new_visits_tree_view" model="ir.ui.view">
+            <field name="name">new_visits.tree.view</field>
+            <field name="model">new.visits</field>
+            <field name="arch" type="xml">
+                <tree string="Guard Details Tree" version="8.0">
+                    <field name="name"/>
+                    <field name="cs_number"/>
+                    <field name="address"/>
+                    <field name="stages"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End tree view of New Visits ================================================ -->
+
+
+    </data>
+</openerp>
