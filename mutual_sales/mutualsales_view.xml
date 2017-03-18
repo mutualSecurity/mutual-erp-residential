@@ -140,6 +140,11 @@
                          <filter string="Inactive" domain="[('active','=',False)]"/>
                          <filter string="Mobile application User" domain="[('application_user','=',True)]"/>
                      </group>
+                     <group string="Uplink day/month">
+                        <filter string="Uplink By Day" context="{'group_by':'uplink_date:day'}" />
+                        <filter string="Uplink By Month" context="{'group_by':'uplink_date:month'}" />
+                        <filter string="Uplink By Year" context="{'group_by':'uplink_date:year'}" />
+                    </group>
                 </search>
             </field>
         </record>
@@ -150,12 +155,16 @@
               <field name="model">res.partner</field>
               <field name="inherit_id" ref="base.view_partner_tree" />
               <field name="arch" type="xml">
+                  <xpath expr="//tree[@string='Contacts']" position="attributes">
+                      <attribute name="default_order">uplink_date desc</attribute>
+                  </xpath>
                   <field name="phone" position="after">
                       <field name="mobile"/>
                       <field name="cs_number"/>
                       <field name="street"/>
                       <field name="active"/>
                       <field name="city"/>
+                      <field name="uplink_date"/>
                       <field name="application_user"/>
                   </field>
                   <xpath expr="//field[@name='application_user']" position="attributes">
@@ -203,16 +212,16 @@
         </record>
 
         <!--====================================== Kanban view of partner begins ==================================-->
-        <!--<record model="ir.ui.view" id="base.res_partner_kanban">-->
-            <!--<field name="name">res.partner.kanban</field>-->
-            <!--<field name="model">res.partner</field>-->
-            <!--<field name="inherit_id" ref="base.res_partner_kanban_view"/>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<xpath expr='//kanban/field[@name="email"]' position="after">-->
-                    <!--<field name="cs_number"/>-->
-                <!--</xpath>-->
-            <!--</field>-->
-        <!--</record>-->
+        <record model="ir.ui.view" id="base.res_partner_kanban">
+            <field name="name">res.partner.kanban</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr='//kanban/templates/t/div/div/h4/a/field[@name="display_name"]' position="after">
+                    <br/><span style="color:grey;"><field name="cs_number"/></span>
+                </xpath>
+            </field>
+        </record>
         <!--====================================== Kanban view of partner ends ==================================-->
     </data>
 </openerp>

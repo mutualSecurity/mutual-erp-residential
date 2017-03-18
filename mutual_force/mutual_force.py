@@ -49,7 +49,9 @@ class new_visits(osv.osv):
         'name': fields.char('Customer Name',store=True,track_visibility='onchange'),
         'cs_number': fields.char('CS Number', store=True),
         'address': fields.char('Address', store=True),
-        'stages': fields.many2one('new.visits.stages','Stage',store=True)
+        'stages': fields.many2one('new.visits.stages','Stage',store=True),
+        'first_visit':fields.datetime('First Visit',store=True),
+        'second_visit':fields.datetime('Second Visit',store=True)
     }
 
     @api.model

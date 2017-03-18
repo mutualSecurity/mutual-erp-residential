@@ -240,6 +240,8 @@
                             </group>
                             <group>
                                 <field name="stages"/>
+                                <field name="first_visit"/>
+                                <field name="second_visit"/>
                             </group>
                         </group>
                     </sheet>
@@ -253,10 +255,12 @@
             <field name="name">new_visits.tree.view</field>
             <field name="model">new.visits</field>
             <field name="arch" type="xml">
-                <tree string="Guard Details Tree" version="8.0">
+                <tree string="Guard Details Tree" version="8.0" >
                     <field name="name"/>
                     <field name="cs_number"/>
                     <field name="address"/>
+                    <field name="first_visit"/>
+                    <field name="second_visit"/>
                     <field name="stages"/>
                 </tree>
             </field>

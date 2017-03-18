@@ -46,10 +46,10 @@
             <field name="view_type">tree</field>
             <field name="model">tech.activities.issues</field>
             <field name="arch" type="xml">
-                <tree string="Technician Activities" editable="top">
+                <tree string="Technician Activities" editable="top" default_order="date_start asce">
                     <field name="issue_id" readonly="1"/>
                     <field name="cs_number" readonly="1"/>
-                    <field name="tech_name" readonly="1"/>
+                   <!-- <field name="tech_name" readonly="1"/>-->
                     <field name="technician_name"/>
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
@@ -70,6 +70,7 @@
                 <search string="Search Logs">
                     <field name="issue_id"/>
                     <field name="cs_number"/>
+                    <field name="technician_name" filter_domain="['|',('technician_name','ilike',self),('multi_tech','ilike',self)]"/>
                     <group string="Custom Filter">
                         <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
                         <filter string="Create Month" context="{'group_by':'create_date:month'}" help="Create Month"/>
@@ -82,6 +83,7 @@
                         <filter string="Both TimeIn/Out" domain="[('date_start','!=',False),('date_end','!=',False)]"/>
                     </group>
                     <group string="TimeIn/Out By Day/Month">
+                       <filter string="Today" domain="[('date_start', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date_start', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
                         <filter string="TimeIn By Day" context="{'group_by':'date_start:day'}" />
                         <filter string="TimeIn By Month" context="{'group_by':'date_start:month'}" />
                         <filter string="TimeOut By Day" context="{'group_by':'date_end:day'}" />
@@ -104,7 +106,7 @@
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
                     <field name="date_end"/>
-                    <field name="compute_total_time"/>
+                    <field name="compute_total_time" widget="float_time"/>
                     <field name="first_signal"/>
                     <field name="reason_tasks"/>
                     <field name="status"/>
@@ -411,7 +413,7 @@
                     <page string="Timesheet">
                           <field name="tech_name" colspan="6" nolabel="1" width="200">
                             <tree editable="top" string="Timesheets" >
-                                <field name="technician_name"/>
+                                <field name="technician_name" default_focus="1"/>
                                 <field name="multi_tech" widget="many2many_tags"/>
                                 <field name="reason"/>
                                 <field name="first_signal"/>
