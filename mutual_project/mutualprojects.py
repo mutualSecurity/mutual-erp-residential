@@ -218,7 +218,7 @@ class tech_activities_issues(osv.osv):
     _columns = {
         'multi_tech': fields.many2many('res.users', string='Other Tech', domain="[('is_technician','=',True)]"),
         'tech_name': fields.many2one('project.issue', 'Complaint Title'),
-        'technician_name': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange',domain="[('is_technician','=',True)]"),
+        'technician_name': fields.many2one('res.users', 'Assigned Tech', required=True, select=1, track_visibility='onchange',domain="[('is_technician','=',True)]"),
         'reason': fields.char('Remarks',size=100,store=True),
         'total_time': fields.float('Total Time', store=True),
         'compute_total_time': fields.char('T/T', store=True, readonly=True, compute='_compute_total_time',),
