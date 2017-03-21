@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+         <record id="relatives_open_project_attachment_view" model="ir.actions.act_window">
+	        <field name="name">Relatives</field>
+            <field name="res_model">relatives</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+        <menuitem
+            name="Relatives"
+            action="relatives_open_project_attachment_view"
+            id="menu_relatives_open_project_attachment_view"
+            sequence="50"
+            parent="project.menu_project_management">
+        </menuitem>
+        <record id="relatives_activities_form_view" model="ir.ui.view">
+            <field name="name">relatives_activities.form.view</field>
+            <field name="model">relatives</field>
+            <field name="arch" type="xml">
+                <tree string="tech_activities">
+                    <field name="cs"/>
+                    <field name="relativename"/>
+                    <field name="relationship"/>
+                    <field name="contact1"/>
+                    <field name="contact2"/>
+                </tree>
+            </field>
+        </record>
+        <record  model="ir.ui.view" id="Relatives_Search">
+            <field name="name">Relagtives Search</field>
+            <field name="model">relatives</field>
+            <field name="arch" type="xml">
+                <search string="Relatives">
+                    <field name="cs"/>
+                </search>
+            </field>
+        </record>
         <!-- =========================== Issues Logs Begins ================================ -->
         <record id="tech_open_project_attachment_view" model="ir.actions.act_window">
 	        <field name="name">Issues Logs</field>

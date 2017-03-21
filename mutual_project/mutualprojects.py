@@ -333,6 +333,13 @@ class tech_activities_tasks(osv.osv):
             print "Record Updated >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 
-
-
+class relatives(osv.osv):
+    _name = "relatives"
+    _columns = {
+        'cs':fields.char('CS',store=True),
+        'relativename': fields.char('Relative Name',store=True),
+        'relationship': fields.char('Relationship', store=True),
+        'contact1': fields.char('Contact#1', store=True),
+        'contact2': fields.char('Contact#2', store=True),
+    }
 
