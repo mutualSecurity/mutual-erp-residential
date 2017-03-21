@@ -96,21 +96,22 @@ class mutual_sales(osv.osv):
     @api.one
     @api.onchange('visit')
     def create_new_visit_card(self):
-        list = self.env['res.partner'].search([['cs_number', '=',self.cs_number], ])
-        debitors = list.property_account_receivable
-        payable = list.property_account_payable
-        stage = self.env['new.visits.stages'].search([['name', '=', 'New'], ])
-        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Stage.....>>>>>>>>>>>>>>>>>>>>>>>"
-        print stage.id
-        if self.visit == True:
-            self.env['new.visits'].create({
-                'name': self.name,
-                'cs_number': self.cs_number,
-                'address': self.street + ' ' +self.street2+' '+self.city,
-                'stages': stage.id
-            })
-            self.property_account_receivable = debitors
-            self.property_account_payable = payable
+        if self.name!=False:
+            list = self.env['res.partner'].search([['cs_number', '=',self.cs_number], ])
+            debitors = list.property_account_receivable
+            payable = list.property_account_payable
+            stage = self.env['new.visits.stages'].search([['name', '=', 'New'], ])
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Stage.....>>>>>>>>>>>>>>>>>>>>>>>"
+            print stage.id
+            if self.visit == True:
+                self.env['new.visits'].create({
+                    'name': self.name,
+                    'cs_number': self.cs_number,
+                    'address': self.street + ' ' +self.street2+' '+self.city,
+                    'stages': stage.id
+                })
+                self.property_account_receivable = debitors
+                self.property_account_payable = payable
 
 
 
