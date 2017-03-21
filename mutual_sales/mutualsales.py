@@ -133,6 +133,7 @@ class duedeligence(osv.osv):
         'owner_tenant': fields.selection([('owner', 'Owner'), ('tenant', 'Tenant')], 'Is Customer owner or tenant?',store=True),
         'terms': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Do you agree with terms and conditions?',store=True),
         'additional_discount': fields.float('Additional Discount', store=True, compute='add_discount', default=0.00),
+        'installation_discount': fields.float('Additional Discount', store=True, compute='add_discount', default=0.00),
         'monitoring_discount': fields.float('Monitoring Discount',store=True, default=0.00),
         'monitoring_tax': fields.float('Monitoring Tax',store=True, default=0.00, compute='add_tax'),
         'discount_type' : fields.selection([('Fixed', 'Fixed'), ('Percentage', 'Percentage')], string='Discount Method'),
@@ -161,6 +162,11 @@ class duedeligence(osv.osv):
                 add_amount = line.product_uom_qty*line.price_unit
                 add_discount=(line.discount*add_amount)/100
                 self.additional_discount = self.additional_discount+ add_discount
+
+            if line.sale_layout_cat_id.name == 'Installation Charges':
+                ins_amount = line.product_uom_qty * line.price_unit
+                ins_discount = (line.discount * ins_amount) / 100
+                self.installation_discount = self.installation_discount + ins_discount
 
             elif line.sale_layout_cat_id.name == 'Monitoring Charges':
                 moni_amount = line.product_uom_qty*line.price_unit

@@ -42,7 +42,18 @@
      <t t-if="p['category'].name=='Additional'">
         <tr class="text-right">
             <td colspan="100">
-                <strong>Special Discount:  </strong><span t-field="sale_order.additional_discount"/>Rs.
+                <t t-if="sale_order.additional_discount > 0.0">
+                    <strong>Special Discount:  </strong><span t-field="sale_order.additional_discount"/>Rs.
+                </t>
+            </td>
+        </tr>
+     </t>
+    <t t-if="p['category'].name=='Installation Charges'">
+        <tr class="text-right">
+            <td colspan="100">
+                <t t-if="sale_order.installation_discount > 0.0">
+                     <strong>Special Discount:  </strong><span t-field="sale_order.installation_discount"/>Rs.
+                </t>
             </td>
         </tr>
      </t>
@@ -50,7 +61,9 @@
         <tr class="text-right">
             <td colspan="100">
                 <strong>SRB 19%:  </strong><span t-field="sale_order.monitoring_tax"/>Rs.<br/>
-                <strong>Special Discount:  </strong><span t-field="sale_order.discounted_amount"/>Rs.
+                 <t t-if="sale_order.discounted_amount > 0.0">
+                    <strong>Special Discount:  </strong><span t-field="sale_order.discounted_amount"/>Rs.
+                </t>
             </td>
         </tr>
     </t>
