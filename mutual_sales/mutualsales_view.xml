@@ -159,16 +159,23 @@
                       <attribute name="default_order">uplink_date desc</attribute>
                   </xpath>
                   <field name="phone" position="after">
-                      <field name="mobile"/>
+                      <!--<field name="mobile"/>-->
                       <field name="cs_number"/>
-                      <field name="street"/>
-                      <field name="active"/>
-                      <field name="city"/>
+                      <!--<field name="street"/>-->
+
+                      <!--<field name="city"/>-->
                       <field name="uplink_date"/>
+                      <field name="active"/>
                       <field name="application_user"/>
                   </field>
                   <xpath expr="//field[@name='application_user']" position="attributes">
                       <attribute name="string">App User</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='email']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='phone']" position="attributes">
+                      <attribute name="invisible">1</attribute>
                   </xpath>
               </field>
         </record>

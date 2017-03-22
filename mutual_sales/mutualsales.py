@@ -136,9 +136,6 @@ class duedeligence(osv.osv):
         'installation_discount': fields.float('Additional Discount', store=True, compute='add_discount', default=0.00),
         'monitoring_discount': fields.float('Monitoring Discount',store=True, default=0.00),
         'monitoring_tax': fields.float('Monitoring Tax',store=True, default=0.00, compute='add_tax'),
-        'discount_type' : fields.selection([('Fixed', 'Fixed'), ('Percentage', 'Percentage')], string='Discount Method'),
-        'discount_value' : fields.float(string='Discount Value', states={'draft': [('readonly', False)]},
-                                      help='Choose the value of the Discount')
     }
 
     def sale_layout_lines(self, cr, uid, ids, order_id=None, context=None):
