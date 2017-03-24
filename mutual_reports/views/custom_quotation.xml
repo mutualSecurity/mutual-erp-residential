@@ -29,9 +29,13 @@
                                       <strong>Sales Person</strong>
                                       <p t-field="sale_order.create_uid"/>
                                   </div>
+                                  <div class="col-xs-3" t-if="sale_order.cs_number">
+                                      <strong>CS Number</strong>
+                                      <p t-field="sale_order.cs_number"/>
+                                  </div>
                               </div>
-                              <h3>Quotation <span t-field="sale_order.name"/>
-                              </h3>
+                              <!--<h4>Quotation <span t-field="sale_order.name"/>-->
+                              <!--</h4>-->
                               <table class="table table-condensed" style="font-size:12px">
                                   <thead>
                                       <tr>
@@ -87,6 +91,34 @@
                                           </td>
                                       </tr>
                                   </table>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-top:-20px">
+                              <div class="pull-left">
+                                  <small>
+                                      Terms and Conditions:
+                                      <t t-if="not sale_order.terms_conditions=='Additional'">
+                                          <ol>
+                                              <li>1.Masonry and carpentry will be responsibility of the customer.</li>
+                                              <li>2.Concealed wiring will be the responsibility of the customer.</li>
+                                              <li>3.100% amount will be paid in advance for additional devices and monitoring.</li>
+                                              <li>4.The devices would be installed by us on the completion of wiring and fixing of windows and doors.</li>
+                                              <li>5.The customer's deputed electrical contractor shall take care of concealed wiring/cabling (Laying of Conduits,Pipes and pulling of wire up to electric points for the alarm devices).</li>
+                                              <li>6.Monitoring and Response will be charged according to prevailing rates at the time of activation of system.</li>
+                                              <li>7.For GSM device, a post paid SIM should be arranged by the customer.</li>
+                                              <li><strong>Note : The free basic system shall at all the times remain property of mutual security systems except the additional devices purchased by the customer.</strong></li>
+                                          </ol>
+                                      </t>
+                                      <t t-if="sale_order.terms_conditions=='Additional'">
+                                          <ol>
+                                              <li>1.100% Amount will be paid in advance.</li>
+                                              <li>2.Sales tax has been applied at the prevailing rate.</li>
+                                              <li>3.Payment Term: Cash/Cheque.</li>
+                                              <li>4.Please make your Payees A/C Cheque in favor of Mutual Security Systems.</li>
+                                              <li>5.Please write your name and C.M.S / CS.No on the back of cheque. </li>
+                                          </ol>
+                                      </t>
+                                  </small>
                               </div>
                           </div>
                       </div>

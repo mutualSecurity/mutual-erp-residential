@@ -13,6 +13,9 @@
                     <!--<field name="monitoring_discount"/>-->
                     <!--<field name="monitoring_tax"/>-->
                 </xpath>
+                <xpath expr="//field[@name='client_order_ref']" position="after">
+                    <field name="terms_conditions"/>
+                </xpath>
                 <xpath expr="//button[@string='Create Invoice']" position="attributes">
                     <attribute name="groups">base.group_sale_manager</attribute>
                 </xpath>
