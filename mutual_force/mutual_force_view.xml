@@ -107,7 +107,6 @@
                             <group>
                                 <field name="covered_area"/>
                                 <field name="force_code"/>
-                                <field name="designation"/>
                             </group>
                         </group>
                     </sheet>
@@ -127,7 +126,6 @@
                     <field name="contact"/>
                     <field name="covered_area"/>
                     <field name="force_code"/>
-                    <field name="designation"/>
                 </tree>
             </field>
         </record>
