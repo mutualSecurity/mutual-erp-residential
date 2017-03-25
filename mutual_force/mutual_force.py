@@ -8,7 +8,8 @@ class force_details(osv.osv):
     _columns = {
         'force_name': fields.char('Force Name',store=True,required=True),
         'supervisor': fields.char('Supervisor',store=True,required=True),
-        'contact': fields.char('Contact', store=True,size=12),
+        'contact': fields.char('Contact#1', store=True,size=12),
+        'contact2': fields.char('Contact#2', store=True, size=12),
         'covered_area': fields.char('Covered Area', store=True, required=True),
         'force_code': fields.char('Force Code', store=True, required=True),
     }

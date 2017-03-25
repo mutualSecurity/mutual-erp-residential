@@ -167,6 +167,7 @@
                     <field name="guard_name"/>
                     <field name="nic"/>
                     <field name="contact"/>
+                    <field name="contact2"/>
                     <field name="address"/>
                     <field name="force_details"/>
                 </tree>
