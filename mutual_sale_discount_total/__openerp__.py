@@ -17,6 +17,7 @@ Module to manage discount on total amount in Sale.
 """,
     'depends': ['sale','mutual_sales', 'base', 'stock','mutual_inventory','mutual_reports','mutual_followups','mutual_project','mutual_mass_editing'],
     'data': [
+        'views/account_invoice_view.xml',
         'views/sale_view.xml',
         'views/invoice_report.xml',
         'views/sale_order_report.xml',
