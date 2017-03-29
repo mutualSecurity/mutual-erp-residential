@@ -34,32 +34,59 @@ class invoice_csnumber(osv.osv):
             number_of_days = calendar.monthrange(from_date.year, from_date.month)[1]
             for line in self.invoice_line:
                 print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Line item"+str(line.name)
-                if(number_of_days == 28 and line.name=="Service (MS)") or (number_of_days == 28 and line.name=="Service (MSS)"):
-                    from_ = from_date + timedelta(days=18)
-                    to_ = from_ + relativedelta(months=int(line.quantity))
-                    from_ = str(from_).split(" ")
-                    to_ = to_ - timedelta(days=1)
-                    to_ = str(to_).split(" ")
-                    self.from_date = from_[0]
-                    self.to_date = to_[0]
+                if(number_of_days == 28 and line.product_id.name=="Service (MS)") or (number_of_days == 28 and line.product_id.name=="Service (MSS)"):
+                    if from_date.day == 1 or from_date.day == 11:
+                        from_ = from_date + timedelta(days=10)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
+                    elif from_date.day == 21:
+                        from_ = from_date + timedelta(days=18)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
 
-                elif(number_of_days == 31 and line.name == "Service (MS)") or (number_of_days == 31 and line.name =="Service (MSS)"):
-                    from_ = from_date + timedelta(days=21)
-                    to_ = from_ + relativedelta(months=int(line.quantity))
-                    from_ = str(from_).split(" ")
-                    to_ = to_ - timedelta(days=1)
-                    to_ = str(to_).split(" ")
-                    self.from_date = from_[0]
-                    self.to_date = to_[0]
+                elif(number_of_days == 31 and line.product_id.name == "Service (MS)") or (number_of_days == 31 and line.product_id.name =="Service (MSS)"):
+                    if from_date.day == 1 or from_date.day == 11:
+                        from_ = from_date + timedelta(days=10)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
+                    elif from_date.day == 21:
+                        from_ = from_date + timedelta(days=21)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
 
-                elif(number_of_days == 30 and line.name == "Service (MS)") or (number_of_days == 30 and line.name == "Service (MSS)"):
-                    from_ = from_date + timedelta(days=20)
-                    to_ = from_ + relativedelta(months=int(line.quantity))
-                    from_ = str(from_).split(" ")
-                    to_ = to_ - timedelta(days=1)
-                    to_ = str(to_).split(" ")
-                    self.from_date = from_[0]
-                    self.to_date = to_[0]
+                elif(number_of_days == 30 and line.product_id.name == "Service (MS)") or (number_of_days == 30 and line.product_id.name == "Service (MSS)"):
+                    if from_date.day == 1 or from_date.day == 11:
+                        from_ = from_date + timedelta(days=10)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
+                    elif from_date.day == 21:
+                        from_ = from_date + timedelta(days=20)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
 
     @api.multi
     def account_head(self):

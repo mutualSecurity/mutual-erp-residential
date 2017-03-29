@@ -23,7 +23,7 @@
         <tr class="text-right">
             <td colspan="100">
                 <strong>Subtotal: </strong>
-                <span t-esc="p['subtotal']" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
+                <span t-esc="round(p['subtotal'])" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
             </td>
         </tr>
     </t>
@@ -40,23 +40,32 @@
 <template id="custom_discount_template">
     <!-- Subtotal -->
      <t t-if="p['category'].name=='Additional'">
-        <tr class="text-right">
-            <td colspan="100">
-                <t t-if="sale_order.additional_discount > 0.0">
-                    <strong>Special Discount:  </strong><span t-field="sale_order.additional_discount"/>Rs.
-                </t>
-            </td>
-        </tr>
+         <t t-if="sale_order.additional_discount > 0.0">
+             <tr class="text-right">
+                 <td colspan="100">
+                     <strong>Special Discount:  </strong><span t-field="sale_order.additional_discount"/>Rs.
+                 </td>
+             </tr>
+         </t>
      </t>
     <t t-if="p['category'].name=='Installation Charges'">
+        <t t-if="sale_order.installation_discount > 0.0">
+            <tr class="text-right">
+                <td colspan="100">
+                    <strong>Special Discount:  </strong><span t-field="sale_order.installation_discount"/>Rs.
+                </td>
+            </tr>
+        </t>
+    </t>
+    <t t-if="p['category'].name=='Gsm Bentel'">
         <tr class="text-right">
             <td colspan="100">
-                <t t-if="sale_order.installation_discount > 0.0">
-                     <strong>Special Discount:  </strong><span t-field="sale_order.installation_discount"/>Rs.
+                <t t-if="sale_order.gsm_discount > 0.0">
+                     <strong>Special Discount:  </strong><span t-esc="round(sale_order.gsm_discount)"/>Rs.
                 </t>
             </td>
         </tr>
-     </t>
+    </t>
     <t t-if="p['category'].name=='Monitoring Charges'">
         <tr class="text-right">
             <td colspan="100">

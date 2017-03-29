@@ -134,8 +134,9 @@ class duedeligence(osv.osv):
         'terms': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Do you agree with terms and conditions?',store=True),
         'additional_discount': fields.float('Additional Discount', store=True, compute='add_discount', default=0.00),
         'installation_discount': fields.float('Additional Discount', store=True, compute='add_discount', default=0.00),
-        'monitoring_discount': fields.float('Monitoring Discount',store=True, default=0.00),
-        'monitoring_tax': fields.float('Monitoring Tax',store=True, default=0.00, compute='add_tax'),
+        'gsm_discount': fields.float('GSM Discount', store=True, compute='add_discount', default=0.00),
+        'monitoring_discount': fields.float('Monitoring Discount', store=True, default=0.00),
+        'monitoring_tax': fields.float('Monitoring Tax', store=True, default=0.00, compute='add_tax'),
         'terms_conditions': fields.selection([('Additional', 'Additional')], 'Terms and Conditions', store=True),
     }
 
@@ -161,7 +162,7 @@ class duedeligence(osv.osv):
                 add_discount=(line.discount*add_amount)/100
                 self.additional_discount = self.additional_discount+ add_discount
 
-            if line.sale_layout_cat_id.name == 'Installation Charges':
+            elif line.sale_layout_cat_id.name == 'Installation Charges':
                 ins_amount = line.product_uom_qty * line.price_unit
                 ins_discount = (line.discount * ins_amount) / 100
                 self.installation_discount = self.installation_discount + ins_discount
@@ -170,6 +171,11 @@ class duedeligence(osv.osv):
                 moni_amount = line.product_uom_qty*line.price_unit
                 moni_discount=(line.discount*moni_amount)/100
                 self.monitoring_discount = self.monitoring_discount + moni_discount
+
+            elif line.sale_layout_cat_id.name == 'Gsm Bentel':
+                gsm_amount = line.product_uom_qty * line.price_unit
+                gsm_discount = (line.discount * gsm_amount) / 100
+                self.gsm_discount = self.gsm_discount + gsm_discount
 
     @api.one
     @api.depends('order_line.sale_layout_cat_id', 'order_line.tax_id')
