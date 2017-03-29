@@ -21,6 +21,7 @@
     ],
     'data': [
             'mutual_reports_reports.xml',
+            'views/custom_invoice.xml',
             'views/custom_quotation.xml',
             'views/custom_layouts.xml',
             'views/report_acknowledgment_receipt.xml',

@@ -49,5 +49,15 @@
                 attachment_use="False"
                 file="mutual_reports.custom_quotation"
         />
+
+        <report
+                id="custom_invoice_pdf"
+                model="account.invoice"
+                string="Custom Invoice"
+                report_type="qweb-pdf"
+                name="mutual_reports.custom_invoice"
+                attachment_use="False"
+                file="mutual_reports.custom_invoice"
+        />
     </data>
 </openerp>

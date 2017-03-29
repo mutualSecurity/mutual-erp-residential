@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+       <template id="custom_invoice">
+           <t t-call='report.html_container'>
+               <t t-foreach="docs" t-as="account_invoice">
+                   <t>
+                      <div class="page">
+                          <div class="row">
+                              <div style="font-size:14px; border:2px solid grey; padding:10px;border-radius:10px;width:400px">
+                                  <strong style="font-size:14px">Customer's Information:</strong><br/>
+                                  <span t-field="account_invoice.partner_id.name"/><br/>
+                                  <span t-if="account_invoice.partner_id.c_street">
+                                      <span t-field="account_invoice.partner_id.c_street"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.c_street2">
+                                      <span t-field="account_invoice.partner_id.c_street2"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.city">
+                                      <span t-field="account_invoice.partner_id.city"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.office">
+                                      <span t-field="account_invoice.partner_id.office"/>,
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.phone">
+                                      <span t-field="account_invoice.partner_id.phone"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.mobile">
+                                      <span t-field="account_invoice.partner_id.mobile"/>
+                                  </span>
+                              </div>
+                              <div class="row mt32 mb32" style="font-size:14px">
+                                  <div class="col-xs-2" t-if="account_invoice.date_invoice">
+                                      <strong>Date</strong>
+                                      <p t-field="account_invoice.date_invoice"/>
+                                  </div>
+                                  <div class="col-xs-2" t-if="account_invoice.css">
+                                      <strong>CS Number</strong>
+                                      <p t-field="account_invoice.css"/>
+                                  </div>
+                                  <div class="col-xs-2" t-if="account_invoice.ntn_num">
+                                      <strong>NTN</strong>
+                                      <p t-field="account_invoice.ntn_num"/>
+                                  </div>
+                                   <div class="col-xs-2" t-if="account_invoice.gst_num">
+                                      <strong>GST</strong>
+                                      <p t-field="account_invoice.gst_num"/>
+                                  </div>
+                              </div>
+                              <h3>Invoice <span t-field="account_invoice.number"/>
+                              </h3>
+                              <div><br/>
+                                  <strong><em>Dear Subscriber,<br/>Please keep checking your Alarm System regularly on weekly and weekly basis
+                                  by using panics and other devices</em></strong>
+                              </div><br/>
+                              <table class="table table-condensed" style="font-size:14px">
+                                  <thead>
+                                      <tr>
+                                          <th>Description</th>
+                                          <!--<th colspan="2"><center>Billing Period</center></th>-->
+                                          <th>Quantity</th>
+                                          <th class="text-right">Unit Price</th>
+                                          <th class="text-right">Subtotal</th>
+                                          <th class="text-right">SRB 19%</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="invoice_tbody">
+                                      <tr t-foreach="account_invoice.invoice_line" t-as="l">
+                                          <td>
+                                              Burglar Alarm Monitoring Fee for the period<br/>
+                                              <span t-if="account_invoice.from_date">
+                                                 from <span t-field="account_invoice.from_date"/>
+                                              </span>
+                                              <span t-if="account_invoice.to_date">
+                                                  to <span t-field="account_invoice.to_date"/>
+                                              </span>
+                                          </td>
+                                          <td>
+                                              <span t-field="l.quantity"/>
+                                              <span t-field="l.uos_id" groups="product.group_uom"/>
+                                          </td>
+                                          <td class="text-right">
+                                              <span t-field="l.price_unit"/>
+                                          </td>
+                                          <td class="text-right" >
+                                              <span t-field="l.price_subtotal" />
+                                          </td>
+                                          <td class="text-right" >
+                                              <span t-if="l.invoice_line_tax_id.description == 'SRB 19%'">
+                                                  <span t-esc="round((l.price_subtotal*19/100))"/>
+                                              </span>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="row"><br/>
+                              <div class="col-xs-4 pull-right">
+                                  <table class="table table-condensed" style="font-size:16px">
+                                      <tr class="border-black">
+                                         <td><strong>Total</strong></td>
+                                          <td class="text-right">
+                                              <strong><span t-esc="round(account_invoice.amount_total)"/></strong>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="pull-left" style="font-size:16px">
+                                 <span>Amount In Words: <span t-esc="account_invoice.amount_to_text"/></span>
+                              </div>
+                          </div>
+                          <div class="row"><br/><br/><br/><br/><br/>
+                              <div class="pull-left" style="font-size:16px">
+                                 <span>
+                                     Payment: Please send your Payees A/c cheque in favour of M/S Mutual Security Systems by
+                                              Registered mail or courier or call for collection of cheque by our representative.
+                                              Please write your name and cs number on the back of the cheque</span>
+                              </div>
+                          </div>
+
+                          <div class="row"><br/><br/>
+                              <div class="pull-left" style="font-size:16px">
+                                 <span>
+                                     <strong><small><em>Note: For complaints please contact 111-238-222 OR 02134311512-13-14
+                                           email:complaints@mutualsecurity.</em></small>
+                                     </strong>
+                                 </span>
+                              </div>
+                          </div>
+                           <div class="row"><br/><br/>
+                              <div class="pull-left" style="font-size:16px">
+                                 <span>
+                                     <small><em>
+                                         <span t-field="account_invoice.create_date"/> <span t-field="account_invoice.create_uid"/></em>
+                                     </small>
+                                 </span>
+                              </div>
+                          </div>
+                          <!--<div class="row" style="margin-top:-20px">-->
+                              <!--<div class="pull-left">-->
+                                  <!--<small>-->
+                                      <!--Terms and Conditions:-->
+                                      <!--<t t-if="not sale_order.terms_conditions=='Additional'">-->
+                                          <!--<ol>-->
+                                              <!--<li>1.Masonry and carpentry will be responsibility of the customer.</li>-->
+                                              <!--<li>2.Concealed wiring will be the responsibility of the customer.</li>-->
+                                              <!--<li>3.100% amount will be paid in advance for additional devices and monitoring.</li>-->
+                                              <!--<li>4.The devices would be installed by us on the completion of wiring and fixing of windows and doors.</li>-->
+                                              <!--<li>5.The customer's deputed electrical contractor shall take care of concealed wiring/cabling (Laying of Conduits,Pipes and pulling of wire up to electric points for the alarm devices).</li>-->
+                                              <!--<li>6.Monitoring and Response will be charged according to prevailing rates at the time of activation of system.</li>-->
+                                              <!--<li>7.For GSM device, a post paid SIM should be arranged by the customer.</li>-->
+                                              <!--<li><strong>Note : The free basic system shall at all the times remain property of mutual security systems except the additional devices purchased by the customer.</strong></li>-->
+                                          <!--</ol>-->
+                                      <!--</t>-->
+                                      <!--<t t-if="sale_order.terms_conditions=='Additional'">-->
+                                          <!--<ol>-->
+                                              <!--<li>1.100% Amount will be paid in advance.</li>-->
+                                              <!--<li>2.Sales tax has been applied at the prevailing rate.</li>-->
+                                              <!--<li>3.Payment Term: Cash/Cheque.</li>-->
+                                              <!--<li>4.Please make your Payees A/C Cheque in favor of Mutual Security Systems.</li>-->
+                                              <!--<li>5.Please write your name and C.M.S / CS.No on the back of cheque. </li>-->
+                                          <!--</ol>-->
+                                      <!--</t>-->
+                                  <!--</small>-->
+                              <!--</div>-->
+                          <!--</div>-->
+                      </div>
+                   </t>
+               </t>
+           </t>
+       </template>
+    </data>
+</openerp>

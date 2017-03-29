@@ -394,6 +394,7 @@
                     <!--<field name="user_id"/>-->
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="user_id_issue"/>
+                    <field name="additional"/>
                     <field name="first_signal_time"/>
                     <field name="date_start" />
                     <field name="date_end" />
@@ -617,6 +618,7 @@
                          <filter string="In Progress" domain="[('stage_id','=','In Progress')]"/>
                          <filter string="Completed by CMS" domain="[('stage_id','=','Completed by CMS')]"/>
                          <filter string="Resolved" domain="[('stage_id','=','Resolved')]"/>
+                         <filter string="Additional" domain="[('additional','=',True)]"/>
                      </group>
                      <group string="By Day Update Stages">
                         <filter name="date_last_stage_update" string="Daily" context="{'group_by':'date_last_stage_update:day'}"/>

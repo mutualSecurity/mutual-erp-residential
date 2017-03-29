@@ -81,6 +81,7 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'additional': fields.boolean('Forwarded to additional', store=True),
       'multi_tech': fields.many2many('res.users', string='Other Technicians', domain="[('is_technician','=',True)]"),
       'task_id': fields.many2one('project.task', ' ', domain="[('project_id','=',project_id)]"),
       # 'project_id': fields.many2one('project.project', 'Project', track_visibility='onchange', select=True, default='Complaints'),
