@@ -21,7 +21,7 @@ class invoice_csnumber(osv.osv):
                                              ('Mailing Address','Mailing Address'),
                                              ('Temporary Address','Temporary Address')],
                                             'Address Criteria',store=True),
-        'from_date': fields.date('From',store=True,compute='monitoring_period'),
+        'from_date': fields.date('From',store=True, compute='monitoring_period'),
         'to_date': fields.date('To', store=True, compute='monitoring_period')
     }
 
@@ -32,33 +32,34 @@ class invoice_csnumber(osv.osv):
             date_format = "%Y-%m-%d"
             from_date = datetime.strptime(str(self.date_invoice), date_format)
             number_of_days = calendar.monthrange(from_date.year, from_date.month)[1]
+            for line in self.invoice_line:
+                print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Line item"+str(line.name)
+                if(number_of_days == 28 and line.name=="Service (MS)") or (number_of_days == 28 and line.name=="Service (MSS)"):
+                    from_ = from_date + timedelta(days=18)
+                    to_ = from_ + relativedelta(months=int(line.quantity))
+                    from_ = str(from_).split(" ")
+                    to_ = to_ - timedelta(days=1)
+                    to_ = str(to_).split(" ")
+                    self.from_date = from_[0]
+                    self.to_date = to_[0]
 
-            if number_of_days == 28:
-                from_ = from_date + timedelta(days=18)
-                to_ = from_ + relativedelta(months=int(self.invoice_line.quantity))
-                from_ = str(from_).split(" ")
-                to_ = to_ - timedelta(days=1)
-                to_ = str(to_).split(" ")
-                self.from_date = from_[0]
-                self.to_date = to_[0]
+                elif(number_of_days == 31 and line.name == "Service (MS)") or (number_of_days == 31 and line.name =="Service (MSS)"):
+                    from_ = from_date + timedelta(days=21)
+                    to_ = from_ + relativedelta(months=int(line.quantity))
+                    from_ = str(from_).split(" ")
+                    to_ = to_ - timedelta(days=1)
+                    to_ = str(to_).split(" ")
+                    self.from_date = from_[0]
+                    self.to_date = to_[0]
 
-            elif number_of_days == 31:
-                from_ = from_date + timedelta(days=21)
-                to_ = from_ + relativedelta(months=int(self.invoice_line.quantity))
-                from_ = str(from_).split(" ")
-                to_ = to_ - timedelta(days=1)
-                to_ = str(to_).split(" ")
-                self.from_date = from_[0]
-                self.to_date = to_[0]
-
-            else:
-                from_ = from_date + timedelta(days=20)
-                to_ = from_ + relativedelta(months=int(self.invoice_line.quantity))
-                from_ = str(from_).split(" ")
-                to_ = to_ - timedelta(days=1)
-                to_ = str(to_).split(" ")
-                self.from_date = from_[0]
-                self.to_date = to_[0]
+                elif(number_of_days == 30 and line.name == "Service (MS)") or (number_of_days == 30 and line.name == "Service (MSS)"):
+                    from_ = from_date + timedelta(days=20)
+                    to_ = from_ + relativedelta(months=int(line.quantity))
+                    from_ = str(from_).split(" ")
+                    to_ = to_ - timedelta(days=1)
+                    to_ = str(to_).split(" ")
+                    self.from_date = from_[0]
+                    self.to_date = to_[0]
 
     @api.multi
     def account_head(self):
