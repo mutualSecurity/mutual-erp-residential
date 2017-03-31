@@ -43,11 +43,21 @@
         <report
                 id="custom_quotation_pdf"
                 model="sale.order"
-                string="Custom Quotation"
+                string="Monitoring Quotation"
                 report_type="qweb-pdf"
                 name="mutual_reports.custom_quotation"
                 attachment_use="False"
                 file="mutual_reports.custom_quotation"
+        />
+
+         <report
+                id="custom_additional_quotation_pdf"
+                model="sale.order"
+                string="Additional Quotation"
+                report_type="qweb-pdf"
+                name="mutual_reports.custom_additional_quotation"
+                attachment_use="False"
+                file="mutual_reports.custom_additional_quotation"
         />
 
         <report
