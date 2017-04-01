@@ -87,7 +87,7 @@
                 <tree string="Technician Activities" editable="top" default_order="date_start asce">
                     <field name="issue_id" readonly="1"/>
                     <field name="cs_number" readonly="1"/>
-                   <!-- <field name="tech_name" readonly="1"/>-->
+                    <field name="tech_name" readonly="1"/>
                     <field name="technician_name"/>
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
@@ -568,6 +568,7 @@
                       <attribute name="invisible">1</attribute>
                   </xpath>
                   <xpath expr="//field[@name='name']" position="before">
+                      <field name="id"/>
                       <field name="complaint_reference"/>
                   </xpath>
                   <xpath expr="//field[@name='name']" position="after">
@@ -577,9 +578,9 @@
                       <field name="monitoring_address_task"/>
                   </xpath>
                   <xpath expr="//field[@name='user_id']" position="after">
-                      <field name="timeIn"/>
-                      <field name="timeOut"/>
-                      <field name="compute_total_time"/>
+                      <!--<field name="timeIn"/>-->
+                      <!--<field name="timeOut"/>-->
+                      <!--<field name="compute_total_time"/>-->
                       <field name="description"/>
                       <field name="create_date"/>
                   </xpath>
@@ -588,6 +589,9 @@
                   </xpath>
                   <xpath expr="//field[@name='create_uid']" position="attributes">
                       <attribute name="string">Logged by</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='user_id']" position="attributes">
+                      <attribute name="invisible">1</attribute>
                   </xpath>
             </field>
         </record>
