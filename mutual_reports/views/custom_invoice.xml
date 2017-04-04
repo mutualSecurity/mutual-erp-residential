@@ -7,8 +7,8 @@
                    <t>
                       <div class="page">
                           <div class="row">
-                              <div style="font-size:14px; border:2px solid grey; padding:10px;border-radius:10px;width:400px">
-                                  <strong style="font-size:14px">Customer's Information:</strong><br/>
+                              <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;width:400px">
+                                  <strong style="font-size:16px">Customer's Information:</strong><br/>
                                   <span t-field="account_invoice.partner_id.name"/><br/>
                                   <span t-if="account_invoice.partner_id.c_street">
                                       <span t-field="account_invoice.partner_id.c_street"/><br/>
@@ -29,7 +29,7 @@
                                       <span t-field="account_invoice.partner_id.mobile"/>
                                   </span>
                               </div>
-                              <div class="row mt32 mb32" style="font-size:14px">
+                              <div class="row mt32 mb32" style="font-size:16px">
                                   <div class="col-xs-2" t-if="account_invoice.date_invoice">
                                       <strong>Date</strong>
                                       <p t-field="account_invoice.date_invoice"/>
@@ -53,15 +53,16 @@
                                   <strong><em>Dear Subscriber,<br/>Please keep checking your Alarm System regularly on weekly and weekly basis
                                   by using panics and other devices</em></strong>
                               </div><br/>
-                              <table class="table table-condensed" style="font-size:14px">
+                              <table class="table table-condensed" style="font-size:16px">
                                   <thead>
                                       <tr>
                                           <th>Description</th>
                                           <!--<th colspan="2"><center>Billing Period</center></th>-->
-                                          <th>Quantity</th>
-                                          <th class="text-right">Unit Price</th>
+                                          <th>Month(s)</th>
+                                          <!--<th class="text-right">Unit Price</th>-->
+                                          <th class="text-right">Amount</th>
+                                          <th class="text-right">Sales Tax 19%</th>
                                           <th class="text-right">Subtotal</th>
-                                          <th class="text-right">SRB 19%</th>
                                       </tr>
                                   </thead>
                                   <tbody class="invoice_tbody">
@@ -76,12 +77,17 @@
                                               </span>
                                           </td>
                                           <td>
-                                              <span t-field="l.quantity"/>
-                                              <span t-field="l.uos_id" groups="product.group_uom"/>
+                                              <span t-esc="round(l.quantity)"/>
+                                              <t t-if="l.uos_id.name == 'Unit(s)'">
+                                                  Month(s)
+                                              </t>
+                                              <t t-if="not l.uos_id.name == 'Unit(s)'">
+                                                  <span t-field="l.uos_id" groups="product.group_uom"/>
+                                              </t>
                                           </td>
-                                          <td class="text-right">
-                                              <span t-field="l.price_unit"/>
-                                          </td>
+                                          <!--<td class="text-right">-->
+                                              <!--<span t-field="l.price_unit"/>-->
+                                          <!--</td>-->
                                           <td class="text-right" >
                                               <span t-field="l.price_subtotal" />
                                           </td>
@@ -90,25 +96,66 @@
                                                   <span t-esc="round((l.price_subtotal*19/100))"/>
                                               </span>
                                           </td>
+                                          <td class="text-right" >
+                                              <span t-esc="round((l.price_subtotal*19/100))+l.price_subtotal"/>
+                                          </td>
                                       </tr>
+                                      <t t-if="account_invoice.grand_total > 0.0">
+                                          <tr>
+                                              <td>
+                                                  Outstanding
+                                              </td>
+                                              <td>
+
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-field="account_invoice.outstanding_amount"/>
+                                              </td>
+                                               <td>
+
+                                              </td>
+                                               <td class="text-right">
+                                                  <span t-field="account_invoice.outstanding_amount"/>
+                                              </td>
+                                          </tr>
+                                      </t>
                                   </tbody>
                               </table>
                           </div>
                           <div class="row"><br/>
                               <div class="col-xs-4 pull-right">
                                   <table class="table table-condensed" style="font-size:16px">
-                                      <tr class="border-black">
-                                         <td><strong>Total</strong></td>
-                                          <td class="text-right">
-                                              <strong><span t-esc="round(account_invoice.amount_total)"/></strong>
-                                          </td>
-                                      </tr>
+                                          <t t-if="not account_invoice.grand_total > 0.0">
+                                              <tr class="border-black">
+                                                  <td>
+                                                      <strong>Total</strong>
+                                                  </td>
+                                                  <td class="text-right">
+                                                      <strong><span t-esc="round(account_invoice.amount_total)"/></strong>
+                                                  </td>
+                                              </tr>
+                                          </t>
+                                          <t t-if="account_invoice.grand_total > 0.0">
+                                              <tr>
+                                                  <td>
+                                                      <strong>Total</strong>
+                                                  </td>
+                                                  <td class="text-right">
+                                                      <strong><span t-esc="round(account_invoice.amount_total+account_invoice.outstanding_amount)"/></strong>
+                                                  </td>
+                                              </tr>
+                                          </t>
                                   </table>
                               </div>
                           </div>
                           <div class="row">
                               <div class="pull-left" style="font-size:16px">
-                                 <span>Amount In Words: <span t-esc="account_invoice.amount_to_text"/></span>
+                                  <t t-if="account_invoice.grand_total > 0.0">
+                                      <span>Amount In Words: <span t-esc="account_invoice.amount_to_text(round(account_invoice.amount_total+account_invoice.outstanding_amount),'euro')"/></span>
+                                  </t>
+                                  <t t-if=" not account_invoice.grand_total > 0.0">
+                                      <span>Amount In Words: <span t-esc="account_invoice.amount_to_text(round(account_invoice.amount_total),'PKR')"/></span>
+                                  </t>
                               </div>
                           </div>
                           <div class="row"><br/><br/><br/><br/><br/>

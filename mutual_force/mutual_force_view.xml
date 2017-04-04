@@ -184,11 +184,11 @@
                     <field name="cs_number" readonly="1"/>
                     <field name="customer"/>
                     <field name="force_name"/>
-                    <field name="dispatch_time"/>
-                    <field name="reach_time"/>
-                    <field name="minutes"/>
+                    <field name="dispatch_time" widget="float_time"/>
+                    <field name="reach_time" widget="float_time"/>
+                    <field name="minutes" widget="float_time"/>
                     <field name="remarks"/>
-                    <field name="create_uid"/>
+                    <field name="create_uid" readonly="1"/>
                 </tree>
             </field>
         </record>

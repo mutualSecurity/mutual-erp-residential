@@ -8,9 +8,11 @@
             <field name="arch" type="xml">
                 <field name="date_invoice" position="after">
                     <field name="css" />
-                    <field name="from_date"/>
-                    <field name="to_date"/>
-                    <field name="outstanding"/>
+                    <field name="from_date" readonly="1"/>
+                    <field name="to_date" readonly="1"/>
+                    <field name="outstanding" readonly="1"/>
+                    <field name="outstanding_amount" readonly="1"/>
+                    <field name="grand_total" readonly="1"/>
                     <field name="ntn_num" />
                     <field name="gst_num" />
                     <field name="phone" />

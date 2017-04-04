@@ -1,15 +1,17 @@
 from openerp.osv import fields, osv
 from openerp import api
 from datetime import date, timedelta,datetime
+import re
 import calendar
 import time
 from dateutil.relativedelta import *
+from openerp.tools import amount_to_text_en
 
 class invoice_csnumber(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
-        'outstanding': fields.related('partner_id', 'credit', type='char', string='Outstanding amount', readonly=True),
+        'outstanding': fields.related('partner_id', 'credit', type='char', string='Credit Balance', readonly=True),
         'phone': fields.related('partner_id','phone',type='char', size=12,string='Phone',readonly=True),
         'mobile': fields.related('partner_id','mobile',type='char', size=12,string='Mobile',readonly=True),
         'ntn_num': fields.related('partner_id','ntn_num',type='char', size=12,string='NTN',readonly=True),
@@ -22,12 +24,28 @@ class invoice_csnumber(osv.osv):
                                              ('Temporary Address','Temporary Address')],
                                             'Address Criteria',store=True),
         'from_date': fields.date('From',store=True, compute='monitoring_period'),
-        'to_date': fields.date('To', store=True, compute='monitoring_period')
+        'to_date': fields.date('To', store=True, compute='monitoring_period'),
+        'outstanding_amount': fields.float('Outstanding Amount', store=True, readonly=True, compute='monitoring_period'),
+        'grand_total': fields.float('Grand Total', store=True, readonly=True, compute='monitoring_period')
     }
+
+    @api.multi
+    def amount_to_text(self, amount, currency):
+        convert_amount_in_words = amount_to_text_en.amount_to_text(amount, lang='en', currency='')
+        convert_amount_in_words = convert_amount_in_words.replace(' and Zero Cent', ' Only ')
+        return convert_amount_in_words
 
     @api.one
     @api.depends('state')
     def monitoring_period(self):
+        total = 0.0
+        list = self.env['account.invoice'].search([['partner_id', '=', self.partner_id.id], ])
+        for value in list:
+            if((re.match(r'SO', value['origin'])) and (value['state'] =='open')):
+                total = total + float(value['amount_total'])
+        out = float(self.outstanding) - total - self.amount_total
+        self.outstanding_amount = out
+        self.grand_total = out + self.amount_total
         if self.date_invoice:
             date_format = "%Y-%m-%d"
             from_date = datetime.strptime(str(self.date_invoice), date_format)
@@ -94,6 +112,7 @@ class invoice_csnumber(osv.osv):
             for line in self.invoice_line:
                 print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Heads Reset>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
                 line.account_id = line.product_id.property_account_income
+
 
     # @api.onchange('custom_account_id')
     # def account_head_invoice(self):
