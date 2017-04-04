@@ -41,8 +41,9 @@ class invoice_csnumber(osv.osv):
         total = 0.0
         list = self.env['account.invoice'].search([['partner_id', '=', self.partner_id.id], ])
         for value in list:
-            if((re.match(r'SO', value['origin'])) and (value['state'] =='open')):
-                total = total + float(value['amount_total'])
+            if self.origin:
+                if((re.match(r'SO', value['origin'])) and (value['state'] =='open')):
+                    total = total + float(value['amount_total'])
         out = float(self.outstanding) - total - self.amount_total
         self.outstanding_amount = out
         self.grand_total = out + self.amount_total

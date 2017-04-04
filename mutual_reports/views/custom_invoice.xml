@@ -97,7 +97,12 @@
                                               </span>
                                           </td>
                                           <td class="text-right" >
-                                              <span t-esc="round((l.price_subtotal*19/100))+l.price_subtotal"/>
+                                              <span t-if="l.invoice_line_tax_id.description == 'SRB 19%'">
+                                                  <span t-esc="round((l.price_subtotal*19/100))+l.price_subtotal"/>
+                                              </span>
+                                              <span t-if="not (l.invoice_line_tax_id.description == 'SRB 19%')">
+                                                  <span t-esc="l.price_subtotal"/>
+                                              </span>
                                           </td>
                                       </tr>
                                       <t t-if="account_invoice.grand_total > 0.0">
