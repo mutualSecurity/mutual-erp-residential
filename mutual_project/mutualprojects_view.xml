@@ -454,11 +454,11 @@
                             <tree editable="top" string="Timesheets" >
                                 <field name="technician_name" default_focus="1"/>
                                 <field name="multi_tech" widget="many2many_tags"/>
-                                <field name="reason"/>
-                                <field name="first_signal"/>
+                                <!--<field name="first_signal"/>-->
                                 <field name="date_start"/>
                                 <field name="date_end"/>
                                 <field name="compute_total_time"/>
+                                <field name="reason"/>
                             </tree>
                           </field>
                     </page>
