@@ -81,6 +81,7 @@ class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
   _columns = {
+      'color': fields.integer(compute='_get_color',string='Color', store=False),
       'additional': fields.boolean('Forwarded to additional', store=True),
       'multi_tech': fields.many2many('res.users', string='Other Technicians', domain="[('is_technician','=',True)]"),
       'task_id': fields.many2one('project.task', ' ', domain="[('project_id','=',project_id)]"),
@@ -177,6 +178,11 @@ class mutual_issues(osv.osv):
                                 ],
                                'Complaint Title', required=True, read=['__export__.res_groups_52'], write=['project.group_project_user'])
   }
+
+  @api.depends('additional')
+  def _get_color(self):
+      if self.additional == True:
+          self.color = 5
 
   @api.multi
   def smsSent(self):
