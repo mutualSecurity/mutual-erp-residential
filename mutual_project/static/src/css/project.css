@@ -21,3 +21,10 @@
 .oe_form_sheet_full_screen{
     width: 90% !important;
 }
+
+.openerp .oe_kanban_view .oe_dropdown_kanban {
+    display: none !important;
+    float: right;
+    cursor: pointer;
+    margin-top: -6px;
+}

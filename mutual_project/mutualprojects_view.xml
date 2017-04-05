@@ -316,7 +316,8 @@
                     <field name="uplink_date_task"/>
                     <field name="complaint_reference"/>
                     <field name="user_id"/>
-                    <field name="task_status"/>
+                    <!--<field name="task_status"/>-->
+                    <field name="status"/>
                     <field name="task_status_confirm"/>
                     <field name="disco_reasons"/>
                     <!--<field name="timeIn"/>-->
@@ -387,6 +388,15 @@
                 <field name="version_id" position="replace">
 
                 </field>
+                <xpath expr="//field[@name='task_id']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='task_id']" position="attributes">
+                    <attribute name="options">{'limit': 0, 'search':false, 'create': True, 'create_edit': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='task_id']" position="after">
+                    <field name="task_status" readonly="1"/>
+                </xpath>
                 <xpath expr="//field[@name='priority']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
@@ -415,9 +425,6 @@
                 <xpath expr="//button[@name='case_escalate']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <xpath expr="//field[@name='task_id']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
                 <xpath expr="//field[@name='first_signal_time']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
@@ -434,6 +441,9 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='multi_tech']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='progress']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
                  <field name="partner_id" position="after">
@@ -539,6 +549,7 @@
                   </field>
                   <xpath expr="//field[@name='stage_id']" position="after">
                       <field name="additional"/>
+                      <field name="task_id"/>
                   </xpath>
                   <xpath expr="//field[@name='stage_id']" position="attributes">
                       <attribute name="string">Complaint Status</attribute>
@@ -685,9 +696,16 @@
                          <strong><field name="cs_number_issue"/></strong>
                      </span>
                     <field name="create_date"/>
+                     <span style="color:purple !important; font-weight:bold">
+                         <br/><field name="task_id"/>
+                         <br/><field name="task_status"/>
+                    </span>
                 </field>
                 <xpath expr='//kanban'  position="attributes">
                    <attribute name="quick_create">0</attribute>
+                </xpath>
+                 <xpath expr='//field[@name="color"]' position="attributes">
+                   <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr='//kanban' position="attributes">
                     <attribute name="colors">grey:id==503</attribute>

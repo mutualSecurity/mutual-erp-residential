@@ -10,6 +10,7 @@ class mutual_projects(osv.osv):
   _name="project.task"
   _inherit = "project.task",
   _columns = {
+      'status': fields.char('status', store=True, compute='status_task'),
       'task_status': fields.boolean('Task Status', store=True),
       'task_status_confirm': fields.char('', store=True, compute='_task_status'),
       'user_id': fields.many2one('res.users', 'Assigned Tech', required=False, select=1, track_visibility='onchange',
@@ -55,12 +56,26 @@ class mutual_projects(osv.osv):
   }
 
   @api.one
+  @api.onchange('complaint_reference')
+  def auto_select(self, context=None):
+      if self.complaint_reference>0:
+          self.name = 'additional'
+          self.env.cr.execute('select partner_id from project_issue where id =' + str(self.complaint_reference))
+          customer = self.env.cr.dictfetchall()
+          list = self.env['res.partner'].search([['id', '=', customer[0]['partner_id']], ])
+          self.partner_id = list
+
+  @api.one
+  @api.depends('stage_id')
+  def status_task(self):
+      self.status = self.stage_id.name
+
+  @api.one
   @api.depends('task_status')
   def _task_status(self):
       if self.task_status == True:
           self.task_status_confirm = "Done"
           return True
-
 
   @api.one
   @api.depends('timeIn', 'timeOut')
@@ -84,7 +99,8 @@ class mutual_issues(osv.osv):
       'color': fields.integer(compute='_get_color',string='Color', store=False),
       'additional': fields.boolean('Forwarded to additional', store=True),
       'multi_tech': fields.many2many('res.users', string='Other Technicians', domain="[('is_technician','=',True)]"),
-      'task_id': fields.many2one('project.task', ' ', domain="[('project_id','=',project_id)]"),
+      # 'task_id': fields.many2one('project.task', ' ', domain="[('project_id','=',project_id)]"),
+      'task_status': fields.related('task_id', 'status', type='char', string='Task Status'),
       # 'project_id': fields.many2one('project.project', 'Project', track_visibility='onchange', select=True, default='Complaints'),
       'responsibleperson': fields.char("Responsible Person", store=True,required=True),
       'contactperson': fields.char("Contact Person", store=True),
@@ -179,10 +195,13 @@ class mutual_issues(osv.osv):
                                'Complaint Title', required=True, read=['__export__.res_groups_52'], write=['project.group_project_user'])
   }
 
-  @api.depends('additional')
+  @api.depends('additional','stage_id')
   def _get_color(self):
-      if self.additional == True:
+      if(self.additional==True) and (self.stage_id.name != 'Resolved'):
           self.color = 5
+      else:
+          self.color = 0
+
 
   @api.multi
   def smsSent(self):
