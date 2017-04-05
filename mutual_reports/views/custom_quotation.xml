@@ -75,7 +75,7 @@
                                                   </td>
                                                   <td class="text-right">
                                                       <t t-if="not l.product_id.name == 'GSM Bentel (Italian)'">
-                                                          <span t-field="l.price_unit"/>
+                                                          <span t-field="l.price_unit * l.price_unit * l.product_uom_qty"/>
                                                        </t>
                                                        <t t-if="l.product_id.name == 'GSM Bentel (Italian)'">
                                                           <span t-esc="l.price_unit * l.product_uom_qty"/>
