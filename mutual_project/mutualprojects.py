@@ -197,10 +197,11 @@ class mutual_issues(osv.osv):
 
   @api.depends('additional','stage_id')
   def _get_color(self):
-      if(self.additional==True) and (self.stage_id.name != 'Resolved'):
-          self.color = 5
-      else:
-          self.color = 0
+      if len(self) == 1:
+          if(self.additional==True) and (self.stage_id.name != 'Resolved'):
+              self.color = 5
+          elif(self.additional==True) and (self.stage_id.name == 'Resolved'):
+              self.color = 0
 
 
   @api.multi
