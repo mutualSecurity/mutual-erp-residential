@@ -186,8 +186,10 @@
                     <field name="force_name"/>
                     <field name="dispatch_time" widget="float_time"/>
                     <field name="reach_time" widget="float_time"/>
-                    <field name="minutes" widget="float_time"/>
+                    <field name="minutes" widget="float_time" readonly="1"/>
+                    <field name="move" widget="float_time"/>
                     <field name="remarks"/>
+                    <field name="cms" required="1"/>
                     <field name="create_uid" readonly="1"/>
                 </tree>
             </field>
@@ -240,9 +242,11 @@
                                  <field name="address"/>
                             </group>
                             <group>
-                                <field name="stages"/>
+                                <!--<field name="stages"/>-->
                                 <field name="first_visit"/>
+                                <field name="first_visit_remarks" attrs="{'invisible': [('first_visit','=',False)]}"/>
                                 <field name="second_visit"/>
+                                <field name="second_visit_remarks" attrs="{'invisible': [('second_visit','=',False)]}"/>
                             </group>
                         </group>
                     </sheet>
@@ -267,6 +271,27 @@
             </field>
         </record>
         <!-- ================================================== End tree view of New Visits ================================================ -->
+
+        <!-- ================================================== Begin Search view of New Visits ================================================ -->
+        <record id="new_visits_search_view" model="ir.ui.view">
+            <field name="name">response.time_search.view</field>
+            <field name="model">response.time</field>
+            <field name="arch" type="xml">
+                <search string="Guard Details Search" version="8.0" >
+                    <field name="cs_number"/>
+                    <field name="force_name"/>
+                    <group string="By Day/Month/Year">
+                        <filter name="create_date" string="Daily" context="{'group_by':'create_date:day'}"/>
+                        <filter name="create_date" string="Monthly" context="{'group_by':'create_date:month'}"/>
+                        <filter name="create_date" string="Yearly" context="{'group_by':'create_date:year'}"/>
+                    </group>
+                    <group string="By Shift">
+                        <filter name="create_uid" string="Shift"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!-- ================================================== End Search view of New Visits ================================================ -->
 
 
     </data>

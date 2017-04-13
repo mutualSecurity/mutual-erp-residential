@@ -68,5 +68,34 @@
                 </xpath>
             </field>
         </record>
+
+        <!-- ================================================== Account Move Journal Entries Views ===============================================-->
+        <record  model="ir.ui.view" id="account.view_account_move_filter_search">
+            <field name="name">account.move.select</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_move_filter" />
+            <field name="arch" type="xml">
+                <search string="Search Move">
+                    <group string="Daily">
+                        <filter string="Today" domain="[('create_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                    </group>
+                    <group string="Companies">
+                       <filter string="Mutual Security" domain="[('company_id','=','Mutual Security')]"/>
+                       <filter string="Mutual Security Systems" domain="[('company_id','=','Mutual Security Systems')]"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+         <record id="account.view_move_tree_mutual" model="ir.ui.view">
+              <field name="name">account.invoice.tree</field>
+              <field name="model">account.move</field>
+              <field name="inherit_id" ref="account.view_move_tree" />
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='to_check']" position="after">
+                      <field name="company_id"/>
+                  </xpath>
+              </field>
+        </record>
     </data>
 </openerp>

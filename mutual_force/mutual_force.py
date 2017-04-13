@@ -1,5 +1,6 @@
 from openerp.osv import fields, osv
 from openerp import api
+from datetime import date,datetime
 
 
 class force_details(osv.osv):
@@ -40,9 +41,18 @@ class response_time(osv.osv):
         'force_name': fields.char('Force Name',store=True,track_visibility='onchange'),
         'dispatch_time': fields.float('Dispatch', store=True),
         'reach_time': fields.float('Reach', store=True),
-        'minutes': fields.float('Minutes', store=True),
+        'minutes': fields.float('Minutes', store=True, compute='time_diff'),
+        'move': fields.float('Move', store=True),
         'remarks': fields.char('Remarks',store=True),
+        'cms': fields.char('Responsible',store=True)
     }
+
+    @api.depends('dispatch_time','reach_time')
+    def time_diff(self):
+        if self.dispatch_time > self.reach_time:
+            self.minutes = self.dispatch_time - self.reach_time
+        else:
+            self.minutes = self.reach_time - self.dispatch_time
 
     @api.onchange('customer')
     def forcefetch(self):
@@ -57,7 +67,9 @@ class new_visits(osv.osv):
         'address': fields.char('Address', store=True),
         'stages': fields.many2one('new.visits.stages','Stage',store=True),
         'first_visit':fields.datetime('First Visit',store=True),
-        'second_visit':fields.datetime('Second Visit',store=True)
+        'second_visit':fields.datetime('Second Visit',store=True),
+        'first_visit_remarks':fields.text('First Visit Remarks',store=True),
+        'second_visit_remarks': fields.text('Second Visit Remarks', store=True),
     }
 
     @api.model
