@@ -75,6 +75,9 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_account_move_filter" />
             <field name="arch" type="xml">
+                <xpath expr="//search/field[@name='name']" position="before">
+                    <field name="ref"/>
+                </xpath>
                 <search string="Search Move">
                     <group string="Daily">
                         <filter string="Today" domain="[('create_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
