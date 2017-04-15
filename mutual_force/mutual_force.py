@@ -87,3 +87,16 @@ class new_visits_stages(osv.osv):
     _columns = {
         'name': fields.char('Stage Name',store=True,track_visibility='onchange'),
     }
+
+class bank_customers(osv.osv):
+    _name = "bank.customers"
+    _columns = {
+        'name': fields.char('Name',store=True,track_visibility='onchange'),
+        'cs': fields.char('CS Number',store=True,track_visibility='onchange'),
+        'bank_coder': fields.char('Bank Code', store=True, track_visibility='onchange'),
+        'branch_code': fields.char('Branch Code', store=True, track_visibility='onchange'),
+        'street1': fields.char('Address', store=True, track_visibility='onchange'),
+        'street2': fields.char('Street', store=True, track_visibility='onchange'),
+        'city': fields.char('City', store=True, track_visibility='onchange'),
+
+    }

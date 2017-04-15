@@ -31,6 +31,30 @@
 
         <!-- ================================================== End menuitem of Force Details ================================================ -->
 
+
+
+          <!-- ================================================== Begin menuitem of Bank Customers ================================================ -->
+        <record id="mutual_force_bank_customers" model="ir.actions.act_window">
+	        <field name="name">Bank Customers</field>
+            <field name="res_model">bank.customers</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+
+        <menuitem name="Bank Customers"
+                  action="mutual_force_bank_customers"
+                  id="menu_mutual_force_bank_customers"
+                  sequence="110"
+                  parent="force_side_top_menu"/>
+
+        <!-- ================================================== End menuitem of Bank Customrss ================================================ -->
+
+
+
+
  <!-- ================================================== Begin menuitem of guard Details ================================================ -->
         <record id="mutual_guard_details" model="ir.actions.act_window">
 	        <field name="name">Guard Details</field>
@@ -131,6 +155,67 @@
         </record>
         <!-- ================================================== End tree view of Force Details ================================================ -->
 
+
+
+        <!-- ================================================== Begin Form view of Bank Customers ================================================ -->
+
+       <record id="force_details_form_view" model="ir.ui.view">
+            <field name="name">bank_customers.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">bank.customers</field>
+            <field name="arch" type="xml">
+                <form string="Bank Customers">
+                    <sheet>
+                        <group string="Bank Customers">
+                            <group>
+                                 <field name="name"/>
+                                 <field name="cs"/>
+                                 <field name="branch_code"/>
+                                 <field name="bank_coder"/>
+                            </group>
+                            <group>
+                                <field name="street1"/>
+                                <field name="street2"/>
+                                <field name="city"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form view of Bank Customers ================================================ -->
+
+        <!-- ================================================== Begin tree view of Bank Customers ================================================ -->
+        <record id="bank_customers_tree_view" model="ir.ui.view">
+            <field name="name">bank_customers.tree.view</field>
+            <field name="model">bank.customers</field>
+            <field name="arch" type="xml">
+                <tree string="Bank Customers Tree" version="8.0">
+                    <field name="name" readonly="1"/>
+                    <field name="cs" readonly="1"/>
+                    <field name="branch_code" readonly="1"/>
+                    <field name="bank_coder" readonly="1"/>
+                    <field name="street1" readonly="1"/>
+                    <field name="city" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End tree view of Force Details ================================================ -->
+
+          <!-- ================================================== Begin Search view of Bank Customers ================================================ -->
+        <record id="bank_customers_search_view" model="ir.ui.view">
+            <field name="name">bank_customers_search_view</field>
+            <field name="model">bank.customers</field>
+            <field name="arch" type="xml">
+                <search string="Bank Customers Search" version="8.0" >
+                    <field name="cs"/>
+                    <field name="branch_code"/>
+                    <field name="bank_coder" />
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        <!-- ================================================== End Search view of Bank Customers ================================================ -->
 
 
         <!-- ================================================== Begin Form view of Guard Details ================================================ -->
@@ -293,6 +378,56 @@
         </record>
         <!-- ================================================== End Search view of New Visits ================================================ -->
 
+          <record id="action_partner_customer_form" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'default_customer':1, 'search_default_customer':1}</field>
+            <field name="filter" eval="True"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a contact in your address book.
+              </p><p>
+                Odoo helps you easily track all activities related to
+                a customer: discussions, history of business opportunities,
+                documents, etc.
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+            name="Residential Customers"
+            action="action_partner_customer_form"
+            id="menu_action_partner_customer_form"
+            sequence="100"
+            parent="force_side_top_menu">
+        </menuitem>
+
+
+        <!--====================================== List of customers showing in project module Begins ==================================-->
+
+
+        <!--<record model="ir.ui.view" id="base.view_partner_form_inherit_inherit">-->
+            <!--<field name="name">res.partner.form</field>-->
+            <!--<field name="model">res.partner</field>-->
+            <!--<field name="inherit_id" ref="base.view_partner_form" />-->
+            <!--<field name="groups_id" eval="[(4,[ref('project.group_project_user')])]"/>-->
+            <!--<field name="arch" type="xml">-->
+                 <!--<xpath expr="//page[@string='Accounting']" position="attributes">-->
+                     <!--<attribute name="invisible">False</attribute>-->
+                 <!--</xpath>-->
+                <!--<xpath expr="//page[@string='Sales &amp; Purchases']" position="attributes">-->
+                    <!--<attribute name="invisible">False</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr='//form[@string="Partners"]' position='attributes'>-->
+                    <!--<attribute name="create">false</attribute>-->
+                <!--</xpath>-->
+
+            <!--</field>-->
+        <!--</record>-->
 
     </data>
 </openerp>
