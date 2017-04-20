@@ -301,6 +301,7 @@
                                 <div class="oe_kanban_details">
                                         <strong><field name='name'/></strong><br/>
                                         <strong><field name='cs_number'/></strong><br/>
+                                        <em><field name='address'/></em>
                                 </div>
                                 </a>
                             </div>

@@ -230,5 +230,35 @@
             </field>
         </record>
         <!--====================================== Kanban view of partner ends ==================================-->
+
+         <record model="ir.ui.view" id="followups_id">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <field name="payment_responsible_id" position="after">
+                    <field name="riders" />
+                    <field name="payment_received"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_followup.customer_followup_tree_mutual">
+            <field name="name">res.partner.followup.inherit.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account_followup.customer_followup_tree" />
+            <field name="arch" type="xml">
+                <field name="payment_responsible_id" position="after">
+                    <field name="riders" />
+                    <field name="payment_received"/>
+                </field>
+                <xpath expr="//field[@name='latest_followup_level_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='display_name']" position="after">
+                    <field name="cs_number"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
