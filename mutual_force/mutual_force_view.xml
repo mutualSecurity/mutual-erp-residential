@@ -93,6 +93,26 @@
 
         <!-- ==================================================  End menuitem of response time ================================================ -->
 
+
+         <!-- ================================================== Begin menuitem of  recovery response time ================================================ -->
+        <record id="mutual_recovery_response_time" model="ir.actions.act_window">
+	        <field name="name">Recovery Response Time</field>
+            <field name="res_model">recovery.visits</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+
+        <menuitem name="Recovery Response TimeIn/Out"
+                  action="mutual_recovery_response_time"
+                  id="menu_mutual_recovery_response_time"
+                  sequence="20"
+                  parent="force_side_top_menu"/>
+
+        <!-- ==================================================  End menuitem of  recovery response time ================================================ -->
+
           <!-- ================================================== Begin menuitem of New Visits ================================================ -->
         <record id="mutual_new_visits" model="ir.actions.act_window">
 	        <field name="name">New Visits</field>
@@ -280,6 +300,24 @@
             </field>
         </record>
         <!-- ================================================== End tree view of Response Time ================================================ -->
+
+
+          <!-- ================================================== Begin tree view of Recovery Response Time ================================================ -->
+        <record id="recovery_response_tree_view" model="ir.ui.view">
+            <field name="name">recovery.visits.tree.view</field>
+            <field name="model">recovery.visits</field>
+            <field name="arch" type="xml">
+                <tree string="Response Time Tree" version="8.0" editable="top">
+                    <field name="cs_number"/>
+                    <field name="force"/>
+                    <field name="time"/>
+                    <field name="status"/>
+                    <field name="recovery_officer" />
+                    <field name="create_date" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End tree view of Recovery Response Time ================================================ -->
 
 
         <!-- ================================================== Begin kanban view of new visits ================================================ -->
