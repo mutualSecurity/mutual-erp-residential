@@ -108,7 +108,8 @@ class bank_customers(osv.osv):
 class recovery_visits(osv.osv):
     _name = "recovery.visits"
     _columns = {
-        'cs_number': fields.char('CS Number', store=True, required=True),
+        'cs_number': fields.many2one('bank.customers','Customer',store=True),
+        'name': fields.related('cs_number', 'name', type='char', store=True, string='Name'),
         'force': fields.char('Force', store=True, required=True),
         'time': fields.datetime('Time', store=True),
         'status': fields.char('Status', store=True),

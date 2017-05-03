@@ -309,6 +309,7 @@
             <field name="arch" type="xml">
                 <tree string="Response Time Tree" version="8.0" editable="top">
                     <field name="cs_number"/>
+                    <field name="name"/>
                     <field name="force"/>
                     <field name="time"/>
                     <field name="status"/>
