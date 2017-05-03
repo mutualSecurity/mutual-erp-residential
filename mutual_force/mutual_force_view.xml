@@ -44,7 +44,7 @@
             </field>
         </record>
 
-        <menuitem name="Bank Customers"
+        <menuitem name="Customers"
                   action="mutual_force_bank_customers"
                   id="menu_mutual_force_bank_customers"
                   sequence="110"
@@ -216,7 +216,7 @@
                     <field name="branch_code" readonly="1"/>
                     <field name="bank_coder" readonly="1"/>
                     <field name="street1" readonly="1"/>
-                    <field name="city" readonly="1"/>
+                    <field name="street2" readonly="1"/>
                 </tree>
             </field>
         </record>
@@ -286,12 +286,12 @@
             <field name="model">response.time</field>
             <field name="arch" type="xml">
                 <tree string="Response Time Tree" version="8.0" editable="top">
-                    <field name="cs_number" readonly="1"/>
                     <field name="customer"/>
+                    <field name="name"/>
                     <field name="force_name"/>
-                    <field name="dispatch_time" widget="float_time"/>
-                    <field name="reach_time" widget="float_time"/>
-                    <field name="minutes" widget="float_time" readonly="1"/>
+                    <field name="dispatch_time"/>
+                    <field name="reach_time"/>
+                    <field name="minutes" readonly="1"/>
                     <field name="move" widget="float_time"/>
                     <field name="remarks"/>
                     <field name="cms" required="1"/>
@@ -402,7 +402,7 @@
             <field name="model">response.time</field>
             <field name="arch" type="xml">
                 <search string="Guard Details Search" version="8.0" >
-                    <field name="cs_number"/>
+                    <field name="name"/>
                     <field name="force_name"/>
                     <group string="By Day/Month/Year">
                         <filter name="create_date" string="Daily" context="{'group_by':'create_date:day'}"/>
@@ -437,13 +437,13 @@
             </field>
         </record>
 
-        <menuitem
-            name="Residential Customers"
-            action="action_partner_customer_form"
-            id="menu_action_partner_customer_form"
-            sequence="100"
-            parent="force_side_top_menu">
-        </menuitem>
+        <!--<menuitem-->
+            <!--name="Residential Customers"-->
+            <!--action="action_partner_customer_form"-->
+            <!--id="menu_action_partner_customer_form"-->
+            <!--sequence="100"-->
+            <!--parent="force_side_top_menu">-->
+        <!--</menuitem>-->
 
 
         <!--====================================== List of customers showing in project module Begins ==================================-->

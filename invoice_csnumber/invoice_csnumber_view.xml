@@ -31,20 +31,37 @@
                     <separator string="Reset Account Heads"/><br/>
                     <button name="account_head" string="Reset Heads" type="object" class="oe_highlight" />
                 </xpath>
+                <xpath expr="//notebook/page[@string='Invoice Lines']" position="after">
+                    <page string="Payment Follow-Ups">
+                        <group>
+                            <field name="responsible_person"/>
+                            <field name="date"/>
+                            <field name="riders"/>
+                            <field name="payment_received"/>
+                        </group>
+                        <group>
+                            <field name="remarks"/>
+                        </group>
+                    </page>
+                </xpath>
             </field>
         </record>
         <record id="account.invoice_tree_mutual" model="ir.ui.view">
               <field name="name">account.invoice.tree</field>
               <field name="model">account.invoice</field>
               <field name="inherit_id" ref="account.invoice_tree" />
-              <field name="code">self.account_head()</field>
               <field name="arch" type="xml">
                   <field name="partner_id" position="after">
                       <field name="css"/>
                   </field>
-                  <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="journal_id"/>
-                    <field name="account_id"/>
+                  <xpath expr="//field[@name='origin']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='date_due']" position="after">
+                      <field name="responsible_person"/>
+                      <field name="date"/>
+                      <field name="riders"/>
+                      <field name="payment_received"/>
                   </xpath>
               </field>
         </record>
@@ -55,6 +72,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//search/field[@name='number']" position="before">
                     <field name="css"/>
+                    <field name="responsible_person"/>
+                    <field name="riders"/>
                 </xpath>
             </field>
         </record>

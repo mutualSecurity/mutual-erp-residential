@@ -26,7 +26,12 @@ class invoice_csnumber(osv.osv):
         'from_date': fields.date('From',store=True, compute='monitoring_period'),
         'to_date': fields.date('To', store=True, compute='monitoring_period'),
         'outstanding_amount': fields.float('Outstanding Amount', store=True, readonly=True, compute='monitoring_period'),
-        'grand_total': fields.float('Grand Total', store=True, readonly=True, compute='monitoring_period')
+        'grand_total': fields.float('Grand Total', store=True, readonly=True, compute='monitoring_period'),
+        'remarks': fields.text('Remarks', store=True),
+        'date': fields.date('Date',store=True),
+        'riders': fields.many2one('res.partner', 'Assigned to Rider', required=False, select=1,track_visibility='onchange', domain="[('is_rider','=',True)]"),
+        'responsible_person': fields.many2one('res.users', 'Follow-up Responsible', track_visibility='onchange', store=True),
+        'payment_received': fields.boolean('Payment Received', store=True, track_visibility='onchange')
     }
 
     @api.multi

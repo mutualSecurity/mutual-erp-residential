@@ -104,14 +104,21 @@ class mutual_sales(osv.osv):
             debitors = list.property_account_receivable
             payable = list.property_account_payable
             stage = self.env['new.visits.stages'].search([['name', '=', 'New'], ])
-            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Stage.....>>>>>>>>>>>>>>>>>>>>>>>"
-            print stage.id
+            customer = self.env['bank.customers'].search([['cs', '=', self.cs_number], ])
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Customer.....>>>>>>>>>>>>>>>>>>>>>>>"
             if self.visit == True:
                 self.env['new.visits'].create({
                     'name': self.name,
                     'cs_number': self.cs_number,
-                    'address': self.street + ' ' +self.street2+' '+self.city,
+                    'address': (str(self.street) + ' ' +str(self.street2)+' '+str(self.city)).replace('False',' '),
                     'stages': stage.id
+                })
+                self.env['bank.customers'].create({
+                    'name': self.name,
+                    'cs': self.cs_number,
+                    'street1': str(self.street).replace('False',' '),
+                    'street2': str(self.street2).replace('False',' '),
+                    'city': str(self.city).replace('False',' ')
                 })
                 self.property_account_receivable = debitors
                 self.property_account_payable = payable

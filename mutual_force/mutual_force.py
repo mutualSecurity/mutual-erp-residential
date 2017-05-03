@@ -36,12 +36,13 @@ class guard_details(osv.osv):
 class response_time(osv.osv):
     _name = "response.time"
     _columns = {
-        'customer': fields.many2one('res.partner','Customer',store=True),
-        'cs_number': fields.related('customer', 'cs_number', type='char', store=True, string='CS'),
+        'customer': fields.many2one('bank.customers','Customer',store=True),
+        'name': fields.related('customer', 'name', type='char', store=True, string='Name'),
+        'branch_code': fields.related('customer', 'branch_code', type='char', store=True, string='CS'),
         'force_name': fields.char('Force Name',store=True,track_visibility='onchange'),
-        'dispatch_time': fields.float('Dispatch', store=True),
-        'reach_time': fields.float('Reach', store=True),
-        'minutes': fields.float('Minutes', store=True, compute='time_diff'),
+        'dispatch_time': fields.datetime('Dispatch', store=True),
+        'reach_time': fields.datetime('Reach', store=True),
+        'minutes': fields.char('Minutes', store=True, compute='time_diff'),
         'move': fields.float('Move', store=True),
         'remarks': fields.char('Remarks',store=True),
         'cms': fields.char('Responsible',store=True)
@@ -49,14 +50,16 @@ class response_time(osv.osv):
 
     @api.depends('dispatch_time','reach_time')
     def time_diff(self):
-        if self.dispatch_time > self.reach_time:
-            self.minutes = self.dispatch_time - self.reach_time
-        else:
-            self.minutes = self.reach_time - self.dispatch_time
+        if self.dispatch_time and self.reach_time:
+            # set the date and time format
+            date_format = "%Y-%m-%d %H:%M:%S"
+            # convert string to actual date and time
+            dispatch = datetime.strptime(self.dispatch_time, date_format)
+            reach = datetime.strptime(self.reach_time, date_format)
+            # find the difference between two dates
+            diff = reach - dispatch
+            self.minutes = diff
 
-    @api.onchange('customer')
-    def forcefetch(self):
-        self.force_name = self.customer.force_details.force_code
 
 
 class new_visits(osv.osv):
@@ -90,6 +93,7 @@ class new_visits_stages(osv.osv):
 
 class bank_customers(osv.osv):
     _name = "bank.customers"
+    _rec_name = 'cs'
     _columns = {
         'name': fields.char('Name',store=True,track_visibility='onchange'),
         'cs': fields.char('CS Number',store=True,track_visibility='onchange'),
@@ -109,5 +113,4 @@ class recovery_visits(osv.osv):
         'time': fields.datetime('Time', store=True),
         'status': fields.char('Status', store=True),
         'recovery_officer': fields.char('Recovery Officer', store=True, required=True)
-
     }
