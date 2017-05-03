@@ -100,7 +100,7 @@ class bank_customers(osv.osv):
         'bank_coder': fields.char('Bank Code', store=True, track_visibility='onchange'),
         'branch_code': fields.char('Branch Code', store=True, track_visibility='onchange'),
         'street1': fields.char('Address', store=True, track_visibility='onchange'),
-        'street2': fields.char('Street', store=True, track_visibility='onchange'),
+        'street2': fields.char('Location', store=True, track_visibility='onchange'),
         'city': fields.char('City', store=True, track_visibility='onchange'),
 
     }
