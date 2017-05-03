@@ -213,8 +213,8 @@
                 <tree string="Bank Customers Tree" version="8.0">
                     <field name="name" readonly="1"/>
                     <field name="cs" readonly="1"/>
-                    <field name="branch_code" readonly="1"/>
-                    <field name="bank_coder" readonly="1"/>
+                    <!--<field name="branch_code" readonly="1"/>-->
+                    <!--<field name="bank_coder" readonly="1"/>-->
                     <field name="street1" readonly="1"/>
                     <field name="street2" readonly="1"/>
                 </tree>
