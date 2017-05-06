@@ -20,6 +20,9 @@
                     <field name="uplink_date" />
                     <!--<field name="custom_account_id"/>-->
                 </field>
+                <xpath expr="//button[@string='Validate']" position="attributes">
+                    <attribute name="groups">account.group_account_manager</attribute>
+                </xpath>
                 <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="context">"{'show_address':0}"</attribute>
                 </xpath>
@@ -36,8 +39,11 @@
                         <group>
                             <field name="responsible_person"/>
                             <field name="date"/>
+                            <field name="next_action"/>
                             <field name="riders"/>
                             <field name="payment_received"/>
+                            <field name="payment_method"/>
+                            <field name="cheque_no" attrs="{'invisible': [('payment_method','=','Cash')]}"/>
                         </group>
                         <group>
                             <field name="remarks"/>

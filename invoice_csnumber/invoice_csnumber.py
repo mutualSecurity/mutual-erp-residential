@@ -31,7 +31,10 @@ class invoice_csnumber(osv.osv):
         'date': fields.date('Date',store=True),
         'riders': fields.many2one('res.partner', 'Assigned to Rider', required=False, select=1,track_visibility='onchange', domain="[('is_rider','=',True)]"),
         'responsible_person': fields.many2one('res.users', 'Follow-up Responsible', track_visibility='onchange', store=True),
-        'payment_received': fields.boolean('Payment Received', store=True, track_visibility='onchange')
+        'payment_received': fields.boolean('Payment Received', store=True, track_visibility='onchange'),
+        'payment_method': fields.selection([('Cheque', 'Cheque'),('Cash', 'Cash')],'Payment Method', store=True),
+        'cheque_no': fields.char('Cheque No.',store=True),
+        'next_action': fields.date('Next Action,',store=True)
     }
 
     @api.multi
