@@ -43,7 +43,7 @@ class response_time(osv.osv):
         'dispatch_time': fields.datetime('Dispatch', store=True),
         'reach_time': fields.datetime('Reach', store=True),
         'minutes': fields.char('Minutes', store=True, compute='time_diff'),
-        'move': fields.float('Move', store=True),
+        'move': fields.datetime('Move', store=True),
         'remarks': fields.char('Remarks',store=True),
         'cms': fields.char('Responsible',store=True)
     }
@@ -102,7 +102,6 @@ class bank_customers(osv.osv):
         'street1': fields.char('Address', store=True, track_visibility='onchange'),
         'street2': fields.char('Location', store=True, track_visibility='onchange'),
         'city': fields.char('City', store=True, track_visibility='onchange'),
-
     }
 
 class recovery_visits(osv.osv):

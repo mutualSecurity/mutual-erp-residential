@@ -1,4 +1,6 @@
 from openerp.osv import fields, osv
+from openerp import models
+from openerp import fields as field
 from openerp import api
 from datetime import date, timedelta,datetime
 import re
@@ -10,7 +12,9 @@ from openerp.tools import amount_to_text_en
 class invoice_csnumber(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
+        # 'cs_num': fields.char('CS Number', store=True, readonly=True, compute='cal_cs'),
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
+        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12,store=True, string='CS Number', readonly=True),
         'outstanding': fields.related('partner_id', 'credit', type='char', string='Credit Balance', readonly=True),
         'phone': fields.related('partner_id','phone',type='char', size=12,string='Phone',readonly=True),
         'mobile': fields.related('partner_id','mobile',type='char', size=12,string='Mobile',readonly=True),
@@ -36,6 +40,14 @@ class invoice_csnumber(osv.osv):
         'cheque_no': fields.char('Cheque No.',store=True),
         'next_action': fields.date('Next Action,',store=True)
     }
+
+    # @api.one
+    # @api.depends('origin')
+    # def cal_cs(self):
+    #     if self.origin!= False or self.origin==False:
+    #         print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Invoice Customer>>>>>>>>>>>>>>>>>"
+    #         print self.partner_id
+    #         self.cs_num = self.partner_id
 
     @api.multi
     def amount_to_text(self, amount, currency):
@@ -126,3 +138,5 @@ class invoice_csnumber(osv.osv):
     # @api.onchange('custom_account_id')
     # def account_head_invoice(self):
     #     self.invoice_line.account_id = self.invoice_line.product_id.property_account_income
+
+

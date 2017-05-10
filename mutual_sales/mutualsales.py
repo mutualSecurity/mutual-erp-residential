@@ -97,7 +97,7 @@ class mutual_sales(osv.osv):
 
 
     @api.one
-    @api.onchange('visit')
+    @api.onchange('visit','street')
     def create_new_visit_card(self):
         if self.name!=False:
             list = self.env['res.partner'].search([['cs_number', '=',self.cs_number], ])
