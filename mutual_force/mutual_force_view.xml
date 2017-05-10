@@ -292,7 +292,7 @@
                     <field name="dispatch_time"/>
                     <field name="reach_time"/>
                     <field name="minutes" readonly="1"/>
-                    <field name="move" widget="float_time"/>
+                    <field name="move"/>
                     <field name="remarks"/>
                     <field name="cms" required="1"/>
                     <field name="create_uid" readonly="1"/>
@@ -403,6 +403,7 @@
             <field name="model">response.time</field>
             <field name="arch" type="xml">
                 <search string="Guard Details Search" version="8.0" >
+                    <field name="customer"/>
                     <field name="name"/>
                     <field name="force_name"/>
                     <group string="By Day/Month/Year">
