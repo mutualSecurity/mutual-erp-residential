@@ -31,6 +31,9 @@
                 </xpath>
                 <xpath expr="//field[@name='fiscal_position']" position="after">
                     <field name="invoice_remarks"/>
+                    <field name="contactperson"/>
+                    <field name="contactpersondetails"/>
+                    <field name="tempaddress"/>
                     <field name="address_criteria"/>
                     <separator string="Reset Account Heads"/><br/>
                     <button name="account_head" string="Reset Heads" type="object" class="oe_highlight" />

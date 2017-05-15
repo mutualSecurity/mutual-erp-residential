@@ -127,8 +127,8 @@
                     <field name="cs_number"/>
                 </xpath>
                 <xpath expr="//search/field[@name='name']" position="after">
-                    <field name="mobile" />
-                    <field name="phone" />
+                    <!--<field name="mobile" />-->
+                    <field name="phone" filter_domain="['|','|',('phone','ilike',self),('mobile','ilike',self),('office','ilike',self)]" />
                     <field name="street"/>
                     <field name="email"/>
                     <field name="payment_next_action" />

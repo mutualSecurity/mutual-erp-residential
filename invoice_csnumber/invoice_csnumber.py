@@ -12,6 +12,9 @@ from openerp.tools import amount_to_text_en
 class invoice_csnumber(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
+        'contactperson': fields.related('partner_id', 'contactperson', type='char', readonly=True, string='Contact Person'),
+        'contactpersondetails': fields.related('partner_id', 'contactpersondetails', type='char', readonly=True, string='Contact Person Details'),
+        'tempaddress': fields.related('partner_id', 'tempaddress', type='char', readonly=True, string='Temp Address'),
         'invoice_remarks': fields.char('Remarks',store=True),
         # 'cs_num': fields.char('CS Number', store=True, readonly=True, compute='cal_cs'),
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),

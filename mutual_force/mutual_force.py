@@ -38,6 +38,7 @@ class response_time(osv.osv):
     _columns = {
         'customer': fields.many2one('bank.customers','Customer',store=True),
         'name': fields.related('customer', 'name', type='char', store=True, string='Name'),
+        'address': fields.related('customer', 'street1', type='char', store=True, string='Address'),
         'branch_code': fields.related('customer', 'branch_code', type='char', store=True, string='CS'),
         'force_name': fields.char('Force Name',store=True,track_visibility='onchange'),
         'dispatch_time': fields.datetime('Dispatch', store=True),

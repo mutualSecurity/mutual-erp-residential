@@ -288,6 +288,7 @@
                 <tree string="Response Time Tree" version="8.0" editable="top">
                     <field name="customer"/>
                     <field name="name"/>
+                    <field name="address"/>
                     <field name="force_name"/>
                     <field name="dispatch_time"/>
                     <field name="reach_time"/>
