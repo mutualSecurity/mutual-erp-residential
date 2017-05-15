@@ -12,6 +12,7 @@ from openerp.tools import amount_to_text_en
 class invoice_csnumber(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
+        'invoice_remarks': fields.char('Remarks',store=True),
         # 'cs_num': fields.char('CS Number', store=True, readonly=True, compute='cal_cs'),
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
         'css_number': fields.related('partner_id', 'cs_number', type='char', size=12,store=True, string='CS Number', readonly=True),
@@ -140,3 +141,8 @@ class invoice_csnumber(osv.osv):
     #     self.invoice_line.account_id = self.invoice_line.product_id.property_account_income
 
 
+class account_voucher_mutual(osv.osv):
+    _inherit = 'account.voucher'
+    _columns = {
+        'cs_number': fields.related('partner_id','cs_number',type='char',string='CS Number')
+    }

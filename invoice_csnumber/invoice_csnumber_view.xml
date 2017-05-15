@@ -30,6 +30,7 @@
                     <field name="address"/>
                 </xpath>
                 <xpath expr="//field[@name='fiscal_position']" position="after">
+                    <field name="invoice_remarks"/>
                     <field name="address_criteria"/>
                     <separator string="Reset Account Heads"/><br/>
                     <button name="account_head" string="Reset Heads" type="object" class="oe_highlight" />
@@ -81,6 +82,8 @@
                     <field name="css"/>
                     <field name="responsible_person"/>
                     <field name="riders"/>
+                    <field name="date_invoice"/>
+                    <field name="number"/>
                 </xpath>
             </field>
         </record>
@@ -95,7 +98,7 @@
             </field>
         </record>
 
-        <!-- ================================================== Account Move Journal Entries Views ===============================================-->
+        <!-- ================================================== Account Move Journal Entries Search View ===============================================-->
         <record  model="ir.ui.view" id="account.view_account_move_filter_search">
             <field name="name">account.move.select</field>
             <field name="model">account.move</field>
@@ -116,6 +119,7 @@
             </field>
         </record>
 
+        <!-- ================================================== Account Move Journal Tree View ===============================================-->
          <record id="account.view_move_tree_mutual" model="ir.ui.view">
               <field name="name">account.invoice.tree</field>
               <field name="model">account.move</field>
@@ -123,6 +127,44 @@
               <field name="arch" type="xml">
                   <xpath expr="//field[@name='to_check']" position="after">
                       <field name="company_id"/>
+                  </xpath>
+              </field>
+        </record>
+
+         <!-- ================================================== customer payments form View ===============================================-->
+         <record id="account.view_form_move_tree_mutual" model="ir.ui.view">
+              <field name="name">account.voucher.receipt.form</field>
+              <field name="model">account.voucher</field>
+              <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form" />
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='partner_id']" position="after">
+                      <field name="cs_number"/>
+                  </xpath>
+              </field>
+        </record>
+
+
+        <!-- ================================================== Customer Payments Search View ===============================================-->
+        <record  model="ir.ui.view" id="account.view_account_move_filter_search">
+            <field name="name">account.voucher.customer.pay.select</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay" />
+            <field name="arch" type="xml">
+                <xpath expr="//search/field[@name='number']" position="after">
+                    <field name="cs_number"/>
+                    <field name="reference"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ================================================== customer Tree View ===============================================-->
+         <record id="account.voucher_move_tree_mutual" model="ir.ui.view">
+              <field name="name">account.voucher.tree</field>
+              <field name="model">account.voucher</field>
+              <field name="inherit_id" ref="account_voucher.view_voucher_tree" />
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='partner_id']" position="after">
+                      <field name="cs_number"/>
                   </xpath>
               </field>
         </record>
