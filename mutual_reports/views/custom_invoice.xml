@@ -47,8 +47,12 @@
                                       <p t-field="account_invoice.gst_num"/>
                                   </div>
                               </div>
-                              <h3>Invoice <span t-field="account_invoice.number"/>
-                              </h3>
+                              <span t-if="account_invoice.ntn_num">
+                                  <h3>SaleTax Invoice <span t-field="account_invoice.number"/></h3>
+                              </span>
+                              <span t-if="not account_invoice.ntn_num">
+                                  <h3>Invoice <span t-field="account_invoice.number"/></h3>
+                              </span>
                               <div><br/>
                                   <strong><em>Dear Subscriber,<br/>Please keep checking your Alarm System regularly on weekly and weekly basis
                                   by using panics and other devices</em></strong>
