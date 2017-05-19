@@ -23,12 +23,12 @@
                 <xpath expr="//field[@name='payment_option']" position="attributes">
                     <attribute name="attrs">{'invisible': [('multi_counter_parts','=',True)],'required': [('multi_counter_parts', '=', False)]}</attribute>
                 </xpath>
-                <xpath expr="//field[@name='writeoff_acc_id']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('multi_counter_parts','=',True)],'required': [('multi_counter_parts', '=', False)]}</attribute>
-                </xpath>
-                <xpath expr="//field[@name='analytic_id']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('multi_counter_parts','=',True)]}</attribute>
-                </xpath>
+                <!--<xpath expr="//field[@name='writeoff_acc_id']" position="attributes">-->
+                    <!--<attribute name="attrs">{'invisible': [('multi_counter_parts','=',True)],'required': [('multi_counter_parts', '=', False)]}</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='analytic_id']" position="attributes">-->
+                    <!--<attribute name="attrs">{'invisible': [('multi_counter_parts','=',True)]}</attribute>-->
+                <!--</xpath>-->
             </field>
         </record>
     </data>
