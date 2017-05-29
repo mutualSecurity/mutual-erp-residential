@@ -18,6 +18,7 @@
                     <field name="phone" />
                     <field name="mobile" />
                     <field name="uplink_date" />
+                    <field name="invoice_status"/>
                     <!--<field name="custom_account_id"/>-->
                 </field>
                 <xpath expr="//button[@string='Validate']" position="attributes">
@@ -89,8 +90,24 @@
                     <field name="responsible_person"/>
                     <field name="riders"/>
                     <field name="date_invoice"/>
+                    <field name="company_id"/>
                     <field name="number"/>
                 </xpath>
+                <search string="Search Invoice">
+                    <group string="Recovery Officers">
+                        <filter string="My" domain="[('responsible_person','=',uid)]"/>
+                        <filter string="Payment Received" domain="[('payment_received','=',True)]"/>
+                        <filter string="Payment Not Received" domain="[('payment_received','=',False)]"/>
+                        <filter string="Assigned to Riders" domain="[('riders','!=',False)]"/>
+                        <filter string="Not Assigned to Riders" domain="[('riders','=',False)]"/>
+                        <filter string="Received by Me" domain="[('payment_received','=',True),('responsible_person','=',uid)]"/>
+                        <filter string="Not Received by Me" domain="[('payment_received','=',False),('responsible_person','=',uid)]"/>
+                        <filter string="Assigned to Riders by Me" domain="[('riders','!=',False),('responsible_person','=',uid)]"/>
+                        <filter string="Assigned to Riders not by Me" domain="[('riders','=',False),('responsible_person','=',uid)]"/>
+                        <filter string="Daily" domain="[('write_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('write_date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                     </group>
+                </search>
+
             </field>
         </record>
          <record  model="ir.ui.view" id="account.view_move">
@@ -165,6 +182,17 @@
 
         <!-- ================================================== customer Tree View ===============================================-->
          <record id="account.voucher_move_tree_mutual" model="ir.ui.view">
+              <field name="name">account.voucher.tree</field>
+              <field name="model">account.voucher</field>
+              <field name="inherit_id" ref="account_voucher.view_voucher_tree" />
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='partner_id']" position="after">
+                      <field name="cs_number"/>
+                  </xpath>
+              </field>
+        </record>
+
+        <record id="account.voucher_move_tree_mutual" model="ir.ui.view">
               <field name="name">account.voucher.tree</field>
               <field name="model">account.voucher</field>
               <field name="inherit_id" ref="account_voucher.view_voucher_tree" />
