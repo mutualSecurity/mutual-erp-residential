@@ -63,6 +63,10 @@
                     <field name="contactpersondetails"/>
                     <field name="tempaddress"/>
                 </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="create_date" readonly="1"/>
+                    <field name="create_uid" readonly="1"/>
+                </xpath>
                 <xpath expr="//field[@name='website']" position="before">
                     <field name="force_details"/>
                 </xpath>
@@ -138,6 +142,7 @@
                      <group string="Custom Filter">
                          <filter string="Active" domain="[('active','=',True)]"/>
                          <filter string="Inactive" domain="[('active','=',False)]"/>
+                         <filter string="Disco" domain="[('active','=',False),('cs_number','!=',False)]"/>
                          <filter string="Mobile application User" domain="[('application_user','=',True)]"/>
                      </group>
                      <group string="Uplink day/month">

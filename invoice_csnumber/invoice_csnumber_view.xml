@@ -58,6 +58,10 @@
                         </group>
                     </page>
                 </xpath>
+                <xpath expr="//field[@name='account_id']" position="after">
+                    <field name="create_date" readonly="1"/>
+                    <field name="create_uid" readonly="1"/>
+                </xpath>
             </field>
         </record>
         <record id="account.invoice_tree_mutual" model="ir.ui.view">
@@ -118,6 +122,10 @@
                 <xpath expr="//field[@name='company_id']" position="attributes">
                     <attribute name="readonly">0</attribute>
                 </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="create_date" readonly="1"/>
+                    <field name="create_uid" readonly="1"/>
+                </xpath>
             </field>
         </record>
 
@@ -163,6 +171,10 @@
                   <xpath expr="//field[@name='partner_id']" position="after">
                       <field name="cs_number" readonly="1"/>
                   </xpath>
+                   <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="create_date" readonly="1"/>
+                    <field name="create_uid" readonly="1"/>
+                </xpath>
               </field>
         </record>
 

@@ -97,10 +97,6 @@
                                   <strong>CS Number</strong>
                                   <p t-field="account.css"/>
                               </div>
-                              <div class="col-xs-2" t-if="account.css">
-                                  <strong>CS Number</strong>
-                                  <p t-field="account.css"/>
-                              </div>
                               <div class="col-xs-2">
                                   <strong>Receipt Date</strong>
                                   <p>___________</p>
@@ -110,9 +106,18 @@
                                   <p>__________</p>
                               </div>
                           </div>
+                          <div>
+                              <strong>Monitoring Period: </strong>
+                              <span t-if="account.from_date">
+                                  <span t-field="account.from_date"></span>
+                              </span> to
+                              <span t-if="account.to_date">
+                                  <span t-field="account.to_date"></span>
+                              </span>
+                          </div>
                            <div>
                                <strong>Amount Due:</strong>
-                               <span t-field="account.amount_total"/> PKR<br/>(<small><span t-esc="account.amount_to_text"/></small>)
+                               <span t-field="account.amount_total"/> PKR<br/>(<small><span t-esc="account.amount_to_text(round(account.amount_total+account.outstanding_amount),'euro')"/></small>)
                            </div>
                            <div><br/>
                                <strong>Note: </strong><br/>

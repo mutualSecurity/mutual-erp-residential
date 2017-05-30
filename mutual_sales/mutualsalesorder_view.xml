@@ -15,6 +15,8 @@
                 </xpath>
                 <xpath expr="//field[@name='client_order_ref']" position="after">
                     <field name="terms_conditions"/>
+                    <field name="create_date" readonly="1"/>
+                    <field name="create_uid" readonly="1"/>
                 </xpath>
                 <xpath expr="//button[@string='Create Invoice']" position="attributes">
                     <attribute name="groups">base.group_sale_manager</attribute>
