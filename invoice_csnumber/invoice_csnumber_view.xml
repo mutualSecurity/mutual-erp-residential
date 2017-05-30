@@ -18,8 +18,6 @@
                     <field name="phone" />
                     <field name="mobile" />
                     <field name="uplink_date" />
-                    <field name="invoice_status"/>
-                    <!--<field name="custom_account_id"/>-->
                 </field>
                 <xpath expr="//button[@string='Validate']" position="attributes">
                     <attribute name="groups">account.group_account_manager</attribute>
