@@ -55,6 +55,18 @@ class mutual_projects(osv.osv):
           ],'Disco Reasons', store=True, select=True),
   }
 
+  @api.model
+  def create(self, vals):
+      if vals['name'] == 'disco':
+          status = "cancelled"
+          self.env.cr.execute('UPDATE res_partner SET active = False WHERE id =' + str(vals['partner_id']))
+          self.env.cr.execute(
+              'UPDATE account_analytic_account SET state =' + "'" + status + "'" + 'WHERE partner_id =' + str(
+                  vals['partner_id']))
+          return super(mutual_projects, self).create(vals)
+      else:
+          return super(mutual_projects, self).create(vals)
+
   @api.one
   @api.onchange('complaint_reference')
   def auto_select(self, context=None):
