@@ -72,9 +72,15 @@
                                   <tbody class="invoice_tbody">
                                       <tr t-foreach="account_invoice.invoice_line" t-as="l">
                                           <td>
-                                              <span t-if="l.product_id.name == 'Service (MS)'">  Burglar Alarm Monitoring Fee for the period<br/></span>
-                                              <span t-if="l.product_id.name == 'Service (MSS)'">  Burglar Alarm Monitoring Fee for the period<br/></span>
-                                              <span t-if="l.product_id.name != 'Service (MSS)' or l.product_id.name != 'Service (MSS)'"><span t-field="l.name"></span><br/></span>
+                                              <span t-if="l.product_id.name == 'Service (MS)'">
+                                                  Burglar Alarm Monitoring Fee for the period<br/>
+                                              </span>
+                                              <span t-if="l.product_id.name == 'Service (MSS)'">
+                                                  Burglar Alarm Monitoring Fee for the period<br/>
+                                              </span>
+                                              <span t-if="not(l.product_id.name == 'Service (MSS)') or not(l.product_id.name == 'Service (MSS)')">
+                                                  <span t-field="l.name"/><br/>
+                                              </span>
                                               <span t-if="account_invoice.from_date">
                                                  from <span t-field="account_invoice.from_date"/>
                                               </span>
@@ -111,7 +117,7 @@
                                               </span>
                                           </td>
                                       </tr>
-                                      <t t-if="account_invoice.grand_total > 0.0">
+                                      <t t-if="account_invoice.outstanding_amount > 0.0">
                                           <tr>
                                               <td>
                                                   Outstanding
@@ -127,6 +133,25 @@
                                               </td>
                                                <td class="text-right">
                                                   <span t-field="account_invoice.outstanding_amount"/>
+                                              </td>
+                                          </tr>
+                                      </t>
+                                      <t t-if="account_invoice.outstanding_amount &lt; 0.0">
+                                          <tr>
+                                              <td>
+                                                  Advance
+                                              </td>
+                                              <td>
+
+                                              </td>
+                                              <td class="text-right">
+                                                  <span t-esc="account_invoice.outstanding_amount*-1"/>
+                                              </td>
+                                               <td>
+
+                                              </td>
+                                               <td class="text-right">
+                                                  <span t-esc="account_invoice.outstanding_amount*-1"/>
                                               </td>
                                           </tr>
                                       </t>
@@ -146,7 +171,17 @@
                                                   </td>
                                               </tr>
                                           </t>
-                                          <t t-if="account_invoice.grand_total > 0.0">
+                                          <t t-if="account_invoice.outstanding_amount > 0.0">
+                                              <tr>
+                                                  <td>
+                                                      <strong>Total</strong>
+                                                  </td>
+                                                  <td class="text-right">
+                                                      <strong><span t-esc="round(account_invoice.amount_total+account_invoice.outstanding_amount)"/></strong>
+                                                  </td>
+                                              </tr>
+                                          </t>
+                                          <t t-if="account_invoice.outstanding_amount &lt; 0.0">
                                               <tr>
                                                   <td>
                                                       <strong>Total</strong>

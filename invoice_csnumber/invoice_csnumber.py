@@ -45,6 +45,13 @@ class invoice_csnumber(osv.osv):
         'next_action': fields.date('Next Action,',store=True)
     }
 
+    @api.multi
+    def invoice_validate(self):
+        if self.outstanding_amount == 0.0 and self.state == 'open':
+            return self.write({'state': 'paid'})
+        else:
+            return self.write({'state': 'open'})
+
     # @api.one
     # @api.depends('origin')
     # def cal_cs(self):
@@ -68,8 +75,12 @@ class invoice_csnumber(osv.osv):
             if self.origin:
                 if((re.match(r'SO', str(value['origin']))) and (value['state'] =='open')):
                     total = total + float(value['amount_total'])
-        out = float(self.outstanding) - total - self.amount_total
-        self.outstanding_amount = out
+        if self.outstanding == 0.0:
+            out = 0.0
+            self.outstanding_amount = out
+        else:
+            out = float(self.outstanding) - total - self.amount_total
+            self.outstanding_amount = out
         self.grand_total = out + self.amount_total
         if self.date_invoice:
             date_format = "%Y-%m-%d"
