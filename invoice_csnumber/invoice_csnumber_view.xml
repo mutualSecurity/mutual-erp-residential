@@ -30,6 +30,7 @@
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="address"/>
+                    <field name="supplier_id"/>
                 </xpath>
                 <xpath expr="//field[@name='fiscal_position']" position="after">
                     <field name="invoice_remarks"/>

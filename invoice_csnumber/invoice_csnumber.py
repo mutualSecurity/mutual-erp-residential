@@ -12,6 +12,7 @@ from openerp.tools import amount_to_text_en
 class invoice_csnumber(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
+        'supplier_id': fields.many2one('res.partner', 'Supplier', domain="[('supplier','=',True)]"),
         'contactperson': fields.related('partner_id', 'contactperson', type='char', readonly=True, string='Contact Person'),
         'contactpersondetails': fields.related('partner_id', 'contactpersondetails', type='char', readonly=True, string='Contact Person Details'),
         'tempaddress': fields.related('partner_id', 'tempaddress', type='char', readonly=True, string='Temp Address'),
@@ -47,7 +48,9 @@ class invoice_csnumber(osv.osv):
 
     @api.multi
     def invoice_validate(self):
-        if self.outstanding_amount == 0.0 and self.state == 'open':
+        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Print>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+        print type(self.outstanding)
+        if float(self.outstanding) == 0.0:
             return self.write({'state': 'paid'})
         else:
             return self.write({'state': 'open'})
@@ -78,10 +81,11 @@ class invoice_csnumber(osv.osv):
         if self.outstanding == 0.0:
             out = 0.0
             self.outstanding_amount = out
+            self.grand_total = out + self.amount_total
         else:
             out = float(self.outstanding) - total - self.amount_total
             self.outstanding_amount = out
-        self.grand_total = out + self.amount_total
+            self.grand_total = out + self.amount_total
         if self.date_invoice:
             date_format = "%Y-%m-%d"
             from_date = datetime.strptime(str(self.date_invoice), date_format)
@@ -126,7 +130,7 @@ class invoice_csnumber(osv.osv):
 
                 elif(number_of_days == 30 and line.product_id.name == "Service (MS)") or (number_of_days == 30 and line.product_id.name == "Service (MSS)"):
                     if from_date.day == 1 :
-                        from_ = from_date + timedelta(days=10)
+                        from_ = from_date + timedelta(days=20)
                         to_ = from_ + relativedelta(months=int(line.quantity))
                         from_ = str(from_).split(" ")
                         to_ = to_ - timedelta(days=1)

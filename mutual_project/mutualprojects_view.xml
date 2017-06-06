@@ -88,6 +88,8 @@
                     <field name="issue_id" readonly="1"/>
                     <field name="cs_number" readonly="1"/>
                     <field name="tech_name" readonly="1"/>
+                    <field name="technician_name_other"/>
+                    <field name="multi_tech_other" widget="many2many_tags"/>
                     <field name="technician_name"/>
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>
@@ -140,6 +142,8 @@
                     <field name="task_id" readonly="1"/>
                     <field name="cs_number" readonly="1"/>
                     <field name="tech_name_tasks" readonly="1"/>
+                    <field name="technician_name_other"/>
+                    <field name="multi_tech_other" widget="many2many_tags"/>
                     <field name="technician_name_tasks"/>
                     <field name="multi_tech" widget="many2many_tags"/>
                     <field name="date_start"/>

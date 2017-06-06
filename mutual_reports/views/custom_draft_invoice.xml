@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+       <template id="custom_draft_invoice">
+           <t t-call='report.html_container'>
+               <t t-foreach="docs" t-as="account_invoice">
+                   <t>
+                      <div class="page">
+                          <div class="row">
+                              <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;width:400px">
+                                  <strong style="font-size:16px">Customer's Information:</strong><br/>
+                                  <span t-field="account_invoice.partner_id.name"/><br/>
+                                  <span t-if="account_invoice.partner_id.c_street">
+                                      <span t-field="account_invoice.partner_id.c_street"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.c_street2">
+                                      <span t-field="account_invoice.partner_id.c_street2"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.city">
+                                      <span t-field="account_invoice.partner_id.city"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.office">
+                                      <span t-field="account_invoice.partner_id.office"/>,
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.phone">
+                                      <span t-field="account_invoice.partner_id.phone"/><br/>
+                                  </span>
+                                  <span t-if="account_invoice.partner_id.mobile">
+                                      <span t-field="account_invoice.partner_id.mobile"/>
+                                  </span>
+                              </div>
+                              <div class="row mt32 mb32" style="font-size:16px">
+                                   <div class="col-xs-2" t-if="account_invoice.number">
+                                      <strong>Invoice No.</strong>
+                                      <p t-field="account_invoice.id"/>
+                                  </div>
+                                  <div class="col-xs-2" t-if="account_invoice.date_invoice">
+                                      <strong>Date</strong>
+                                      <p t-field="account_invoice.date_invoice"/>
+                                  </div>
+                                  <div class="col-xs-2" t-if="account_invoice.css">
+                                      <strong>CS Number</strong>
+                                      <p t-field="account_invoice.css"/>
+                                  </div>
+                                  <div class="col-xs-2" t-if="account_invoice.ntn_num">
+                                      <strong>NTN</strong>
+                                      <p t-field="account_invoice.ntn_num"/>
+                                  </div>
+                                   <div class="col-xs-2" t-if="account_invoice.gst_num">
+                                      <strong>GST No.</strong>
+                                      <p t-field="account_invoice.gst_num"/>
+                                  </div>
+                              </div><br/>
+                              <h3>Invoice </h3>
+                              <table class="table table-condensed" style="font-size:16px">
+                                  <thead>
+                                      <tr>
+                                          <th>Description</th>
+                                          <th>Quantity</th>
+                                          <th class="text-right">Rate</th>
+                                          <th class="text-right">Amount</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="invoice_tbody">
+                                      <tr t-foreach="account_invoice.invoice_line" t-as="l">
+                                          <td>
+                                              <span t-field="l.name"/><br/>
+                                          </td>
+                                          <td>
+                                              <span t-esc="round(l.quantity)"/>
+                                          </td>
+                                          <td class="text-right" >
+                                              <span t-field="l.price_unit" />
+                                          </td>
+                                           <td class="text-right" >
+                                              <span t-esc="l.price_subtotal" />
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="row"><br/>
+                              <div class="col-xs-4 pull-right">
+                                  <table class="table table-condensed" style="font-size:16px">
+                                          <t>
+                                              <tr>
+                                                  <td>
+                                                      <strong>Total</strong>
+                                                  </td>
+                                                  <td class="text-right">
+                                                      <strong><span t-esc="account_invoice.amount_total"/></strong>
+                                                  </td>
+                                              </tr>
+                                          </t>
+                                  </table>
+                              </div>
+                          </div><br/><br/>
+                          <div class="row">
+                              <div class="pull-left" style="font-size:16px">
+                                  <t>
+                                      <span>Amount In Words: <span t-esc="account_invoice.amount_to_text(round(account_invoice.amount_total),'euro')"/></span>
+                                  </t>
+                              </div>
+                          </div>
+                          <div class="row"><br/><br/><br/><br/><br/><br/><br/><br/>
+                             <div class="pull-left" style="font-size:16px">
+                                 <span><strong>Terms and Conditions:</strong>
+                                     <ol>
+                                         <li> 1.100% amount will be paid in advance</li>
+                                         <li> 2.Payment Term: Cash/Cheque</li>
+                                         <li> 3.Please make your Payees A/C Cheque in favour of Mutual Security Systems</li>
+                                         <li> 4.Please write your name and CMS / CS.No on the back of cheque</li>
+                                     </ol>
+                                </span>
+                              </div>
+                          </div>
+                           <!--<div class="row"><br/><br/>-->
+                              <!--<div class="pull-left" style="font-size:16px">-->
+                                 <!--<span>-->
+                                     <!--<small><em>-->
+                                         <!--Prepared by Accountant Manager <br/><span t-field="account_invoice.create_date"/></em>-->
+                                     <!--</small>-->
+                                 <!--</span>-->
+                              <!--</div>-->
+                          <!--</div>-->
+                      </div>
+                   </t>
+               </t>
+           </t>
+       </template>
+    </data>
+</openerp>
