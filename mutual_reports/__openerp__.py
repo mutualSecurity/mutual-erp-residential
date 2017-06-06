@@ -22,6 +22,8 @@
     'data': [
             'mutual_reports_reports.xml',
             'views/custom_invoice.xml',
+            'views/custom_draft_invoice.xml',
+            'views/custom_sale_invoice.xml',
             'views/custom_quotation.xml',
             'views/custom_additional_quotation.xml',
             'views/custom_layouts.xml',
@@ -30,7 +32,6 @@
             'views/report_task_pdf.xml',
             'views/custom_template.xml',
             'views/report_history_pdf.xml',
-
     ]
 
 }

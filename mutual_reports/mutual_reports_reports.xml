@@ -63,11 +63,31 @@
         <report
                 id="custom_invoice_pdf"
                 model="account.invoice"
-                string="Custom Invoice"
+                string="Monitoring Invoice"
                 report_type="qweb-pdf"
                 name="mutual_reports.custom_invoice"
                 attachment_use="False"
                 file="mutual_reports.custom_invoice"
+        />
+
+         <report
+                id="sale_custom_invoice_pdf"
+                model="account.invoice"
+                string="Sales Tax Invoice"
+                report_type="qweb-pdf"
+                name="mutual_reports.custom_sale_invoice"
+                attachment_use="False"
+                file="mutual_reports.custom_sale_invoice"
+        />
+
+         <report
+                id="draft_custom_invoice_pdf"
+                model="account.invoice"
+                string="Draft Invoice"
+                report_type="qweb-pdf"
+                name="mutual_reports.custom_draft_invoice"
+                attachment_use="False"
+                file="mutual_reports.custom_draft_invoice"
         />
     </data>
 </openerp>
