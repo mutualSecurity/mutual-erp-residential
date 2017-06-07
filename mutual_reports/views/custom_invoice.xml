@@ -90,7 +90,7 @@
                                           </td>
                                           <td>
                                               <span t-esc="round(l.quantity)"/>
-                                              <t t-if="l.uos_id.name == 'Unit(s)' and ">
+                                              <t t-if="l.uos_id.name == 'Unit(s)'">
                                                   Month(s)
                                               </t>
                                               <t t-if="not l.uos_id.name == 'Unit(s)'">
