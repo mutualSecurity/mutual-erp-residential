@@ -83,9 +83,16 @@ class invoice_csnumber(osv.osv):
             self.outstanding_amount = out
             self.grand_total = out + self.amount_total
         else:
-            out = float(self.outstanding) - total - self.amount_total
-            self.outstanding_amount = out
-            self.grand_total = out + self.amount_total
+            if total == 0 and float(self.outstanding) == 0.0:
+                out = 0.0
+                self.outstanding_amount = out
+                self.grand_total = out + self.amount_total
+
+            else:
+                out = float(self.outstanding) - total - self.amount_total
+                self.outstanding_amount = out
+                self.grand_total = out + self.amount_total
+
         if self.date_invoice:
             date_format = "%Y-%m-%d"
             from_date = datetime.strptime(str(self.date_invoice), date_format)
