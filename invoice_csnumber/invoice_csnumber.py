@@ -48,7 +48,7 @@ class invoice_csnumber(osv.osv):
 
     @api.multi
     def invoice_validate(self):
-        if float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0:
+        if (float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0) and (str(self.number).find('MAJ') or str(self.number).find('SAJ')):
             return self.write({'state': 'paid'})
         else:
             return self.write({'state': 'open'})
