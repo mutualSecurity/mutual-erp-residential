@@ -40,6 +40,7 @@ class mutual_projects(osv.osv):
                               ('NewInstallation (Under Construction)', 'NewInstallation (Under Construction)'),
                               ('Disable In SIS', 'Disable In SIS'),
                               ('Renovation', 'Renovation'),
+                              ('Change of Owner', 'Change of Owner'),
                               ],
                              'Task', required=True, store=True, select=True),
      'disco_reasons': fields.selection([
