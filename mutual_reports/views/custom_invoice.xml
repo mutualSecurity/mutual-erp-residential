@@ -46,6 +46,10 @@
                                       <strong>GST</strong>
                                       <p t-field="account_invoice.gst_num"/>
                                   </div>
+                                   <div class="col-xs-2" t-if="account_invoice.date_due">
+                                      <strong>Due Date</strong>
+                                      <p t-field="account_invoice.date_due"/>
+                                  </div>
                               </div>
                               <span t-if="account_invoice.ntn_num">
                                   <h3>SaleTax Invoice <span t-field="account_invoice.number"/></h3>
@@ -228,6 +232,19 @@
                                      <small><em>
                                          <span t-field="account_invoice.create_date"/> <span t-field="account_invoice.create_uid"/></em>
                                      </small>
+                                 </span>
+                              </div>
+                          </div>
+                           <div class="row"><br/><br/>
+                              <div class="pull-right" style="font-size:16px">
+                                 <span>
+                                         <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
+                                             Mutual Security Systems
+                                         </t>
+                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                             Mutual Security
+                                         </t>
+
                                  </span>
                               </div>
                           </div>
