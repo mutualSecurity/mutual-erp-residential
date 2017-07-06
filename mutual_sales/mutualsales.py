@@ -194,6 +194,9 @@ class duedeligence(osv.osv):
             if line.tax_id.description == 'SRB 19.5%':
                 tax = line.price_subtotal*19.5/100
                 self.monitoring_tax = tax
+            elif line.tax_id.description == 'SRB 19%':
+                tax = line.price_subtotal * 19 / 100
+                self.monitoring_tax = tax
 
 
 

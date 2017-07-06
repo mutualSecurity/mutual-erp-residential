@@ -10,8 +10,8 @@
                               <h3>Acknowledgement Cheque/Cash</h3>
                               <t t-if="account.address_criteria=='Monitoring Address'">
                                   <div style="border:2px solid grey; padding:10px;border-radius:10px">
-                                      <span style="font-size:14px;">
-                                          <strong style="font-size:14px">Customer's Information:</strong><br/>
+                                      <span style="font-size:16px;">
+                                          <strong style="font-size:16px">Customer's Information:</strong><br/>
                                           <span t-field="account.partner_id.name"/><br/>
                                           <span t-if="account.partner_id.street">
                                               <span t-field="account.partner_id.street"/><br/>
@@ -36,8 +36,8 @@
                               </t>
                               <t t-if="account.address_criteria=='Mailing Address'">
                                   <div style="border:2px solid grey; padding:10px;border-radius:10px">
-                                      <span style="font-size:14px;">
-                                          <strong style="font-size:14px">Customer's Information:</strong><br/>
+                                      <span style="font-size:16px;">
+                                          <strong style="font-size:16px">Customer's Information:</strong><br/>
                                           <span t-field="account.partner_id.name"/><br/>
                                           <span t-if="account.partner_id.c_street">
                                               <span t-field="account.partner_id.c_street"/><br/>
@@ -62,8 +62,8 @@
                               </t>
                               <t t-if="account.address_criteria=='Temporary Address'">
                                   <div style="border:2px solid grey; padding:10px;border-radius:10px">
-                                      <span style="font-size:14px;">
-                                          <strong style="font-size:14px">Customer's Information:</strong><br/>
+                                      <span style="font-size:16px;">
+                                          <strong style="font-size:16px">Customer's Information:</strong><br/>
                                           <span t-field="account.partner_id.name"/><br/>
                                           <span t-if="account.partner_id.tempaddress">
                                               <span t-field="account.partner_id.tempaddress"/><br/>
@@ -84,7 +84,7 @@
                                   </div>
                               </t>
                           </div>
-                          <div class="row mt32 mb32" style="font-size:12px">
+                          <div class="row mt32 mb32" style="font-size:16px">
                               <div class="col-xs-2" t-if="account.date_invoice">
                                   <strong>Invoice Date</strong>
                                   <p t-field="account.date_invoice"/>
@@ -99,14 +99,14 @@
                               </div>
                               <div class="col-xs-2">
                                   <strong>Receipt Date</strong>
-                                  <p>___________</p>
+                                  <p>_____________</p>
                               </div>
                               <div class="col-xs-2">
                                   <strong>Cheque no.</strong>
                                   <p>__________</p>
                               </div>
                           </div>
-                          <div>
+                          <div style="font-size:16px;">
                               <strong>Monitoring Period: </strong>
                               <span t-if="account.from_date">
                                   <span t-field="account.from_date"></span>
@@ -115,16 +115,30 @@
                                   <span t-field="account.to_date"></span>
                               </span>
                           </div>
-                           <div>
+                           <div style="font-size:16px;">
                                <strong>Amount Due:</strong>
-                               <span t-field="account.amount_total"/> PKR<br/>(<small><span t-esc="account.amount_to_text(round(account.amount_total+account.outstanding_amount),'euro')"/></small>)
+                               <t t-if="account.grand_total > 0.0">
+                                   <span t-esc="round(account.grand_total)"/>
+                                PKR<br/>
+                               (
+                                 <span>Amount In Words: <span t-esc="account.amount_to_text(round(account.grand_total),'euro')"/></span>
+                               )
+                               </t>
+                               <t t-if="account.grand_total &lt; 0.0">
+                                   <span t-esc="round(account.grand_total)"/>
+                                PKR<br/>
+                               (<small>
+                                 <span>Amount In Words: <span t-esc="account.amount_to_text(round(account.grand_total),'euro')"/></span>
+                               </small>)
+                               </t>
+
                            </div>
                            <div><br/>
                                <strong>Note: </strong><br/>
                                <small>Dear subscriber please keep checking your "Alarm System Regularly,Weekly or Monthly" basis by using panic and other devices</small>
                            </div>
                            <div class="pull-right">
-                               <small>Prepared By <span t-field="account.create_uid"/> </small><br/>
+                               <small>Prepared By <span t-esc="user.name"/> </small><br/>
                                <small><span t-field="account.create_date"/></small>
                            </div>
                       </div>
