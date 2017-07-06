@@ -7,7 +7,14 @@
                    <t>
                       <div class="page">
                           <div class="row"><br/>
-                              <h1 align="center">Invoice</h1><br/>
+                              <h1 align="center">
+                                  <t t-if="account_invoice.partner_id.ntn_num">
+                                      Sales Tax Invoice
+                                  </t>
+                                  <t t-if="not account_invoice.partner_id.ntn_num">
+                                      Invoice
+                                  </t>
+                              </h1><br/>
                               <div style="font-size:18px;width:550px;display:inline-block;">
                                   <span style="font-size:18px">
                                       <strong>CUSTOMER ID:<span t-field="account_invoice.css"/></strong></span>
