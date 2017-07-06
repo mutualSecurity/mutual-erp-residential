@@ -8,7 +8,7 @@
                       <div class="page">
                           <div class="row"><br/>
                               <h1 align="center">
-                                  <t t-if="account_invoice.partner_id.ntn_num">
+                                  <t t-if="account_invoice.partner_id.ntn_num or account_invoice.partner_id.gst_num">
                                       Sales Tax Invoice
                                   </t>
                                   <t t-if="not account_invoice.partner_id.ntn_num">
