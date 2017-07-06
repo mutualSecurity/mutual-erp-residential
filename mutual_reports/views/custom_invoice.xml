@@ -256,7 +256,7 @@
                                  </span>
                               </div>
                           </div>
-                           <div class="row"><br/><br/>
+                           <div class="row">
                               <div class="pull-right" style="font-size:17px">
                                  <span>
                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
