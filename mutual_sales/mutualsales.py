@@ -191,8 +191,8 @@ class duedeligence(osv.osv):
     @api.depends('order_line.sale_layout_cat_id', 'order_line.tax_id')
     def add_tax(self):
         for line in self.order_line:
-            if line.tax_id.description == 'SRB 19%':
-                tax = line.price_subtotal*19/100
+            if line.tax_id.description == 'SRB 19.5%':
+                tax = line.price_subtotal*19.5/100
                 self.monitoring_tax = tax
 
 
