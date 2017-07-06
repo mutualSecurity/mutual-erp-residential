@@ -69,7 +69,7 @@
     <t t-if="p['category'].name=='Monitoring Charges'">
         <tr class="text-right">
             <td colspan="100">
-                <strong>SRB 19%:  </strong><span t-field="sale_order.monitoring_tax"/>Rs.<br/>
+                <strong>SRB 19.5%:  </strong><span t-field="sale_order.monitoring_tax"/>Rs.<br/>
                  <t t-if="sale_order.discounted_amount > 0.0">
                     <strong>Special Discount:  </strong><span t-field="sale_order.discounted_amount"/>Rs.
                 </t>
