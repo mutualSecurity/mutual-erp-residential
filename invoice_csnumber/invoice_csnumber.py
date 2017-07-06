@@ -169,3 +169,26 @@ class account_voucher_mutual(osv.osv):
     _columns = {
         'cs_number': fields.related('partner_id','cs_number',type='char',string='CS Number')
     }
+
+
+class backupInvoices(osv.osv):
+    _name = "backup.invoces"
+    _columns = {
+        'customer': fields.char('Customer', store=True),
+        'cs': fields.char('CS', store=True),
+        'invoice_date': fields.date('Invoice Date', store=True),
+        'company': fields.char('Company', store=True),
+        'responsible':fields.char('Responsible', store=True),
+        'rider': fields.char('rider', store=True),
+        'date': fields.date('Date', store=True),
+        'from': fields.date('From', store=True),
+        'to': fields.date('To', store=True),
+        'subtotal':fields.float('SubTotal',store=True),
+        'total': fields.float('Total', store=True),
+        'balance': fields.float('Balances', store=True),
+        'tax': fields.float('Tax', store=True),
+        'pay_method': fields.char('Pay Method', store=True),
+        'pay_rec': fields.boolean('Pay Received', store=True),
+        'cheque': fields.char('Cheque no.', store=True),
+        'remarks': fields.char('Remarks',store=True)
+    }

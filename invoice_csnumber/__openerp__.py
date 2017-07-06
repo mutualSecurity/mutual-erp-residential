@@ -34,6 +34,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'invoice_csnumber_view.xml',
+        'backup_invoices_view.xml',
     ],
 
 }

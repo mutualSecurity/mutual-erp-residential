@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="backup_invoice_view" model="ir.actions.act_window">
+	        <field name="name">Backup Invoices</field>
+            <field name="res_model">backup.invoces</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+        <menuitem
+            name="Backup Invoices"
+            action="backup_invoice_view"
+            id="menu_backup_invoice_view"
+            sequence="100"
+            parent="account.menu_finance_receivables">
+        </menuitem>
+
+        <!-- ================================================== Begin Form view of Guard Details ================================================ -->
+       <record id="backup_voucher_form_view" model="ir.ui.view">
+            <field name="name">backup_voucher.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">backup.invoces</field>
+            <field name="arch" type="xml">
+                <form string="Backup Invoices">
+                    <sheet>
+                        <group string="Backup Invoices">
+                            <group>
+                                <field name="customer" />
+                                <field name="company"/>
+                                <field name="balance"/>
+                                <field name="subtotal"/>
+                                <field name="total"/>
+                            </group>
+                            <group>
+                                <field name="invoice_date"/>
+                                <field name="from"/>
+                                <field name="to"/>
+                            </group>
+                        </group>
+                        <separator string="FollowUps"/>
+                        <group>
+                            <field name="responsible"/>
+                            <field name="date"/>
+                            <field name="rider"/>
+                            <field name="pay_rec"/>
+                            <field name="pay_method"/>
+                            <field name="cheque"/>
+                            <field name="remarks"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form view of Force Details ================================================ -->
+        <record id="backup_tree_view" model="ir.ui.view">
+            <field name="name">backup_invoces.tree.view</field>
+            <field name="model">backup.invoces</field>
+            <field name="arch" type="xml">
+                <tree string="BackUp Tree" version="8.0">
+                    <field name="customer" />
+                    <field name="cs"/>
+                    <field name="company"/>
+                    <field name="responsible"/>
+                    <field name="rider"/>
+                    <field name="invoice_date"/>
+                    <field name="date"/>
+                    <field name="rider"/>
+                    <field name="pay_rec"/>
+                    <field name="pay_method"/>
+                    <field name="cheque"/>
+                    <field name="remarks"/>
+                </tree>
+            </field>
+        </record>
+
+        <record  model="ir.ui.view" id="backup_log_Search">
+            <field name="name">Backup log Search</field>
+            <field name="model">backup.invoces</field>
+            <field name="arch" type="xml">
+                <search string="Search Logs">
+                    <field name="cs"/>
+                    <field name="responsible"/>
+                    <field name="rider"/>
+                    <field name="invoice_date"/>
+                    <group string="Recovery Filter">
+                        <filter string="Payment Received" domain="[('pay_rec','=',True)]"/>
+                        <filter string="Payment Not Received" domain="[('pay_rec','=',False)]"/>
+                        <filter string="Assigned to Riders" domain="[('rider','!=',False)]"/>
+                        <filter string="Not Assigned to Riders" domain="[('rider','=',False)]"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</openerp>

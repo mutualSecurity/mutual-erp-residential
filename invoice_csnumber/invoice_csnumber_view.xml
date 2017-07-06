@@ -125,6 +125,9 @@
                     <field name="create_date" readonly="1"/>
                     <field name="create_uid" readonly="1"/>
                 </xpath>
+                <xpath expr="//field[@name='ref']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
             </field>
         </record>
 
