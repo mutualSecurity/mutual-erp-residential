@@ -193,3 +193,9 @@ class backupInvoices(osv.osv):
         'cheque': fields.char('Cheque no.', store=True),
         'remarks': fields.char('Remarks',store=True)
     }
+
+class generalEntry(osv.osv):
+    _inherit = "account.move.line"
+    _columns = {
+        'cs_number': fields.related('partner_id', 'cs_number', type='char', size=12,string='CS Number',readonly=True),
+    }
