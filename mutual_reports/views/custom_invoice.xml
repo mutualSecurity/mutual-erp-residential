@@ -64,7 +64,7 @@
                                       </tr>
                                       <tr>
                                           <td><strong>Uplink Date</strong></td>
-                                          <td><span t-field="account_invoice.date_invoice" style="margin-left:13px;"/></td>
+                                          <td><span t-field="account_invoice.uplink_date" style="margin-left:13px;"/></td>
                                       </tr>
                                       <tr>
                                           <td><strong>Our NTN</strong></td>
