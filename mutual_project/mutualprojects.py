@@ -65,6 +65,9 @@ class mutual_projects(osv.osv):
               'UPDATE account_analytic_account SET state =' + "'" + status + "'" + 'WHERE partner_id =' + str(
                   vals['partner_id']))
           return super(mutual_projects, self).create(vals)
+      elif vals['name'] == 'reconnection':
+          self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(vals['partner_id']))
+          return super(mutual_projects, self).create(vals)
       else:
           return super(mutual_projects, self).create(vals)
 

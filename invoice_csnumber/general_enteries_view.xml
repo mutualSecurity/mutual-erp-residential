@@ -19,6 +19,9 @@
                   <xpath  expr="//page/field/tree/field[@name='partner_id']" position="before">
                     <field name="cs_number" readonly="1"/>
                   </xpath>
+                  <xpath expr="//field[@name='to_check']" position="after">
+                      <field name="parts_payment" widget="radio"/>
+                  </xpath>
               </field>
          </record>
     </data>

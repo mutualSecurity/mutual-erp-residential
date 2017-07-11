@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+       <template id="customer_details">
+           <t t-call='report.external_layout'>
+               <t t-foreach="docs" t-as="customer">
+                   <t>
+                      <div class="page">
+                          <div class="row"><br/>
+                              <h1 align="center">Customer's Information</h1>
+                              <div style="border:2px solid grey; padding:10px;border-radius:10px; width:100%;">
+                                  <table class="table table-condensed" style="font-size:20px;">
+                                  <tbody class="invoice_tbody">
+                                     <tr>
+                                         <td>
+                                            <strong>Name:</strong>
+                                         </td>
+                                         <td>
+                                             <span t-field="customer.name"/>
+                                         </td>
+                                     </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>CS Number:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.cs_number"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>Uplink Date:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.uplink_date"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>Monitoring Address:</strong>
+                                          </td>
+                                          <td>
+                                             <t t-if="customer.street">
+                                                 <span t-field="customer.street"/>
+                                                 <t t-if="customer.street2">
+                                                     ,<span t-field="customer.street2"/>
+                                                 </t>
+                                                 <t t-if="customer.city">
+                                                     ,<span t-field="city"/>
+                                                 </t>
+                                             </t>
+                                          </td>
+                                      </tr>
+                                       <tr>
+                                          <td>
+                                            <strong>Mailing Address:</strong>
+                                          </td>
+                                          <td>
+                                             <t t-if="customer.c_street">
+                                                 <span t-field="customer.c_street"/>
+                                                 <t t-if="customer.c_street2">
+                                                     ,<span t-field="c_customer.street2"/>
+                                                 </t>
+                                                 <t t-if="customer.c_city">
+                                                     ,<span t-field="c_city"/>
+                                                 </t>
+                                             </t>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>Office Number:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.office"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>Phone:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.phone"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>Mobile:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.mobile"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>Email:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.email"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                           <td>
+                                            <strong>Fax:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.fax"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                           <td>
+                                            <strong>Credit Card:</strong>
+                                          </td>
+                                          <td>
+                                             <span t-field="customer.credit_card_no"/>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <strong>Is a mobile app user?</strong>
+                                          </td>
+                                          <td>
+                                             <t t-if="customer.application_user">
+                                                 <span>Yes</span>
+                                             </t>
+                                              <t t-if="not customer.application_user">
+                                                 <span>No</span>
+                                             </t>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                                  </table>
+                              </div><br/>
+                              <h2>Other Contacts</h2>
+                              <table class="table table-condensed"  style="font-size:20px;">
+                                  <thead>
+                                      <tr>
+                                          <th>Name</th>
+                                          <th>Relationship</th>
+                                          <th>Contact#1</th>
+                                          <th>Contact#2</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr t-foreach="customer.customer_relatives" t-as="l">
+                                          <td>
+                                              <span t-field="l.relative"/>
+                                          </td>
+                                          <td>
+                                              <span t-field="l.relationship"/>
+                                          </td>
+                                          <td>
+                                              <span t-field="l.contact_1"/>
+                                          </td>
+                                           <td>
+                                              <span t-field="l.contact_2"/>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                              <div class="pull-right" style="font-size:16px">
+                                 <span>
+                                     <small><em>
+                                         <span t-field="customer.create_date"/> <span t-field="customer.create_uid"/></em>
+                                     </small>
+                                 </span>
+                              </div>
+                          </div>
+                      </div>
+                   </t>
+               </t>
+           </t>
+       </template>
+    </data>
+</openerp>

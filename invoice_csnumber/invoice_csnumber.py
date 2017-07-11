@@ -194,8 +194,16 @@ class backupInvoices(osv.osv):
         'remarks': fields.char('Remarks',store=True)
     }
 
+
 class generalEntry(osv.osv):
     _inherit = "account.move.line"
     _columns = {
         'cs_number': fields.related('partner_id', 'cs_number', type='char', size=12,string='CS Number',readonly=True),
+    }
+
+
+class generalEntryCreate(osv.osv):
+    _inherit = "account.move"
+    _columns = {
+        'parts_payment': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Is this parts payment?',store=True, required=True),
     }

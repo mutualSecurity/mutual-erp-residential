@@ -89,5 +89,15 @@
                 attachment_use="False"
                 file="mutual_reports.custom_draft_invoice"
         />
+
+        <report
+                id="customer_details_pdf"
+                model="res.partner"
+                string="Customer Details"
+                report_type="qweb-pdf"
+                name="mutual_reports.customer_details"
+                attachment_use="False"
+                file="mutual_reports.customer_details"
+        />
     </data>
 </openerp>
