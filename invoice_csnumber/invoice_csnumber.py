@@ -19,7 +19,7 @@ class invoice_csnumber(osv.osv):
         'invoice_remarks': fields.char('Remarks',store=True),
         # 'cs_num': fields.char('CS Number', store=True, readonly=True, compute='cal_cs'),
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
-        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, store=True, string='CS Number', readonly=True),
+        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
         'credit_card': fields.related('partner_id', 'credit_card_no', type='char',string='Credit Card', readonly=True),
         'outstanding': fields.related('partner_id', 'credit', type='char', string='Credit Balance', readonly=True),
         'phone': fields.related('partner_id','phone',type='char', size=12,string='Phone',readonly=True),
@@ -227,7 +227,12 @@ class invoice_line_(osv.osv):
     @api.depends('price_unit', 'discount', 'invoice_line_tax_id', 'quantity',
                  'product_id', 'invoice_id.partner_id', 'invoice_id.currency_id')
     def _compute_price(self):
-        price = self.price_unit - self.discount
+        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Discounr"
+        print (self.quantity - 1) * self.discount
+        print self.price_unit
+        price = self.price_unit - (self.discount/self.quantity)
+        print ">>>>>>>>>>>>>>>>>>>>>>>>.Price>>>>>>>>>>"
+        print price
         taxes = self.invoice_line_tax_id.compute_all(price, self.quantity, product=self.product_id,
                                                      partner=self.invoice_id.partner_id)
         self.price_subtotal = taxes['total']
