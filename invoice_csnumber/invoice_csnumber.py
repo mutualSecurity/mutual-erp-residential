@@ -19,7 +19,7 @@ class invoice_csnumber(osv.osv):
         'invoice_remarks': fields.char('Remarks',store=True),
         # 'cs_num': fields.char('CS Number', store=True, readonly=True, compute='cal_cs'),
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
-        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
+        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, store=True,string='CS Number', readonly=True),
         'credit_card': fields.related('partner_id', 'credit_card_no', type='char',string='Credit Card', readonly=True),
         'outstanding': fields.related('partner_id', 'credit', type='char', string='Credit Balance', readonly=True),
         'phone': fields.related('partner_id','phone',type='char', size=12,string='Phone',readonly=True),
