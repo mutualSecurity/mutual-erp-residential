@@ -48,7 +48,7 @@ class mutual_sales(osv.osv):
         'nic_num': fields.char('CNIC Number', size=15, store=True),
         'ntn_num': fields.char('NTN Number',store=True),
         'gst_num': fields.char('GST Number',store=True),
-        'credit_card_no': fields.char('Credit Card', size=14, store=True),
+        'credit_card_no': fields.char('Credit Card',store=True),
         'credit_card_exp_date': fields.date('Expiry Date', select=True, copy=False),
         'visit': fields.boolean('Force Visit Required',store=True),
         'uplink_date': fields.date('Uplink Date', select=True, copy=False,write=["project.group_project_user"],track_visibility='onchange'),

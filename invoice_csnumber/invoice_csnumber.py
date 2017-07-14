@@ -19,7 +19,7 @@ class invoice_csnumber(osv.osv):
         'invoice_remarks': fields.char('Remarks',store=True),
         # 'cs_num': fields.char('CS Number', store=True, readonly=True, compute='cal_cs'),
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
-        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, string='CS Number', readonly=True),
+        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, store=True, string='CS Number', readonly=True),
         'credit_card': fields.related('partner_id', 'credit_card_no', type='char',string='Credit Card', readonly=True),
         'outstanding': fields.related('partner_id', 'credit', type='char', string='Credit Balance', readonly=True),
         'phone': fields.related('partner_id','phone',type='char', size=12,string='Phone',readonly=True),
@@ -53,7 +53,7 @@ class invoice_csnumber(osv.osv):
         self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line)
         self.amount_tax = sum(line.amount for line in self.tax_line)
         self.amount_total = self.amount_untaxed + self.amount_tax
-        self.amount_discount = sum(line.discount for line in self.invoice_line)
+
 
     @api.multi
     def invoice_validate(self):
