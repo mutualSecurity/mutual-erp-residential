@@ -46,7 +46,7 @@
                                                      ,<span t-field="customer.street2"/>
                                                  </t>
                                                  <t t-if="customer.city">
-                                                     ,<span t-field="city"/>
+                                                     ,<span t-field="customer.city"/>
                                                  </t>
                                              </t>
                                           </td>
@@ -59,10 +59,10 @@
                                              <t t-if="customer.c_street">
                                                  <span t-field="customer.c_street"/>
                                                  <t t-if="customer.c_street2">
-                                                     ,<span t-field="c_customer.street2"/>
+                                                     ,<span t-field="customer.c_street2"/>
                                                  </t>
-                                                 <t t-if="customer.c_city">
-                                                     ,<span t-field="c_city"/>
+                                                 <t t-if="customer.city">
+                                                     ,<span t-field="customer.city"/>
                                                  </t>
                                              </t>
                                           </td>
