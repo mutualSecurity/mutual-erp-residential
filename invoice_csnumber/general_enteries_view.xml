@@ -8,6 +8,7 @@
               <field name="arch" type="xml">
                   <xpath expr="//field[@name='ref']" position="after">
                       <field name="cs_number"/>
+                      <field name="customer_invoice"/>
                   </xpath>
               </field>
          </record>
@@ -17,7 +18,8 @@
               <field name="inherit_id" ref="account.view_move_form" />
               <field name="arch" type="xml">
                   <xpath  expr="//page/field/tree/field[@name='partner_id']" position="before">
-                    <field name="cs_number" readonly="1"/>
+                      <field name="cs_number" readonly="1"/>
+                      <field name="customer_invoice"/>
                   </xpath>
                   <xpath expr="//field[@name='to_check']" position="after">
                       <field name="parts_payment" widget="radio"/>

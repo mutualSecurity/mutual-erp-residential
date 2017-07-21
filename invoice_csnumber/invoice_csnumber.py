@@ -216,6 +216,41 @@ class generalEntryCreate(osv.osv):
         'parts_payment': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Is this parts payment?',store=True, required=True),
     }
 
+    def button_validate(self, cursor, user, ids, context=None):
+        print ">>>>>>>>>>>>>>>>>>>>>Validate>>>>>>>>>>>>>>>>>>>>>>>>."
+        for move in self.browse(cursor, user, ids, context=context):
+            # check that all accounts have the same topmost ancestor
+            top_common = None
+            for line in move.line_id:
+                if(line.customer_invoice.amount_total == line.credit and line.customer_invoice.id):
+                    invoice_status = "paid"
+                    cursor.execute(
+                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+                            line.customer_invoice.id))
+                    cursor.execute(
+                        'UPDATE account_invoice SET residual =' + "'" + str(0.0) + "'" + 'WHERE id =' + str(
+                            line.customer_invoice.id))
+                elif(line.customer_invoice.amount_total > line.credit and line.customer_invoice.id):
+                    invoice_status = "open"
+                    cursor.execute(
+                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+                            line.customer_invoice.id))
+                    cursor.execute(
+                        'UPDATE account_invoice SET residual =' + "'" + str(line.customer_invoice.amount_total - line.credit) + "'" + 'WHERE id =' + str(
+                            line.customer_invoice.id))
+
+
+                account = line.account_id
+                top_account = account
+                while top_account.parent_id:
+                    top_account = top_account.parent_id
+                if not top_common:
+                    top_common = top_account
+                elif top_account.id != top_common.id:
+                    raise osv.except_osv(_('Error!'),
+                                         _('You cannot validate this journal entry because account "%s" does not belong to chart of accounts "%s".') % (account.name, top_common.name))
+        return self.post(cursor, user, ids, context=context)
+
 
 class invoice_line_(osv.osv):
     _inherit = 'account.invoice.line'
@@ -238,6 +273,13 @@ class invoice_line_(osv.osv):
         self.price_subtotal = taxes['total']
         if self.invoice_id:
             self.price_subtotal = self.invoice_id.currency_id.round(self.price_subtotal)
+
+
+class mutual_account_move_line(osv.osv):
+    _inherit = 'account.move.line'
+    _columns = {
+        'customer_invoice': fields.many2one('account.invoice', 'Customer Invoice',store=True,domain=[('state','=', 'open')]),
+    }
 
 
 class mutual_account_invoice_tax(models.Model):
