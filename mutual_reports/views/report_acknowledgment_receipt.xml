@@ -34,7 +34,7 @@
                                       </span>
                                   </div>
                               </t>
-                              <t t-if="account.address_criteria=='Mailing Address'">
+                              <t t-if="account.address_criteria=='Mailing Address' or account.address_criteria==False">
                                   <div style="border:2px solid grey; padding:10px;border-radius:10px">
                                       <span style="font-size:16px;">
                                           <strong style="font-size:16px">Customer's Information:</strong><br/>
