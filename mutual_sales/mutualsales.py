@@ -22,6 +22,7 @@ def grouplines(self, ordered_lines, sortkey):
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
+        'customer_status': fields.char('Customer Status', store=True, compute='_customer_status'),
         'riders': fields.many2one('res.partner', 'Assigned to Rider', required=False, select=1,
                                   track_visibility='onchange', domain="[('is_rider','=',True)]"),
         'payment_received': fields.boolean('Payment Received',store=True,track_visibility='onchange'),
@@ -54,6 +55,15 @@ class mutual_sales(osv.osv):
         'uplink_date': fields.date('Uplink Date', select=True, copy=False,write=["project.group_project_user"],track_visibility='onchange'),
         'active': fields.boolean('Active', read=["account.group_account_manager"], write=["account.group_account_manager"],track_visibility='onchange'),
     }
+
+    @api.one
+    @api.depends('active')
+    def _customer_status(self):
+        print ">>>>>>>>>>>>>>>>>>>>Customer Status>>>>>>>>>>>>>>>>>>>>>>>>>"
+        if self.active:
+            self.customer_status = "Active"
+        else:
+            self.customer_status = "Disco"
 
     @api.one
     @api.depends('cs_number')
