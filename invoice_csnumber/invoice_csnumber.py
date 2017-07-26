@@ -319,10 +319,6 @@ class mutual_account_move_line(osv.osv):
     def _customer_id(self):
         self.partner_id = self.customer_invoice.partner_id
         self.account_id = self.customer_invoice.partner_id.property_account_receivable
-        if(self.customer_invoice.amount_total == self.customer_invoice.residual):
-            self.credit = self.customer_invoice.amount_total
-        else:
-            self.credit = self.customer_invoice.residual
 
 
 class mutual_account_invoice_tax(models.Model):
