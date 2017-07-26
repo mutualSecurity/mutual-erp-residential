@@ -16,9 +16,9 @@
                                           <span t-if="account.partner_id.street">
                                               <span t-field="account.partner_id.street"/><br/>
                                           </span>
-                                          <span t-if="account.partner_id.street2">
-                                              <span t-field="account.partner_id.street2"/><br/>
-                                          </span>
+                                          <!--<span t-if="account.partner_id.street2">-->
+                                              <!--<span t-field="account.partner_id.street2"/><br/>-->
+                                          <!--</span>-->
                                           <span t-if="account.partner_id.city">
                                               <span t-field="account.partner_id.city"/><br/>
                                           </span>
@@ -42,9 +42,9 @@
                                           <span t-if="account.partner_id.c_street">
                                               <span t-field="account.partner_id.c_street"/><br/>
                                           </span>
-                                          <span t-if="account.partner_id.c_street2">
-                                              <span t-field="account.partner_id.c_street2"/><br/>
-                                          </span>
+                                          <!--<span t-if="account.partner_id.c_street2">-->
+                                              <!--<span t-field="account.partner_id.c_street2"/><br/>-->
+                                          <!--</span>-->
                                           <span t-if="account.partner_id.city">
                                               <span t-field="account.partner_id.city"/><br/>
                                           </span>
