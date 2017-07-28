@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_inventory">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="report.internal_layout">
+                <div class="page">
+                    <h1>Stock Report</h1><br/>
+                     <table class="table table-condensed" style="font-size:14px">
+                                  <thead>
+                                      <tr>
+                                          <th>Item Code</th>
+                                          <th>Item Name</th>
+                                          <th class="text-right">Opening</th>
+                                          <th class="text-right">Receipt</th>
+                                          <th class="text-right">Sales Return</th>
+                                          <th class="text-right">Sales</th>
+                                          <th class="text-right">Purchase Return</th>
+                                          <th class="text-right">Total</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="invoice_tbody">
+                                      <tr t-foreach="doc._fetch_record()" t-as="l">
+                                          <td>
+                                             <span t-esc="l['item_code']"/>
+                                          </td>
+                                          <td>
+                                             <span t-esc="l['item_name']"/>
+                                          </td>
+                                          <td class="text-right">
+                                             <span t-esc="l['opening']"/>
+                                          </td>
+                                          <td class="text-right">
+                                             <span t-esc="l['purchase_total']"/>
+                                          </td>
+                                          <td class="text-right">
+                                             <span t-esc="l['sale_return']"/>
+                                          </td>
+                                          <td class="text-right">
+                                             <span t-esc="l['total_sale']"/>
+                                          </td>
+                                          <td class="text-right">
+                                             <span t-esc="l['purchase_return']"/>
+                                          </td>
+                                          <td class="text-right">
+                                             <span t-esc="l['remaining']"/>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                     </table>
+                    <!--<h1><span t-esc="doc._fetch_record()"/></h1>-->
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

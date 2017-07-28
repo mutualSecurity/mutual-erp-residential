@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem name="Accounts Inventory" id="accounts_inventory_side_top_menu" parent="account.menu_finance" sequence="3"/>
+        <record id="account_inventory_view" model="ir.actions.act_window">
+	        <field name="name">Accounts Inventory</field>
+            <field name="res_model">inventory.logs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+        <menuitem
+            name="Stock Moves"
+            action="account_inventory_view"
+            id="menu_account_inventory_view"
+            sequence="2"
+            parent="accounts_inventory_side_top_menu">
+        </menuitem>
+
+         <!-- ================================================== Begin Form views of Accounts Inventory ================================================ -->
+       <record id="account_inventory_form_view" model="ir.ui.view">
+            <field name="name">account_inventory.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">inventory.logs</field>
+            <field name="arch" type="xml">
+                <form string="Inventory">
+                    <sheet>
+                        <group string="Inventory">
+                            <field name="item_code"/>
+                            <field name="item_name"/>
+                            <field name="date"/>
+                        </group>
+                        <separator string="Stock Quants"/>
+                        <group>
+                            <field name="sale_count"/>
+                            <field name="purchase_count"/>
+                            <field name="sale_return"/>
+                            <field name ="purchase_return"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form views of Account Inventory ================================================ -->
+
+        <!-- ================================================== Begins tree views of Account Inventory ================================================ -->
+         <record id="account_inventory_tree_view" model="ir.ui.view">
+            <field name="name">account_inventory.tree.view</field>
+            <field name="model">inventory.logs</field>
+            <field name="arch" type="xml">
+                <tree string="Account Inventory" version="8.0">
+                    <field name="item_code"/>
+                    <field name="item_name"/>
+                    <field name="purchase_count"/>
+                    <field name="sale_return"/>
+                    <field name="sale_count"/>
+                    <field name="purchase_return"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End Tree views of Account Inventory ================================================ -->
+
+         <record id="inventory_view" model="ir.actions.act_window">
+	        <field name="name">Inventory</field>
+            <field name="res_model">inventory.accounts</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+        <menuitem
+            name="Products"
+            action="inventory_view"
+            id="menu_inventory_view"
+            sequence="1"
+            parent="accounts_inventory_side_top_menu">
+        </menuitem>
+
+         <!-- ================================================== Begin Form views of Accounts Inventory ================================================ -->
+       <record id="inventory_form_view" model="ir.ui.view">
+            <field name="name">inventory.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">inventory.accounts</field>
+            <field name="arch" type="xml">
+                <form string="Inventory">
+                    <sheet>
+                        <group string="Inventory">
+                            <field name="item_code"/>
+                            <field name="item_name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form views of Account Inventory ================================================ -->
+
+        <!-- ================================================== Begins tree views of Account Inventory ================================================ -->
+        <record id="inventory_tree_view" model="ir.ui.view">
+            <field name="name">inventory.tree.view</field>
+            <field name="model">inventory.accounts</field>
+            <field name="arch" type="xml">
+                <tree string="Account Inventory" version="8.0">
+                    <field name="item_code"/>
+                    <field name="item_name"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End Tree views of Account Inventory ================================================ -->
+
+
+        <record id="inventory_opening_logs_view" model="ir.actions.act_window">
+	        <field name="name">Inventory Logs</field>
+            <field name="res_model">inventory.opening</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+        <menuitem
+            name="Opening Stock"
+            action="inventory_opening_logs_view"
+            id="menu_inventory_opening_logs_view"
+            sequence="3"
+            parent="accounts_inventory_side_top_menu">
+        </menuitem>
+
+         <!-- ================================================== Begin Form views of Accounts Inventory ================================================ -->
+       <record id="inventory_opening_logs_form_view" model="ir.ui.view">
+            <field name="name">inventory_opening.form.view</field>
+            <field name="view_type">form</field>
+            <field name="model">inventory.opening</field>
+            <field name="arch" type="xml">
+                <form string="Inventory">
+                    <sheet>
+                        <group string="Inventory">
+                            <field name="item_code"/>
+                            <field name="remaining_count"/>
+                            <field name="date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form views of Account Inventory ================================================ -->
+
+        <!-- ================================================== Begins tree views of Account Inventory ================================================ -->
+        <record id="inventory_opening_logs_tree_view" model="ir.ui.view">
+            <field name="name">inventory_opening.tree.view</field>
+            <field name="model">inventory.opening</field>
+            <field name="arch" type="xml">
+                <tree string="Opening Inventory" version="8.0">
+                    <field name="item_code"/>
+                    <field name="remaining_count"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+        <!-- ================================================== End Tree views of Account Inventory ================================================ -->
+
+         <menuitem
+            name="Stock Report"
+            action="action_account_form_wiz_inventory"
+            id="menu_action_account_form_wiz_inventory"
+            sequence="4"
+            parent="accounts_inventory_side_top_menu">
+        </menuitem>
+    </data>
+</openerp>
