@@ -40,6 +40,13 @@
                         </group>
                     </page>
                 </notebook>
+                <notebook>
+                    <page string="Changes in Sales Order" groups="base.group_sale_salesman_all_leads">
+                        <group col="4">
+                            <field name="changes_description"/>
+                        </group>
+                    </page>
+                </notebook>
             </field>
         </record>
         <record id="view_order_tree" model="ir.ui.view">

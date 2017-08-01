@@ -158,6 +158,7 @@ class duedeligence(osv.osv):
         'monitoring_discount': fields.float('Monitoring Discount', store=True, default=0.00),
         'monitoring_tax': fields.float('Monitoring Tax', store=True, default=0.00, compute='add_tax'),
         'terms_conditions': fields.selection([('Additional', 'Additional')], 'Terms and Conditions', store=True),
+        'changes_description': fields.text("Remarks", store=True),
     }
 
     def sale_layout_lines(self, cr, uid, ids, order_id=None, context=None):
