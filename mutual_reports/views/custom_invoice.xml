@@ -68,7 +68,12 @@
                                       </tr>
                                       <tr>
                                           <td><strong>Our NTN</strong></td>
-                                          <td><span style="margin-left:13px;">S3764757-1</span></td>
+                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
+                                              <td><span style="margin-left:13px;">0296772-3</span></td>
+                                          </t>
+                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                              <td><span style="margin-left:13px;">S3764757-1</span></td>
+                                         </t>
                                       </tr>
                                   </table>
                                   </div>
