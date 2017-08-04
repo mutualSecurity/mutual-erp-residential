@@ -432,7 +432,7 @@ class generalEntryCreate(osv.osv):
             # check that all accounts have the same topmost ancestor
             top_common = None
             for line in move.line_id:
-                if((line.credit == line.grand_total or line.customer_invoice.amount_total == line.credit or line.customer_invoice.residual == line.credit) and line.customer_invoice.id):
+                if((line.credit == line.customer_invoice.grand_total or line.customer_invoice.amount_total == line.credit or line.customer_invoice.residual == line.credit) and line.customer_invoice.id):
                     invoice_status = "paid"
                     cursor.execute(
                         'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
