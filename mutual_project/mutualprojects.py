@@ -222,7 +222,7 @@ class mutual_issues(osv.osv):
 
   @api.multi
   def smsSent(self):
-      r = requests.post("http://localhost:3001", data={'sms': self.sms, 'contact': self.techContact})
+      r = requests.post("http://localhost:3000", data={'sms': self.sms, 'contact': self.techContact})
       if r:
           self.status = "Sent"
           return True
