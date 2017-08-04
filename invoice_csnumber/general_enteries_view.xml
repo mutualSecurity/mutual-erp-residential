@@ -26,5 +26,15 @@
                   </xpath>
               </field>
          </record>
+        <record id="account_report_general_ledger_view_mutual" model="ir.ui.view">
+              <field name="name">General Ledger</field>
+              <field name="model">account.report.general.ledger</field>
+              <field name="inherit_id" ref="account.account_report_general_ledger_view" />
+              <field name="arch" type="xml">
+                  <xpath  expr="//field[@name='chart_account_id']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+              </field>
+         </record>
     </data>
 </openerp>

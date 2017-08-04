@@ -54,21 +54,12 @@ class invoice_csnumber(osv.osv):
         self.amount_tax = sum(line.amount for line in self.tax_line)
         self.amount_total = self.amount_untaxed + self.amount_tax
 
-
     @api.multi
     def invoice_validate(self):
         if (float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0) and (self.partner_id.customer == True):
             return self.write({'state': 'paid'})
         else:
             return self.write({'state': 'open'})
-
-    # @api.one
-    # @api.depends('origin')
-    # def cal_cs(self):
-    #     if self.origin!= False or self.origin==False:
-    #         print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Invoice Customer>>>>>>>>>>>>>>>>>"
-    #         print self.partner_id
-    #         self.cs_num = self.partner_id
 
     @api.multi
     def amount_to_text(self, amount, currency):
@@ -105,7 +96,6 @@ class invoice_csnumber(osv.osv):
             from_date = datetime.strptime(str(self.date_invoice), date_format)
             number_of_days = calendar.monthrange(from_date.year, from_date.month)[1]
             for line in self.invoice_line:
-                print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Line item"+str(line.name)
                 if(number_of_days == 28 and line.product_id.name=="Service (MS)") or (number_of_days == 28 and line.product_id.name=="Service (MSS)"):
                     if from_date.day == 1:
                         from_ = from_date + timedelta(days=10)
@@ -164,7 +154,6 @@ class invoice_csnumber(osv.osv):
     def account_head(self):
         if self.company_id.name == "Mutual Security" and self.origin:
             for line in self.invoice_line:
-                print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Heads Reset>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
                 line.account_id = line.product_id.property_account_income
 
 
@@ -214,15 +203,20 @@ class generalEntryCreate(osv.osv):
     _inherit = "account.move"
     _columns = {
         'parts_payment': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Is this parts payment?',store=True, required=True),
+        'count': fields.integer('Cancel Count',store=True),
+    }
+
+    _defaults = {
+        'count': 0
     }
 
     def button_cancel(self, cr, uid, ids, context=None):
+        obj = self.browse(cr, uid, ids[0], context=context)
+        obj.count = obj.count +1
         for move in self.browse(cr, uid, ids, context=context):
             # check that all accounts have the same topmost ancestor
             top_common = None
             for line in move.line_id:
-                print ">>>>>>>>>>>>>>Cancel>>>>>>>>>>>>>>>>>>>>>."
-                print line.customer_invoice.amount_total
                 invoice_status = "open"
                 if (line.customer_invoice.residual == 0.0 and line.customer_invoice.id):
                     cr.execute(
@@ -251,7 +245,9 @@ class generalEntryCreate(osv.osv):
         return True
 
     def button_validate(self, cursor, user, ids, context=None):
-        print ">>>>>>>>>>>>>>>>>>>>>Validate>>>>>>>>>>>>>>>>>>>>>>>>."
+        obj = self.browse(cursor, user, ids[0], context=context)
+        if(obj.count>0):
+            cursor.execute('UPDATE account_move_line SET ref =' + "'" + str(obj.ref) + "'" + 'WHERE move_id =' + str(obj.id))
         for move in self.browse(cursor, user, ids, context=context):
             # check that all accounts have the same topmost ancestor
             top_common = None
@@ -264,6 +260,15 @@ class generalEntryCreate(osv.osv):
                     cursor.execute(
                         'UPDATE account_invoice SET residual =' + "'" + str(0.0) + "'" + 'WHERE id =' + str(
                             line.customer_invoice.id))
+                elif(line.credit > line.customer_invoice.amount_total and line.customer_invoice.id):
+                    invoice_status = "paid"
+                    cursor.execute(
+                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+                            line.customer_invoice.id))
+                    cursor.execute(
+                        'UPDATE account_invoice SET residual =' + "'" + str(line.credit-line.customer_invoice.amount_total) + "'" + 'WHERE id =' + str(
+                            line.customer_invoice.id))
+
                 elif(line.customer_invoice.amount_total > line.credit and line.customer_invoice.id):
                     invoice_status = "open"
                     cursor.execute(
@@ -296,12 +301,7 @@ class invoice_line_(osv.osv):
     @api.depends('price_unit', 'discount', 'invoice_line_tax_id', 'quantity',
                  'product_id', 'invoice_id.partner_id', 'invoice_id.currency_id')
     def _compute_price(self):
-        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Discounr"
-        print (self.quantity - 1) * self.discount
-        print self.price_unit
         price = self.price_unit - (self.discount/self.quantity)
-        print ">>>>>>>>>>>>>>>>>>>>>>>>.Price>>>>>>>>>>"
-        print price
         taxes = self.invoice_line_tax_id.compute_all(price, self.quantity, product=self.product_id,
                                                      partner=self.invoice_id.partner_id)
         self.price_subtotal = taxes['total']
@@ -359,8 +359,6 @@ class mutual_account_invoice_tax(models.Model):
             taxes = line.invoice_line_tax_id.compute_all(
                 (line.price_unit),
                 line.quantity, line.product_id, invoice.partner_id)['taxes']
-            print ">>>>>>>>>>>>>>>>>Taxes>>>>>>>>>>>>>>>>>>>>>>>"
-            print taxes
             for tax in taxes:
                 val = {
                     'invoice_id': invoice.id,
