@@ -32,19 +32,19 @@
                                              <span t-esc="l['opening']"/>
                                           </td>
                                           <td class="text-right">
-                                             <span t-esc="l['purchase_total']"/>
+                                             <span t-esc="l['purchase_count']"/>
                                           </td>
                                           <td class="text-right">
                                              <span t-esc="l['sale_return']"/>
                                           </td>
                                           <td class="text-right">
-                                             <span t-esc="l['total_sale']"/>
+                                             <span t-esc="l['sale_count']"/>
                                           </td>
                                           <td class="text-right">
                                              <span t-esc="l['purchase_return']"/>
                                           </td>
                                           <td class="text-right">
-                                             <span t-esc="l['remaining']"/>
+                                             <span t-esc="l['Total']"/>
                                           </td>
                                       </tr>
                                   </tbody>

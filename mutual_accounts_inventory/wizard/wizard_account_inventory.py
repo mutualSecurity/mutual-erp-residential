@@ -18,18 +18,45 @@ class WizardAccountInventory(osv.TransientModel):
     }
 
     def _fetch_record(self):
-        self.env.cr.execute('select item_code,item_name,(select remaining_count from inventory_opening where'
-                        ' date >= '+"'"+self.start_date +"'" +' order by date asc limit 1) '
-                        'opening,sum(sale_count) total_sale,sum(sale_return) '
-                        'sale_return,sum(purchase_count) purchase_total,sum(purchase_return) '
-                        'purchase_return,(select remaining_count from inventory_opening '
-                        'where date >= '+"'"+self.start_date +"'" +'order by date asc limit 1)-sum(sale_count)+sum(purchase_count)remaining '
-                        'from inventory_logs where date between '+"'"+self.start_date +"'"+' and '+"'"+self.end_date +"'"+'  group by item_code,item_name')
+        result = []
+        self.env.cr.execute('select item_code,item_name,sum(sale_count) sales, sum(purchase_count) purchase,sale_return,purchase_return from inventory_logs where date between '+"'"+self.start_date +"'" +'and'+"'"+self.end_date +"'" +'group by item_code,item_name,sale_return,purchase_return ')
+        account_inventory_logs = self.env.cr.dictfetchall()
 
-        print ">>>>>>>>>>>>Date>>>>>>>>>>>>>>>>"
-        print self.start_date
-        report = self.env.cr.dictfetchall()
-        return report
+        self.env.cr.execute('select item_code,item_name,sum(sale_count) sales, sum(purchase_count) purchase,sale_return,purchase_return from inventory_logs where date< ' + "'" + self.start_date + "'" + 'group by item_code,item_name,sale_return,purchase_return')
+        account_inventory_logs1 = self.env.cr.dictfetchall()
+
+        self.env.cr.execute('select distinct on (item_code) item_code, remaining_count ,date from inventory_opening where date<'+"'"+self.start_date +"'"+'order by item_code, date desc;')
+        remaing_inventory_logs = self.env.cr.dictfetchall()
+
+        for remain in remaing_inventory_logs:
+            for count in account_inventory_logs:
+                if remain['item_code'] == count['item_code']:
+                    result.append({
+                        'item_code': count['item_code'],
+                        'item_name': count['item_name'],
+                        'opening': remain['remaining_count'],
+                        'sale_count': count['sales'],
+                        'sale_return': count['sale_return'],
+                        'purchase_count': count['purchase'],
+                        'purchase_return': count['purchase_return'],
+                        'Total': remain['remaining_count'] - count['sales'] + count['purchase']
+
+                    })
+            for count1 in account_inventory_logs1:
+                if not any(d['item_code']==count1['item_code'] for d in result) and remain['item_code'] == count1['item_code']:
+                    result.append({
+                        'item_code': count1['item_code'],
+                        'item_name': count1['item_name'],
+                        'opening': remain['remaining_count'],
+                        'sale_count': count1['sales'],
+                        'sale_return': count1['sale_return'],
+                        'purchase_count': count1['purchase'],
+                        'purchase_return': count1['purchase_return'],
+                        'Total': remain['remaining_count'] - count1['sales'] + count1['purchase']
+                    })
+
+
+        return result
 
     def print_report(self, cr, uid, ids, data, context=None):
         return {
