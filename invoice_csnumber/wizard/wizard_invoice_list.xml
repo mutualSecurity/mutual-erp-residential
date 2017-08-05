@@ -1,0 +1,30 @@
+<openerp>
+    <data>
+       <!-- ================================================== Begin Form views of Account Inventory Wizard ================================================ -->
+        <record id="account_form_wiz_invoice_list" model="ir.ui.view">
+            <field name="name">view.form.invoice</field>
+            <field name="model">wiz.invoice.list</field>
+            <field name="arch" type="xml">
+                <form string="Invoice List" version="8.0">
+                    <group>
+                        <field name="date"/>
+                        <field name="company_id_invoice"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" type="object" string="Print" class="oe_highlight"/>
+                        OR
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form views of Account Inventory Wizard ================================================ -->
+         <record id="action_account_form_wiz_invoice_list" model="ir.actions.act_window">
+            <field name="name">Invoice list</field>
+            <field name="res_model">wiz.invoice.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>

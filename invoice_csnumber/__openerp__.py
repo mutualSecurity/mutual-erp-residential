@@ -33,9 +33,12 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'wizard/wizard_invoice_list.xml',
+        'invoice_list_report.xml',
+        'views/report_invoice_list.xml',
         'invoice_csnumber_view.xml',
         'backup_invoices_view.xml',
-        'general_enteries_view.xml'
+        'general_enteries_view.xml',
     ],
 
 }

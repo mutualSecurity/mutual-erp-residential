@@ -94,6 +94,12 @@
                 </search>
             </field>
         </record>
-
+        <menuitem
+            name="Invoice List"
+            action="action_account_form_wiz_invoice_list"
+            id="menu_action_account_form_wiz_invoice_list"
+            sequence="101"
+            parent="account.menu_finance_receivables">
+        </menuitem>
     </data>
 </openerp>

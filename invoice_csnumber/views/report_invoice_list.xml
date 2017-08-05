@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <template id="report_invoice_list">
+            <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="report.internal_layout">
+                <div class="page">
+                    <h1>Invoice List Report</h1><br/>
+                     <table class="table table-condensed" style="font-size:14px">
+                                  <thead>
+                                      <tr>
+                                          <th>Index</th>
+                                          <th>Cs Number</th>
+                                          <th>Customer Name</th>
+                                          <th class="text-right">Credit Status</th>
+                                          <th class="text-right">Due date</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="invoice_tbody">
+                                      <tr t-foreach="doc.fetch_record()" t-as="l">
+                                          <td>
+                                              <span t-esc="l_index"/>
+                                          </td>
+                                          <td>
+                                             <span t-esc="l['cs_number']"/>
+                                          </td>
+                                          <td>
+                                             <span t-esc="l['name']"/>
+                                          </td>
+                ,                          <td class="text-right">
+
+                                            <t t-if="not l['credit_card_no']">No</t>
+                                            <t t-if="l['credit_card_no']">Yes</t>
+                                           </td>
+                                          <td class="text-right">
+                                             <span t-esc="l['date_due']"/>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                     </table>
+                </div>
+            </t>
+        </t>
+    </t>
+        </template>
+    </data>
+</openerp>
