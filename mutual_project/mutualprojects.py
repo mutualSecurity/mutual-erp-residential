@@ -60,13 +60,21 @@ class mutual_projects(osv.osv):
   def create(self, vals):
       if vals['name'] == 'disco':
           status = "cancelled"
+          _customer_status = "Disco"
           self.env.cr.execute('UPDATE res_partner SET active = False WHERE id =' + str(vals['partner_id']))
           self.env.cr.execute(
               'UPDATE account_analytic_account SET state =' + "'" + status + "'" + 'WHERE partner_id =' + str(
                   vals['partner_id']))
+          self.env.cr.execute(
+              'UPDATE res_partner SET customer_status =' + "'" + _customer_status + "'" + 'WHERE partner_id =' + str(
+                  vals['partner_id']))
           return super(mutual_projects, self).create(vals)
       elif vals['name'] == 'reconnection':
+          _customer_status = "Active"
           self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(vals['partner_id']))
+          self.env.cr.execute(
+              'UPDATE res_partner SET customer_status =' + "'" + _customer_status + "'" + 'WHERE partner_id =' + str(
+                  vals['partner_id']))
           return super(mutual_projects, self).create(vals)
       else:
           return super(mutual_projects, self).create(vals)
@@ -255,6 +263,7 @@ class mutual_issues(osv.osv):
           # find the difference between two dates
           diff = timeOut - timeIn
           self.compute_total_time = diff
+
 
 class tech_activities_issues(osv.osv):
     _name = "tech.activities.issues"

@@ -10,6 +10,7 @@ from dateutil.relativedelta import *
 from openerp.tools import amount_to_text_en
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 
+
 class invoice_csnumber(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
@@ -47,6 +48,13 @@ class invoice_csnumber(osv.osv):
         'cheque_no': fields.char('Cheque No.',store=True),
         'next_action': fields.date('Next Action,',store=True)
     }
+
+    @api.onchange('from_date', 'to_date')
+    def update_period(self):
+        period = "Monitoring from "+str(self.from_date)+"to "+str(self.to_date)
+        if self.from_date and self.to_date:
+            self.env.cr.execute('UPDATE account_move SET ref =' + "'" + period + "'" + 'WHERE name =' + "'"+str(self.number)+"'")
+            self.env.cr.execute('UPDATE account_move_line SET ref =' + "'" + period + "'" + 'WHERE name ='+"'"+str(self.number)+"'")
 
     @api.one
     @api.depends('invoice_line.price_subtotal', 'tax_line.amount')
@@ -168,6 +176,8 @@ class invoice_csnumber(osv.osv):
 
             line = inv.finalize_invoice_move_lines(line)
             periods = self.monitoring_period()
+            if periods[0]['from'] == False or periods[0]['to'] == False:
+                raise osv.except_osv('Error....', 'Kindly Mention Proper Monitoring Period')
 
             move_vals = {
                 'ref': "Monitoring period from "+str(periods[0]['from'])+" to "+str(periods[0]['to']),
