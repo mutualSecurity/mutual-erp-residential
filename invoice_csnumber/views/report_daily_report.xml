@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <template id="report_daily_report">
+            <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <h1 align="left">
+                    <t t-if="doc.company_id_invoice.name=='Mutual Security Systems'"><span t-esc="doc.company_id_invoice.name"></span></t>
+                    <t t-if="doc.company_id_invoice.name=='Mutual Security'">Mutual Security Pvt. Ltd.</t></h1>
+                    <t t-set="total_credit" t-value="0"/>
+                    <t t-set="total_debit" t-value="0"/>
+                    <h2>Daily Report </h2><small align="right">
+                    <span t-esc="doc.date"/>
+                </small><br/>
+                     <table class="table table-condensed" style="font-size:16px">
+                                  <thead>
+                                      <tr>
+                                          <th>S.No.</th>
+                                          <th>Entry No.</th>
+                                          <th>Account</th>
+                                          <th>Reference</th>
+                                          <th>Party Name</th>
+                                          <th>Debit</th>
+                                          <th class="text-right">Credit</th>
+                                      </tr>
+                                  </thead>
+
+                                  <tbody class="invoice_tbody">
+                                    <tr t-foreach="doc.fetch_record()" t-as="l">
+                                          <td>
+                                              <span t-esc="l_index + 1"/>
+                                          </td>
+                                          <td>
+                                             <span t-esc="l['journal_entry']"/>
+                                          </td>
+                                          <td>
+                                             <span t-esc="l['account_name']"/>
+                                          </td>
+                                           <td>
+                                             <span t-esc="l['ref']"/>
+                                          </td>
+                                          <td>
+                                             <span t-esc="l['partner_name']"/>
+                                          </td>
+                                         <td>
+                                             <span t-esc="l['debit']"/>
+                                              <t t-set="total_debit" t-value="total_debit+l['debit']"/>
+                                          </td>
+                                         <td class="text-right">
+                                              <span t-esc="l['credit']"/>
+                                             <t t-set="total_credit" t-value="total_credit+l['credit']"/>
+                                           </td>
+                                      </tr>
+                                      <tr>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+
+                                          <td>
+                                              <span t-esc="total_credit"/>
+                                          </td>
+                                          <td class="text-right">
+                                              <span t-esc="total_debit"/>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                     </table>
+
+                </div>
+            </t>
+        </t>
+
+        </template>
+    </data>
+</openerp>

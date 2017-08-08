@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="action_report_daily_report"
+            model="wiz.daily.report"
+            string="Daily Report"
+            report_type="qweb-pdf"
+            name="invoice_csnumber.report_daily_report"
+            file="invoice_csnumber.report_daily_report"
+            menu="False"
+        />
+    </data>
+</openerp>

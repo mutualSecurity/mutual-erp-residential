@@ -1,1 +1,2 @@
 import wizard_invoice_list
+import wizard_daily_report

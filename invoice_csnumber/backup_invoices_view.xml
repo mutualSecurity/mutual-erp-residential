@@ -101,5 +101,13 @@
             sequence="101"
             parent="account.menu_finance_receivables">
         </menuitem>
+
+         <menuitem
+            name="Daily Report"
+            action="action_account_form_wiz_daily_report"
+            id="menu_action_account_form_wiz_invoice_report_daily"
+            sequence="5"
+            parent="account.menu_finance_entries">
+        </menuitem>
     </data>
 </openerp>
