@@ -54,7 +54,8 @@ class invoice_csnumber(osv.osv):
         period = "Monitoring from "+str(self.from_date)+"to "+str(self.to_date)
         if self.from_date and self.to_date:
             self.env.cr.execute('UPDATE account_move SET ref =' + "'" + period + "'" + 'WHERE name =' + "'"+str(self.number)+"'")
-            self.env.cr.execute('UPDATE account_move_line SET ref =' + "'" + period + "'" + 'WHERE name ='+"'"+str(self.number)+"'")
+            entry_number = self.env['account.move'].search([['name','=',self.number],])
+            self.env.cr.execute('UPDATE account_move_line SET ref =' + "'" + period + "'" + 'WHERE move_id ='+"'"+str(entry_number)+"'")
 
     @api.one
     @api.depends('invoice_line.price_subtotal', 'tax_line.amount')
@@ -298,6 +299,7 @@ class invoice_csnumber(osv.osv):
                         self.from_date = from_[0]
                         self.to_date = to_[0]
                         return {"from": self.from_date, "to": self.to_date}
+                    return {"from": self.from_date, "to": self.to_date}
 
                 elif(number_of_days == 31 and line.product_id.name == "Service (MS)") or (number_of_days == 31 and line.product_id.name =="Service (MSS)"):
                     if from_date.day == 1 :
@@ -309,6 +311,7 @@ class invoice_csnumber(osv.osv):
                         self.from_date = from_[0]
                         self.to_date = to_[0]
                         return {"from": self.from_date, "to": self.to_date}
+
                     elif from_date.day == 21 or from_date.day == 11:
                         from_ = from_date + timedelta(days=21)
                         to_ = from_ + relativedelta(months=int(line.quantity))
@@ -318,6 +321,7 @@ class invoice_csnumber(osv.osv):
                         self.from_date = from_[0]
                         self.to_date = to_[0]
                         return {"from": self.from_date, "to": self.to_date}
+                    return {"from": self.from_date, "to": self.to_date}
 
                 elif(number_of_days == 30 and line.product_id.name == "Service (MS)") or (number_of_days == 30 and line.product_id.name == "Service (MSS)"):
                     if from_date.day == 1 :
@@ -339,6 +343,7 @@ class invoice_csnumber(osv.osv):
                         self.from_date = from_[0]
                         self.to_date = to_[0]
                         return {"from": self.from_date, "to": self.to_date}
+                    return {"from": self.from_date, "to": self.to_date}
 
     @api.multi
     def account_head(self):
