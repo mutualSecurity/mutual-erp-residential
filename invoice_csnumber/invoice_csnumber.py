@@ -348,6 +348,8 @@ class invoice_csnumber(osv.osv):
                         self.to_date = to_[0]
                         return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
                     return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
+                else:
+                    return {"from": False, "to": False, "customer": False}
         else:
             return {"from": False, "to": False, "customer": False}
 
