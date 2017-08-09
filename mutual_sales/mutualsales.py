@@ -59,15 +59,12 @@ class mutual_sales(osv.osv):
     @api.one
     @api.depends('active')
     def _customer_status(self):
-        print ">>>>>>>>>>>>>>>>>>>>Customer Status>>>>>>>>>>>>>>>>>>>>>>>>>"
         if self.active:
             self.customer_status = "Active"
         else:
             self.customer_status = "Disco"
 
-    @api.one
-    @api.depends('cs_number')
-    @api.onchange('cs_number')
+    @api.model
     def validate_csnumber(self):
         if self.cs_number:
             cs = re.search('^[A-Z]{1}[A-Z0-9][0-9]{4}$', self.cs_number)
@@ -138,6 +135,7 @@ class mutual_sales(osv.osv):
 class duedeligence(osv.osv):
     _inherit = "sale.order"
     _columns = {
+        'approval': fields.boolean('Quotation Approval',store=True),
         'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=True,
                                       states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
                                       copy=True),

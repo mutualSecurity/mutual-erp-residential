@@ -17,9 +17,13 @@
                     <field name="terms_conditions"/>
                     <field name="create_date" readonly="1"/>
                     <field name="create_uid" readonly="1"/>
+                    <field name="approval" groups="__export__.res_groups_54"/>
                 </xpath>
                 <xpath expr="//button[@string='Create Invoice']" position="attributes">
                     <attribute name="groups">account.group_account_manager</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('approval', '=', True)]}</attribute>
                 </xpath>
                 <notebook>
                     <page string="Due Deligence" groups="base.group_sale_salesman_all_leads">

@@ -76,7 +76,7 @@
                 </label>
                 <xpath expr="//form/sheet/group" position="after" >
                     <group>
-                            <label for="c_street" string='Correspondences Address'></label>
+                        <label for="c_street" string='Correspondences Address'></label>
                             <div>
                                 <field name="c_street" placeholder="Street..."/>
                                 <field name="c_street2"/>
