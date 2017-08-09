@@ -19,10 +19,10 @@ class WizardAccountInventory(osv.TransientModel):
 
     def _fetch_record(self):
         result = []
-        self.env.cr.execute('select item_code,item_name,sum(sale_count) sales, sum(purchase_count) purchase,sale_return,purchase_return from inventory_logs where date between '+"'"+self.start_date +"'" +'and'+"'"+self.end_date +"'" +'group by item_code,item_name,sale_return,purchase_return ')
+        self.env.cr.execute('select item_code,item_name,sum(sale_count) sales, sum(purchase_count) purchase,sum(sale_return) sale_return,sum(purchase_return) purchase_return from inventory_logs where date between '+"'"+self.start_date +"'" +'and'+"'"+self.end_date +"'" +'group by item_code,item_name')
         account_inventory_logs = self.env.cr.dictfetchall()
 
-        self.env.cr.execute('select item_code,item_name,sum(sale_count) sales, sum(purchase_count) purchase,sale_return,purchase_return from inventory_logs where date< ' + "'" + self.start_date + "'" + 'group by item_code,item_name,sale_return,purchase_return')
+        self.env.cr.execute('select item_code,item_name,sum(sale_count) sales, sum(purchase_count) purchase,sum(sale_return) sale_return,sum(purchase_return) purchase_return from inventory_logs where date< ' + "'" + self.start_date + "'" + 'group by item_code,item_name')
         account_inventory_logs1 = self.env.cr.dictfetchall()
 
         self.env.cr.execute('select distinct on (item_code) item_code, remaining_count ,date from inventory_opening where date<'+"'"+self.start_date +"'"+'order by item_code, date desc;')
@@ -39,7 +39,7 @@ class WizardAccountInventory(osv.TransientModel):
                         'sale_return': count['sale_return'],
                         'purchase_count': count['purchase'],
                         'purchase_return': count['purchase_return'],
-                        'Total': remain['remaining_count'] - count['sales'] + count['purchase']
+                        'Total': remain['remaining_count'] - count['sales']+count['sale_return'] + count['purchase']-count['purchase_return']
 
                     })
             for count1 in account_inventory_logs1:
@@ -52,7 +52,7 @@ class WizardAccountInventory(osv.TransientModel):
                         'sale_return': count1['sale_return'],
                         'purchase_count': count1['purchase'],
                         'purchase_return': count1['purchase_return'],
-                        'Total': remain['remaining_count'] - count1['sales'] + count1['purchase']
+                        'Total': remain['remaining_count'] - count1['sales']+count1['sale_return'] + count1['purchase']-count1['purchase_return']
                     })
 
 

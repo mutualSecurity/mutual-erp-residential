@@ -17,7 +17,7 @@
                                           <th class="text-right">Sales Return</th>
                                           <th class="text-right">Sales</th>
                                           <th class="text-right">Purchase Return</th>
-                                          <th class="text-right">Total</th>
+                                          <th class="text-right">Closing</th>
                                       </tr>
                                   </thead>
                                   <tbody class="invoice_tbody">
