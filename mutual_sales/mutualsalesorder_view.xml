@@ -17,7 +17,7 @@
                     <field name="terms_conditions"/>
                     <field name="create_date" readonly="1"/>
                     <field name="create_uid" readonly="1"/>
-                    <field name="approval" groups="__export__.res_groups_54"/>
+                    <field name="approval"/>
                 </xpath>
                 <xpath expr="//button[@string='Create Invoice']" position="attributes">
                     <attribute name="groups">account.group_account_manager</attribute>

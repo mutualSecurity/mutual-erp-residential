@@ -135,7 +135,7 @@ class mutual_sales(osv.osv):
 class duedeligence(osv.osv):
     _inherit = "sale.order"
     _columns = {
-        'approval': fields.boolean('Quotation Approval',store=True),
+        'approval': fields.boolean('Quotation Approval',store=True,read=['__export__.res_groups_54'],write=['__export__.res_groups_54']),
         'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=True,
                                       states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
                                       copy=True),
