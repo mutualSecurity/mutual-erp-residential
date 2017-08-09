@@ -62,7 +62,7 @@ class WizardAccountInventory(osv.TransientModel):
 
         else:
             for count in account_inventory_logs:
-                demo.append({
+                result.append({
                             'item_code': count['item_code'],
                             'item_name': count['item_name'],
                             'opening': count['opening_count'],
@@ -72,7 +72,7 @@ class WizardAccountInventory(osv.TransientModel):
                             'purchase_return': count['purchase_return'],
                             'Total': count['opening_count'] - count['sales']+count['sale_return'] + count['purchase']-count['purchase_return']
                         })
-            return demo
+        return result
 
     def print_report(self, cr, uid, ids, data, context=None):
         return {
