@@ -1,4 +1,4 @@
-from openerp import models,fields,api,_
+from openerp import models,fields,api
 from openerp.osv import fields,osv
 from datetime import datetime, timedelta
 
@@ -18,6 +18,7 @@ class WizardAccountInventory(osv.TransientModel):
     }
 
     def _fetch_record(self):
+        demo = []
         result = []
         self.env.cr.execute('select item_code,item_name,opening_count,sum(sale_count) sales, sum(purchase_count) purchase,sum(sale_return) sale_return,sum(purchase_return) purchase_return from inventory_logs where date between '+"'"+self.start_date +"'" +'and'+"'"+self.end_date +"'" +'group by item_code,item_name,opening_count')
         account_inventory_logs = self.env.cr.dictfetchall()
@@ -29,7 +30,7 @@ class WizardAccountInventory(osv.TransientModel):
         print account_inventory_logs
         self.env.cr.execute('select distinct on (item_code) item_code, remaining_count ,date from inventory_opening where date<'+"'"+self.start_date +"'"+'order by item_code, date desc;')
         remaing_inventory_logs = self.env.cr.dictfetchall()
-        print ">?<><><><><>><>< remain inventory logs><<><>><><><"
+
         print remaing_inventory_logs
         if len(remaing_inventory_logs)!=0:
             for remain in remaing_inventory_logs:
@@ -61,18 +62,17 @@ class WizardAccountInventory(osv.TransientModel):
 
         else:
             for count in account_inventory_logs:
-                result.append({
-                    'item_code': count['item_code'],
-                    'item_name': count['item_name'],
-                    'opening': count['opening_count'],
-                    'sale_count': count['sales'],
-                    'sale_return': count['sale_return'],
-                    'purchase_count': count['purchase'],
-                    'purchase_return': count['purchase_return'],
-                    'Total': count['opening_count'] - count['sales'] + count['sale_return'] + count['purchase'] - count['purchase_return']
-                    })
-
-            return result
+                demo.append({
+                            'item_code': count['item_code'],
+                            'item_name': count['item_name'],
+                            'opening': count['opening_count'],
+                            'sale_count': count['sales'],
+                            'sale_return': count['sale_return'],
+                            'purchase_count': count['purchase'],
+                            'purchase_return': count['purchase_return'],
+                            'Total': count['opening_count'] - count['sales']+count['sale_return'] + count['purchase']-count['purchase_return']
+                        })
+            return demo
 
     def print_report(self, cr, uid, ids, data, context=None):
         return {

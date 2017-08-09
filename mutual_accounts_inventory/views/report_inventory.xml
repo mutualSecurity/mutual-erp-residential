@@ -49,7 +49,7 @@
                                       </tr>
                                   </tbody>
                      </table>
-                    <!--<h1><span t-esc="doc._fetch_record()"/></h1>-->
+
                 </div>
             </t>
         </t>
