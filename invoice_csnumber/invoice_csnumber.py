@@ -49,14 +49,19 @@ class invoice_csnumber(osv.osv):
         'next_action': fields.date('Next Action,',store=True)
     }
 
+    _defaults={
+        'date_invoice': lambda *a: datetime.now().strftime('%Y-%m-%d')
+    }
+
     @api.onchange('from_date', 'to_date')
     def update_period(self):
         period = "Monitoring from "+str(self.from_date)+"to "+str(self.to_date)
         if self.partner_id.customer:
             if self.from_date and self.to_date:
-                self.env.cr.execute('UPDATE account_move SET ref =' + "'" + period + "'" + 'WHERE name =' + "'"+str(self.number)+"'")
-                entry_number = self.env['account.move'].search([['name','=',self.number],])
-                self.env.cr.execute('UPDATE account_move_line SET ref =' + "'" + period + "'" + 'WHERE move_id ='+"'"+str(entry_number['id'])+"'")
+                if self.number:
+                    self.env.cr.execute('UPDATE account_move SET ref =' + "'" + period + "'" + 'WHERE name =' + "'"+str(self.number)+"'")
+                    entry_number = self.env['account.move'].search([['name','=',self.number],])
+                    self.env.cr.execute('UPDATE account_move_line SET ref =' + "'" + period + "'" + 'WHERE move_id ='+"'"+str(entry_number['id'])+"'")
 
     @api.one
     @api.depends('invoice_line.price_subtotal', 'tax_line.amount')
@@ -82,7 +87,7 @@ class invoice_csnumber(osv.osv):
             ctx = dict(self._context, lang=inv.partner_id.lang)
 
             if not inv.date_invoice:
-                inv.with_context(ctx).write({'date_invoice': fields.Date.context_today(self)})
+                inv.with_context(ctx).write({'date_invoice': (datetime.now()).strftime("%Y/%m/%d")})
             date_invoice = inv.date_invoice
 
             company_currency = inv.company_id.currency_id
@@ -539,7 +544,7 @@ class mutual_account_invoice_tax(models.Model):
         company = self.env['res.company'].browse(company_id)
         if currency_id and company.currency_id:
             currency = self.env['res.currency'].browse(currency_id)
-            currency = currency.with_context(date=date_invoice or fields.Date.context_today(self))
+            currency = currency.with_context(date=date_invoice or (datetime.now()).strftime("%Y/%m/%d"))
             base = currency.compute(base * factor, company.currency_id, round=False)
         return {'value': {'base_amount': base}}
 
@@ -548,7 +553,7 @@ class mutual_account_invoice_tax(models.Model):
         company = self.env['res.company'].browse(company_id)
         if currency_id and company.currency_id:
             currency = self.env['res.currency'].browse(currency_id)
-            currency = currency.with_context(date=date_invoice or fields.Date.context_today(self))
+            currency = currency.with_context(date=date_invoice or (datetime.now()).strftime("%Y/%m/%d"))
             amount = currency.compute(amount, company.currency_id, round=False)
         tax_sign = (self.tax_amount / self.amount) if self.amount else 1
         return {'value': {'tax_amount': amount * tax_sign}}
@@ -556,7 +561,7 @@ class mutual_account_invoice_tax(models.Model):
     @api.v8
     def compute(self, invoice):
         tax_grouped = {}
-        currency = invoice.currency_id.with_context(date=invoice.date_invoice or fields.Date.context_today(invoice))
+        currency = invoice.currency_id.with_context(date=invoice.date_invoice or (datetime.now()).strftime("%Y/%m/%d"))
         company_currency = invoice.company_id.currency_id
         for line in invoice.invoice_line:
             taxes = line.invoice_line_tax_id.compute_all(
