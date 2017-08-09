@@ -1,7 +1,7 @@
 from openerp.osv import fields, osv
 from openerp import models
 from openerp import fields as field
-from openerp import api
+from openerp import api,_
 from datetime import date, timedelta,datetime
 import re
 import calendar
@@ -52,10 +52,11 @@ class invoice_csnumber(osv.osv):
     @api.onchange('from_date', 'to_date')
     def update_period(self):
         period = "Monitoring from "+str(self.from_date)+"to "+str(self.to_date)
-        if self.from_date and self.to_date:
-            self.env.cr.execute('UPDATE account_move SET ref =' + "'" + period + "'" + 'WHERE name =' + "'"+str(self.number)+"'")
-            entry_number = self.env['account.move'].search([['name','=',self.number],])
-            self.env.cr.execute('UPDATE account_move_line SET ref =' + "'" + period + "'" + 'WHERE move_id ='+"'"+str(entry_number)+"'")
+        if self.partner_id.customer:
+            if self.from_date and self.to_date:
+                self.env.cr.execute('UPDATE account_move SET ref =' + "'" + period + "'" + 'WHERE name =' + "'"+str(self.number)+"'")
+                entry_number = self.env['account.move'].search([['name','=',self.number],])
+                self.env.cr.execute('UPDATE account_move_line SET ref =' + "'" + period + "'" + 'WHERE move_id ='+"'"+str(entry_number['id'])+"'")
 
     @api.one
     @api.depends('invoice_line.price_subtotal', 'tax_line.amount')
@@ -177,11 +178,14 @@ class invoice_csnumber(osv.osv):
 
             line = inv.finalize_invoice_move_lines(line)
             periods = self.monitoring_period()
-            if periods[0]['from'] == False or periods[0]['to'] == False:
+            print ">>>>>>>>>>>>>>>>>>>>>>>>Period>>>>>>>>>>>>>>>>>>>>"
+            print periods
+            ledger_status = "Monitoring period from "+str(periods[0]['from'])+" to "+str(periods[0]['to'])
+            if (periods[0]['from'] == False or periods[0]['to'] == False) and periods[0]['customer'] == True:
                 raise osv.except_osv('Error....', 'Kindly Mention Proper Monitoring Period')
 
             move_vals = {
-                'ref': "Monitoring period from "+str(periods[0]['from'])+" to "+str(periods[0]['to']),
+                'ref': ledger_status if periods[0]['customer'] else inv.reference or inv.name,
                 'line_id': line,
                 'journal_id': journal.id,
                 'date': inv.date_invoice,
@@ -275,7 +279,7 @@ class invoice_csnumber(osv.osv):
                 self.outstanding_amount = out
                 self.grand_total = out + self.amount_total
 
-        if self.date_invoice:
+        if self.date_invoice and self.partner_id.customer:
             date_format = "%Y-%m-%d"
             from_date = datetime.strptime(str(self.date_invoice), date_format)
             number_of_days = calendar.monthrange(from_date.year, from_date.month)[1]
@@ -289,7 +293,7 @@ class invoice_csnumber(osv.osv):
                         to_ = str(to_).split(" ")
                         self.from_date = from_[0]
                         self.to_date = to_[0]
-                        return {"from":self.from_date, "to":self.to_date}
+                        return {"from":self.from_date, "to":self.to_date, "customer":self.partner_id.customer}
                     elif from_date.day == 21 or from_date.day == 11:
                         from_ = from_date + timedelta(days=18)
                         to_ = from_ + relativedelta(months=int(line.quantity))
@@ -298,8 +302,8 @@ class invoice_csnumber(osv.osv):
                         to_ = str(to_).split(" ")
                         self.from_date = from_[0]
                         self.to_date = to_[0]
-                        return {"from": self.from_date, "to": self.to_date}
-                    return {"from": self.from_date, "to": self.to_date}
+                        return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
+                    return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
 
                 elif(number_of_days == 31 and line.product_id.name == "Service (MS)") or (number_of_days == 31 and line.product_id.name =="Service (MSS)"):
                     if from_date.day == 1 :
@@ -310,7 +314,7 @@ class invoice_csnumber(osv.osv):
                         to_ = str(to_).split(" ")
                         self.from_date = from_[0]
                         self.to_date = to_[0]
-                        return {"from": self.from_date, "to": self.to_date}
+                        return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
 
                     elif from_date.day == 21 or from_date.day == 11:
                         from_ = from_date + timedelta(days=21)
@@ -320,8 +324,8 @@ class invoice_csnumber(osv.osv):
                         to_ = str(to_).split(" ")
                         self.from_date = from_[0]
                         self.to_date = to_[0]
-                        return {"from": self.from_date, "to": self.to_date}
-                    return {"from": self.from_date, "to": self.to_date}
+                        return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
+                    return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
 
                 elif(number_of_days == 30 and line.product_id.name == "Service (MS)") or (number_of_days == 30 and line.product_id.name == "Service (MSS)"):
                     if from_date.day == 1 :
@@ -332,7 +336,7 @@ class invoice_csnumber(osv.osv):
                         to_ = str(to_).split(" ")
                         self.from_date = from_[0]
                         self.to_date = to_[0]
-                        return {"from": self.from_date, "to": self.to_date}
+                        return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
 
                     elif from_date.day == 21 or from_date.day == 11:
                         from_ = from_date + timedelta(days=20)
@@ -342,8 +346,10 @@ class invoice_csnumber(osv.osv):
                         to_ = str(to_).split(" ")
                         self.from_date = from_[0]
                         self.to_date = to_[0]
-                        return {"from": self.from_date, "to": self.to_date}
-                    return {"from": self.from_date, "to": self.to_date}
+                        return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
+                    return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
+        else:
+            return {"from": False, "to": False, "customer": False}
 
     @api.multi
     def account_head(self):
