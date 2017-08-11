@@ -13,11 +13,6 @@
                                           <th>Item Code</th>
                                           <th>Item Name</th>
                                           <th class="text-right">Opening</th>
-                                          <th class="text-right">Receipt</th>
-                                          <th class="text-right">Sales Return</th>
-                                          <th class="text-right">Sales</th>
-                                          <th class="text-right">Purchase Return</th>
-                                          <th class="text-right">Closing</th>
                                       </tr>
                                   </thead>
                                   <tbody class="invoice_tbody">
@@ -30,21 +25,6 @@
                                           </td>
                                           <td class="text-right">
                                              <span t-esc="l['opening']"/>
-                                          </td>
-                                          <td class="text-right">
-                                             <span t-esc="l['purchase_count']"/>
-                                          </td>
-                                          <td class="text-right">
-                                             <span t-esc="l['sale_return']"/>
-                                          </td>
-                                          <td class="text-right">
-                                             <span t-esc="l['sale_count']"/>
-                                          </td>
-                                          <td class="text-right">
-                                             <span t-esc="l['purchase_return']"/>
-                                          </td>
-                                          <td class="text-right">
-                                             <span t-esc="l['Total']"/>
                                           </td>
                                       </tr>
                                   </tbody>

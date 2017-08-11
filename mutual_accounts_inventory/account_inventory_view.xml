@@ -138,8 +138,9 @@
                 <form string="Inventory">
                     <sheet>
                         <group string="Inventory">
+                            <field name="item_name"/>
                             <field name="item_code"/>
-                            <field name="remaining_count"/>
+                            <field name="opening_count"/>
                             <field name="date"/>
                         </group>
                     </sheet>
@@ -154,8 +155,9 @@
             <field name="model">inventory.opening</field>
             <field name="arch" type="xml">
                 <tree string="Opening Inventory" version="8.0">
+                    <field name="item_name"/>
                     <field name="item_code"/>
-                    <field name="remaining_count"/>
+                    <field name="opening_count"/>
                     <field name="date"/>
                 </tree>
             </field>

@@ -13,7 +13,7 @@ from openerp.tools import amount_to_text_en
 class mutual_account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
-    def createLogs(self,line,customer,supplier,opening):
+    def createLogs(self,line,customer,supplier):
         salecount=line.quantity if customer else 0.0
         purchasecount=line.quantity if supplier else 0.0
         self.env['inventory.logs'].create({
@@ -24,25 +24,16 @@ class mutual_account_invoice(osv.osv):
             'sale_return': 0.0,
             'purchase_count': purchasecount,
             'date': self.date_invoice,
-            'opening_count': opening[0]['remaining_count']
-        })
-        remaining = opening[0]['remaining_count']+purchasecount-salecount
-        self.env['inventory.opening'].create({
-            'item_code': line.product_id.id,
-            'remaining_count':remaining,
-            'date':self.date_invoice
         })
 
     @api.multi
     def invoice_validate(self):
         for line in self.invoice_line:
             if(line.product_id.type != 'service'):
-                self.env.cr.execute("select remaining_count from inventory_opening where item_code="+str(line.product_id.id)+"order by id desc limit 1")
-                opening = self.env.cr.dictfetchall()
                 if(self.partner_id.customer):
-                    self.createLogs(line,self.partner_id.customer,self.partner_id.supplier,opening)
+                    self.createLogs(line,self.partner_id.customer,self.partner_id.supplier)
                 else:
-                    self.createLogs(line,self.partner_id.customer,self.partner_id.supplier,opening)
+                    self.createLogs(line,self.partner_id.customer,self.partner_id.supplier)
 
         if (float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0) and (self.partner_id.customer == True):
             return self.write({'state': 'paid'})
