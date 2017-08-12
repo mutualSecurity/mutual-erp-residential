@@ -183,8 +183,6 @@ class invoice_csnumber(osv.osv):
 
             line = inv.finalize_invoice_move_lines(line)
             periods = self.monitoring_period()
-            print ">>>>>>>>>>>>>>>>>>>>>>>>Period>>>>>>>>>>>>>>>>>>>>"
-            print periods
             ledger_status = "Monitoring period from "+str(periods[0]['from'])+" to "+str(periods[0]['to'])
             if (periods[0]['from'] == False or periods[0]['to'] == False) and periods[0]['customer'] == True:
                 raise osv.except_osv('Error....', 'Kindly Mention Proper Monitoring Period')
