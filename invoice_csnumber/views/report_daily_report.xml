@@ -21,6 +21,7 @@
                                           <th>Account</th>
                                           <th>Reference</th>
                                           <th>Party Name</th>
+                                          <th>CS Number</th>
                                           <th>Debit</th>
                                           <th class="text-right">Credit</th>
                                       </tr>
@@ -42,6 +43,9 @@
                                           </td>
                                           <td>
                                              <span t-esc="l['partner_name']"/>
+                                          </td>
+                                          <td>
+                                             <span t-esc="l['cs_number']"/>
                                           </td>
                                          <td>
                                              <span t-esc="l['debit']"/>
