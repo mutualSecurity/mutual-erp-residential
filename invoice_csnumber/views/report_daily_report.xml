@@ -62,6 +62,7 @@
                                           <td></td>
                                           <td></td>
                                           <td></td>
+                                          <td></td>
 
                                           <td>
                                               <span t-esc="total_credit"/>
