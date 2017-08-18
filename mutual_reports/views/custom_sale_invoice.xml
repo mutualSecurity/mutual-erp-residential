@@ -10,8 +10,8 @@
                               <h2 align="center">Sales Tax Invoice </h2>
                               <div class="row mt32 mb32" style="font-size:16px">
                                    <div class="col-xs-2" t-if="account_invoice.id">
-                                      <strong>Serial No. </strong>
-                                      <u><span t-field="account_invoice.id"/></u>
+                                      <strong>Invoice No. </strong>
+                                      <u><span t-field="account_invoice.sti_num"/></u>
                                   </div>
                                   <div class="col-xs-2" t-if="account_invoice.date_invoice">
                                       <strong>Date </strong>

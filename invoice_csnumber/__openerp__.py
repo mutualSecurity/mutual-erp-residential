@@ -40,6 +40,7 @@
         'views/report_invoice_list.xml',
         'views/report_daily_report.xml',
         'invoice_csnumber_view.xml',
+        'custom_invoice_number.xml',
         'backup_invoices_view.xml',
         'general_enteries_view.xml',
     ],

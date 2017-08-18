@@ -14,6 +14,8 @@ from openerp.exceptions import except_orm, Warning, RedirectWarning
 class invoice_csnumber(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
+        'sti_num' : fields.char('STI Number', readonly=True,store=True),
+        'invoice_type': fields.selection([('Sales Tax','Sales Tax'),('Monitoring','Monitoring')],'Invoice Type',store=True,required=True,default='Monitoring'),
         'supplier_id': fields.many2one('res.partner', 'Supplier', domain="[('supplier','=',True)]"),
         'contactperson': fields.related('partner_id', 'contactperson', type='char', readonly=True, string='Contact Person'),
         'contactpersondetails': fields.related('partner_id', 'contactpersondetails', type='char', readonly=True, string='Contact Person Details'),
@@ -52,6 +54,11 @@ class invoice_csnumber(osv.osv):
     _defaults={
         'date_invoice': lambda *a: datetime.now().strftime('%Y-%m-%d')
     }
+
+    def create(self, cr, uid, vals, context=None):
+        if vals['invoice_type']== 'Sales Tax':
+            vals['sti_num'] = self.pool.get('ir.sequence').get(cr, uid, 'account.invoice')
+        return super(invoice_csnumber, self).create(cr, uid, vals, context=context)
 
     @api.onchange('from_date', 'to_date')
     def update_period(self):
