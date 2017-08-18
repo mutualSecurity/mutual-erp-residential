@@ -741,7 +741,10 @@
                     <field name="partner_id"/><br/>
                     <span style="color:green !important; font-weight:bold"><field name="cs_number_task"/></span><br/>
                     <span style="color:darkred !important; font-weight:bold">
-                        <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','Disable In SIS')]}"/>
+                        <field name="uplink_date_task" attrs="{'invisible': ['|','|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','Disable In SIS')]}"/><br/>
+                    </span>
+                    <span style="color:royalblue !important; font-weight:bold">
+                        <field name="contract" attrs="{'invisible': ['|','|','|','|','|','|',('name','=','reconnection'),('name','=','disco'),('name','=','Shifting'),('name','=','survey'),('name','=','additional'),('name','=','Disable In SIS')]}"/><br/>
                     </span>
                     <field name="create_date"/><br/>
                     <span style="color:red !important; font-weight:bold">

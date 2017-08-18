@@ -10,6 +10,7 @@ class mutual_projects(osv.osv):
   _name="project.task"
   _inherit = "project.task",
   _columns = {
+      'contract': fields.char('Contract', store=True, readonly=True),
       'status': fields.char('status', store=True, compute='status_task'),
       'task_status': fields.boolean('Task Status', store=True),
       'task_status_confirm': fields.char('', store=True, compute='_task_status'),
