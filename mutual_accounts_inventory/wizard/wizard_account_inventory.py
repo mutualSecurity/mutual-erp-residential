@@ -23,10 +23,10 @@ class WizardAccountInventory(osv.TransientModel):
         self.env.cr.execute('select * from inventory_opening')
         opening_stock = self.env.cr.dictfetchall()
         self.env.cr.execute(
-            'select item_code,item_name,opening_count,sum(sale_count) sales,'
+            'select item_code,item_name,sum(sale_count) sales,'
             ' sum(purchase_count) purchase,sum(sale_return) sale_return,'
             'sum(purchase_return) purchase_return from inventory_logs where date between '
-            + "'" + self.start_date + "'" + 'and' + "'" + self.end_date + "'" + 'group by item_code,item_name,opening_count')
+            + "'" + self.start_date + "'" + 'and' + "'" + self.end_date + "'" + 'group by item_code,item_name')
         total_sale_purchase = self.env.cr.dictfetchall()
         for item in opening_stock:
             if not any(d['item_code'] == item['item_code'] for d in result):
