@@ -56,8 +56,9 @@ class invoice_csnumber(osv.osv):
     }
 
     def create(self, cr, uid, vals, context=None):
-        if vals['invoice_type']== 'Sales Tax':
-            vals['sti_num'] = self.pool.get('ir.sequence').get(cr, uid, 'account.invoice')
+        if not vals['origin']:
+            if vals['invoice_type']== 'Sales Tax':
+                vals['sti_num'] = self.pool.get('ir.sequence').get(cr, uid, 'account.invoice')
         return super(invoice_csnumber, self).create(cr, uid, vals, context=context)
 
     @api.onchange('from_date', 'to_date')
