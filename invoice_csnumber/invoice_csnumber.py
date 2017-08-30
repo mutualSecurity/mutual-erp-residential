@@ -542,7 +542,7 @@ class invoice_line_(osv.osv):
 class mutual_account_move_line(osv.osv):
     _inherit = 'account.move.line'
     _columns = {
-        'customer_invoice': fields.many2one('account.invoice', 'Customer Invoice',store=True,domain=[('state','=', 'open')]),
+        'customer_invoice': fields.many2one('account.invoice', 'Customer Invoice',store=True,domain=['|',('state','=', 'open'),('state','=', 'paid')]),
     }
 
     @api.onchange('customer_invoice')
