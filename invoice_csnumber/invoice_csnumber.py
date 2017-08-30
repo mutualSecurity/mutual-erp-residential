@@ -478,10 +478,10 @@ class generalEntryCreate(osv.osv):
             top_common = None
             for line in move.line_id:
                 if(obj.parts_payment == 'Cheque Return'):
-                    invoice_status = 'open'
-                    cursor.execute(
-                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
+                    if(line.customer_invoice.id != False):
+                        invoice_status = 'open'
+                        cursor.execute(
+                            'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(line.customer_invoice.id))
                 if((line.credit == line.customer_invoice.grand_total or line.customer_invoice.amount_total == line.credit or line.customer_invoice.residual == line.credit) and line.customer_invoice.id):
                     invoice_status = "paid"
                     cursor.execute(
