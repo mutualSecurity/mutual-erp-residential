@@ -477,7 +477,7 @@ class generalEntryCreate(osv.osv):
             # check that all accounts have the same topmost ancestor
             top_common = None
             for line in move.line_id:
-                if(self.parts_payment == 'Cheque Return'):
+                if(obj.parts_payment == 'Cheque Return'):
                     invoice_status = 'open'
                     cursor.execute(
                         'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
