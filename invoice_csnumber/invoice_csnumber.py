@@ -255,10 +255,13 @@ class invoice_csnumber(osv.osv):
 
     @api.multi
     def invoice_validate(self):
-        if (float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0) and (self.partner_id.customer == True):
-            return self.write({'state': 'paid'})
+        if self.partner_id.company_id.name == self.journal_id.company_id.name:
+            if (float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0) and (self.partner_id.customer == True):
+                return self.write({'state': 'paid'})
+            else:
+                return self.write({'state': 'open'})
         else:
-            return self.write({'state': 'open'})
+            raise osv.except_osv('Company Error...!', 'Journal and Customer must belong to the same company')
 
     @api.multi
     def amount_to_text(self, amount, currency):
