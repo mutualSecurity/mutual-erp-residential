@@ -126,10 +126,10 @@
                                        )
                                    </t>
                                    <t t-if="account.amount_total > account.residual">
-                                        <span t-esc="round(account.residual)"/>
+                                        <span t-esc="round(account.outstanding)"/>
                                        PKR<br/>
                                        (
-                                       <span>Amount In Words: <span t-esc="account.amount_to_text(round(account.residual),'euro')"/></span>
+                                       <span>Amount In Words: <span t-esc="account.amount_to_text(round(account.outstanding),'euro')"/></span>
                                        )
                                    </t>
                                </t>

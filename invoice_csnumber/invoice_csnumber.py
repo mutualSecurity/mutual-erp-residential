@@ -25,7 +25,7 @@ class invoice_csnumber(osv.osv):
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
         'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, store=True,string='CS Number', readonly=True),
         'credit_card': fields.related('partner_id', 'credit_card_no', type='char',string='Credit Card', readonly=True),
-        'outstanding': fields.related('partner_id', 'credit', type='char', string='Credit Balance', readonly=True),
+        'outstanding': fields.related('partner_id', 'credit', type='float', string='Credit Balance', readonly=True),
         'phone': fields.related('partner_id','phone',type='char', size=12,string='Phone',readonly=True),
         'mobile': fields.related('partner_id','mobile',type='char', size=12,string='Mobile',readonly=True),
         'ntn_num': fields.related('partner_id','ntn_num',type='char', size=12,string='NTN',readonly=True),
