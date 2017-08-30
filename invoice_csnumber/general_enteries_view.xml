@@ -22,7 +22,7 @@
                       <field name="customer_invoice"/>
                   </xpath>
                   <xpath expr="//field[@name='to_check']" position="after">
-                      <field name="parts_payment" widget="radio"/>
+                      <field name="parts_payment" />
                   </xpath>
               </field>
          </record>

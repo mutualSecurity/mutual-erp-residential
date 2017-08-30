@@ -23,7 +23,8 @@ class invoice_csnumber(osv.osv):
         'invoice_remarks': fields.char('Remarks',store=True),
         # 'cs_num': fields.char('CS Number', store=True, readonly=True, compute='cal_cs'),
         'css': fields.related('partner_id','cs_number',type='char', size=12,string='CS Number',readonly=True),
-        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, store=True,string='CS Number', readonly=True),
+        'css_number': fields.related('partner_id', 'cs_number', type='char', size=12, store=True, string='CS Number', readonly=True),
+        'active_inactive': fields.related('partner_id', 'customer', type='boolean', string='Customer Status', readonly=True),
         'credit_card': fields.related('partner_id', 'credit_card_no', type='char',string='Credit Card', readonly=True),
         'outstanding': fields.related('partner_id', 'credit', type='float', string='Credit Balance', readonly=True),
         'phone': fields.related('partner_id','phone',type='char', size=12,string='Phone',readonly=True),
@@ -419,11 +420,18 @@ class generalEntry(osv.osv):
 class generalEntryCreate(osv.osv):
     _inherit = "account.move"
     _columns = {
-        'parts_payment': fields.selection([('yes', 'Yes'), ('no', 'No')], 'Is this parts payment?',store=True, required=True),
+        'parts_payment': fields.selection([
+                                           ('Monitoring Payment', 'Monitoring Payment'),
+                                           ('Parts Payment', 'Parts Payment'),
+                                           ('Cheque Return', 'Cheque Return'),
+                                           ('Miscellaneous', 'Miscellaneous'),
+                                           ('yes', 'Yes'),
+                                           ('no', 'No'),], 'Entry Type?', store=True, required=True),
         'count': fields.integer('Cancel Count',store=True),
     }
 
     _defaults = {
+        'parts_payment': 'Monitoring Payment',
         'count': 0
     }
 
@@ -469,6 +477,11 @@ class generalEntryCreate(osv.osv):
             # check that all accounts have the same topmost ancestor
             top_common = None
             for line in move.line_id:
+                if(self.parts_payment == 'Cheque Return'):
+                    invoice_status = 'open'
+                    cursor.execute(
+                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+                            line.customer_invoice.id))
                 if((line.credit == line.customer_invoice.grand_total or line.customer_invoice.amount_total == line.credit or line.customer_invoice.residual == line.credit) and line.customer_invoice.id):
                     invoice_status = "paid"
                     cursor.execute(
