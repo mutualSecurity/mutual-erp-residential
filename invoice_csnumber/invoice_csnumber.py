@@ -480,44 +480,44 @@ class generalEntryCreate(osv.osv):
                 if(obj.parts_payment == 'Cheque Return'):
                     if(line.customer_invoice.id != False):
                         invoice_status = 'open'
+                        cursor.execute('UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(line.customer_invoice.id))
+                else:
+                    if((line.credit == line.customer_invoice.grand_total or line.customer_invoice.amount_total == line.credit or line.customer_invoice.residual == line.credit) and line.customer_invoice.id):
+                        invoice_status = "paid"
                         cursor.execute(
-                            'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(line.customer_invoice.id))
-                if((line.credit == line.customer_invoice.grand_total or line.customer_invoice.amount_total == line.credit or line.customer_invoice.residual == line.credit) and line.customer_invoice.id):
-                    invoice_status = "paid"
-                    cursor.execute(
-                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-                    cursor.execute(
-                        'UPDATE account_invoice SET residual =' + "'" + str(0.0) + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-                elif(line.credit > line.customer_invoice.amount_total and line.customer_invoice.id):
-                    invoice_status = "paid"
-                    cursor.execute(
-                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-                    cursor.execute(
-                        'UPDATE account_invoice SET residual =' + "'" + str(line.credit-line.customer_invoice.amount_total) + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
+                            'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+                                line.customer_invoice.id))
+                        cursor.execute(
+                            'UPDATE account_invoice SET residual =' + "'" + str(0.0) + "'" + 'WHERE id =' + str(
+                                line.customer_invoice.id))
+                    elif(line.credit > line.customer_invoice.amount_total and line.customer_invoice.id):
+                        invoice_status = "paid"
+                        cursor.execute(
+                            'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+                                line.customer_invoice.id))
+                        cursor.execute(
+                            'UPDATE account_invoice SET residual =' + "'" + str(line.credit-line.customer_invoice.amount_total) + "'" + 'WHERE id =' + str(
+                                line.customer_invoice.id))
 
-                elif(line.customer_invoice.amount_total > line.credit and line.customer_invoice.id):
-                    invoice_status = "open"
-                    cursor.execute(
-                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-                    cursor.execute(
-                        'UPDATE account_invoice SET residual =' + "'" + str(line.customer_invoice.amount_total - line.credit) + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
+                    elif(line.customer_invoice.amount_total > line.credit and line.customer_invoice.id):
+                        invoice_status = "open"
+                        cursor.execute(
+                            'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+                                line.customer_invoice.id))
+                        cursor.execute(
+                            'UPDATE account_invoice SET residual =' + "'" + str(line.customer_invoice.amount_total - line.credit) + "'" + 'WHERE id =' + str(
+                                line.customer_invoice.id))
 
 
-                account = line.account_id
-                top_account = account
-                while top_account.parent_id:
-                    top_account = top_account.parent_id
-                if not top_common:
-                    top_common = top_account
-                elif top_account.id != top_common.id:
-                    raise osv.except_osv(_('Error!'),
-                                         _('You cannot validate this journal entry because account "%s" does not belong to chart of accounts "%s".') % (account.name, top_common.name))
+                    account = line.account_id
+                    top_account = account
+                    while top_account.parent_id:
+                        top_account = top_account.parent_id
+                    if not top_common:
+                        top_common = top_account
+                    elif top_account.id != top_common.id:
+                        raise osv.except_osv(_('Error!'),
+                                             _('You cannot validate this journal entry because account "%s" does not belong to chart of accounts "%s".') % (account.name, top_common.name))
         return self.post(cursor, user, ids, context=context)
 
 
