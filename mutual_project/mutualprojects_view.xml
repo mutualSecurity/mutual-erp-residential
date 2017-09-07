@@ -323,11 +323,11 @@
                     <!--<field name="task_status"/>-->
                     <!--<field name="status"/>-->
                     <field name="task_status_confirm"/>
-                    <field name="disco_reasons"/>
-                    <field name="removal_address"/>
-                    <field name="survey_address"/>
-                    <field name="print_removal"/>
-                    <field name="print_survey"/>
+                    <field name="disco_reasons" attrs="{'invisible':[('name','!=','disco')]}"/>
+                    <field name="removal_address" attrs="{'invisible':[('name','!=','Shifting')]}"/>
+                    <field name="survey_address" attrs="{'invisible':[('name','!=','Shifting')]}"/>
+                    <field name="print_removal" attrs="{'invisible':[('name','!=','Shifting')]}"/>
+                    <field name="print_survey" attrs="{'invisible':[('name','!=','Shifting')]}"/>
                     <!--<field name="timeIn"/>-->
                     <!--<field name="first_signal_time_task"/>-->
                     <!--<field name="timeOut"/>-->
