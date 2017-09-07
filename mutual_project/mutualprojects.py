@@ -10,6 +10,7 @@ class mutual_projects(osv.osv):
   _name="project.task"
   _inherit = "project.task",
   _columns = {
+      'description_remarks': fields.one2many('task.remarks', 'task_title', 'Description', store=True),
       'contract': fields.char('Contract', store=True, readonly=True),
       'status': fields.char('status', store=True, compute='status_task'),
       'task_status': fields.boolean('Task Status', store=True),
@@ -39,7 +40,6 @@ class mutual_projects(osv.osv):
                               ('reconnection', 'Reconnection'),
                               ('NewInstallation (Constructed)', 'NewInstallation (Constructed)'),
                               ('NewInstallation (Under Construction)', 'NewInstallation (Under Construction)'),
-                              ('Disable In SIS', 'Disable In SIS'),
                               ('Renovation', 'Renovation'),
                               ('Change of Owner', 'Change of Owner'),
                               ],
@@ -55,6 +55,10 @@ class mutual_projects(osv.osv):
           ('reason8', 'Complaint Issues'),
           ('reason9', 'Renovation Work'),
           ],'Disco Reasons', store=True, select=True),
+      'removal_address':fields.char('Removal Address'),
+      'survey_address': fields.char('Survey Address'),
+      'print_removal':fields.boolean('Printout Forwarded For Removal'),
+      'print_survey': fields.boolean('Printout Forwarded For Survey')
   }
 
   @api.model
@@ -409,3 +413,9 @@ class relatives(osv.osv):
         'contact2': fields.char('Contact#2', store=True),
     }
 
+class task_remarks(osv.osv):
+    _name = "task.remarks"
+    _columns = {
+        'task_title': fields.many2one('project.task', 'Task Title'),
+        'remarks': fields.char('Remarks',store=True,required=True),
+    }
