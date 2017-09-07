@@ -9,6 +9,7 @@ class invoice_csnumber(osv.osv):
 
     @api.model
     def create(self, vals):
-        self.env.cr.execute("UPDATE project_task SET contract = 'Contract Created' WHERE (name ='NewInstallation (Constructed)' or name ='NewInstallation (Under Construction)') and partner_id ="+ str(vals['partner_id']))
-        return super(invoice_csnumber, self).create(vals)
-
+        if vals['partner_id'] != False:
+            self.env.cr.execute("UPDATE project_task SET contract = 'Contract Created' WHERE (name ='NewInstallation (Constructed)' or name ='NewInstallation (Under Construction)') and partner_id ="+ str(vals['partner_id']))
+        else:
+            return super(invoice_csnumber, self).create(vals)
