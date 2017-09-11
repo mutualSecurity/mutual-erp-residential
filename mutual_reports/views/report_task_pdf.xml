@@ -75,6 +75,22 @@
             </div>
             <div class="row mt32 mb32">
                 <div class="col-xs-12" >
+                    <t t-if="o.removal_address">
+                        <strong>Removal Address:</strong>
+                        <span><span t-field="o.removal_address"/></span><br/><br/>
+                    </t>
+                </div>
+                <div class="col-xs-12" >
+                    <t t-if="o.survey_address">
+                        <strong>Survey Address:</strong>
+                        <span><span t-field="o.survey_address"/></span><br/><br/>
+                    </t>
+                </div>
+                <div class="col-xs-12" >
+                    <strong>Status of system:</strong>
+                    <span>___________________________________________________________________</span><br/><br/>
+                </div>
+                <div class="col-xs-12" >
                     <strong>Status of system:</strong>
                     <span>___________________________________________________________________</span><br/><br/>
                 </div>
