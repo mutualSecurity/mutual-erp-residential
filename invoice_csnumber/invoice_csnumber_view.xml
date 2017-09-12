@@ -29,6 +29,7 @@
                     <attribute name="context">"{'show_address':0}"</attribute>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="active_inactive"/>
                     <field name="address"/>
                     <field name="supplier_id"/>
                 </xpath>
