@@ -164,7 +164,7 @@
                            </div>
                            <div class="pull-right">
                                <small>Prepared By <span t-esc="user.name"/> </small><br/>
-                               <small><span t-field="account.create_date"/></small>
+                               <small><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></small>
                            </div>
                       </div>
                    </t>
