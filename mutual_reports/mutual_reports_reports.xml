@@ -69,6 +69,15 @@
                 attachment_use="False"
                 file="mutual_reports.custom_invoice"
         />
+         <report
+                id="dummy_custom_invoice_pdf"
+                model="mutual.dummy.invoice"
+                string="Monitoring Invoice"
+                report_type="qweb-pdf"
+                name="mutual_reports.dummy_custom_invoice"
+                attachment_use="False"
+                file="mutual_reports.dummy_custom_invoice"
+        />
 
          <report
                 id="sale_custom_invoice_pdf"

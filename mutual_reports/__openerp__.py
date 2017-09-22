@@ -22,6 +22,7 @@
     'data': [
             'mutual_reports_reports.xml',
             'views/custom_invoice.xml',
+            'views/dummy_custom_invoice.xml',
             'views/customer_details.xml',
             'views/custom_draft_invoice.xml',
             'views/custom_sale_invoice.xml',

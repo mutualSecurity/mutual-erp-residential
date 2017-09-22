@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+       <template id="dummy_custom_invoice">
+           <t t-call='report.html_container'>
+               <t t-foreach="docs" t-as="account_invoice">
+                   <t>
+                      <div class="page">
+                          <div class="row"><br/>
+                              <h1 align="center">
+                                  <t t-if="account_invoice.partner_id.ntn_num or account_invoice.partner_id.gst_num">
+                                      Sales Tax Invoice
+                                  </t>
+                                  <t t-if="not account_invoice.partner_id.ntn_num">
+                                      Invoice
+                                  </t>
+                              </h1><br/>
+                              <div style="font-size:18px;width:550px;display:inline-block;">
+                                  <span style="font-size:18px">
+                                      <strong>CUSTOMER ID:<span t-esc="account_invoice.partner_id.cs_number"/></strong></span>
+                                  <div style="border:2px solid grey; padding:10px;border-radius:10px;">
+                                      <strong style="font-size:18px">Customer's Information:</strong><br/>
+                                      <span t-field="account_invoice.partner_id.name"/><br/>
+                                      <span t-if="account_invoice.partner_id.c_street">
+                                          <span t-field="account_invoice.partner_id.c_street"/><br/>
+                                      </span>
+                                      <span t-if="account_invoice.partner_id.c_street2">
+                                          <span t-field="account_invoice.partner_id.c_street2"/><br/>
+                                      </span>
+                                      <span t-if="account_invoice.partner_id.city">
+                                          <span t-field="account_invoice.partner_id.city"/><br/>
+                                      </span>
+                                      <span t-if="account_invoice.partner_id.office">
+                                          <span t-field="account_invoice.partner_id.office"/>,
+                                      </span>
+                                      <span t-if="account_invoice.partner_id.phone">
+                                          <span t-field="account_invoice.partner_id.phone"/><br/>
+                                      </span>
+                                      <span t-if="account_invoice.partner_id.mobile">
+                                          <span t-field="account_invoice.partner_id.mobile"/><br/>
+                                      </span>
+                                      <span t-if="account_invoice.partner_id.ntn_num">
+                                          <strong>NTN: </strong><span t-field="account_invoice.partner_id.ntn_num"/><br/>
+                                      </span>
+                                      <span t-if="account_invoice.partner_id.gst_num">
+                                          <strong>GST: </strong><span t-field="account_invoice.partner_id.gst_num"/><br/>
+                                      </span>
+                                  </div>
+                                  <div style="font-size:16px;"><br/><br/><br/><br/>
+                                      <strong><em>Dear Subscriber,<br/>Please keep checking your Alarm System regularly on weekly and monthly basis
+                                  by using panics and other devices</em></strong>
+                                  </div>
+                              </div>
+                              <div style="font-size:18px; width:360px;display: inline-block;float:right">
+                                  <div style="border:2px solid grey; padding:10px;border-radius:10px;">
+                                      <table>
+                                      <tr>
+                                          <td><strong>Invoice No.</strong></td>
+                                          <td><span t-field="account_invoice.ref_" style="margin-left:15px;"/></td>
+                                      </tr>
+                                      <tr>
+                                          <td><strong>Date</strong></td>
+                                          <td><span t-field="account_invoice.date_invoice" style="margin-left:13px;"/></td>
+                                      </tr>
+                                      <tr>
+                                          <td><strong>Uplink Date</strong></td>
+                                          <td><span t-field="account_invoice.partner_id.uplink_date" style="margin-left:13px;"/></td>
+                                      </tr>
+                                      <tr>
+                                          <td><strong>Our NTN</strong></td>
+                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
+                                              <td><span style="margin-left:13px;">0296772-3</span></td>
+                                          </t>
+                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                              <td><span style="margin-left:13px;">S3764757-1</span></td>
+                                         </t>
+                                      </tr>
+                                  </table>
+                                  </div>
+                                 <div style="border:2px solid grey; padding:10px;border-radius:10px;margin-top:12px;">
+                                     <span>
+                                      <strong>FOR COMPLAINTS PLEASE CONTACT </strong>
+                                          <br/>
+                                          <center>
+                                              111-238-222 OR 02134311512-13-14
+                                              Email:complaints@mutualsecurity.
+                                          </center>
+                                     </span>
+                                 </div><br/><br/>
+                                  <div style="font-size:22px;">
+                                      <center><strong>Due Date</strong></center>
+                                      <center><div style="border:2px solid grey; width:150px; padding:10px;border-radius:10px">
+                                          <span t-field="account_invoice.due_date"/>
+                                      </div></center>
+                                  </div>
+                              </div>
+                              <br/><br/><br/><br/>
+                              <table class="table table-condensed" style="font-size:18px">
+                                  <thead>
+                                      <tr>
+                                          <th>Description</th>
+                                          <th>Month(s)</th>
+                                          <th class="text-right">Amount</th>
+                                          <th class="text-right">Sales Tax 19.5%</th>
+                                          <th class="text-right">Subtotal</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class="invoice_tbody">
+                                      <tr t-foreach="account_invoice.invoice_line" t-as="l">
+                                          <td>
+                                              <span t-if="l.products.name == 'Service (MS)'">
+                                                  Burglar Alarm Monitoring Fee for the period<br/>
+                                              </span>
+                                              <span t-if="l.products.name == 'Service (MSS)'">
+                                                  Burglar Alarm Monitoring Fee for the period<br/>
+                                              </span>
+                                              <span t-if="account_invoice.from_">
+                                                 from <strong><span t-field="account_invoice.from_"/></strong>
+                                              </span>
+                                              <span t-if="account_invoice.to_">
+                                                  to <strong><span t-field="account_invoice.to_"/></strong>
+                                              </span>
+                                          </td>
+                                          <td>
+                                              <span t-esc="round(l.quantity)"/>Month(s)
+                                          </td>
+                                          <td class="text-right">
+                                              <span t-field="l.price_subtotal"/>
+                                          </td>
+                                          <td class="text-right">
+                                              <span t-if="l.tax">
+                                                  <span t-esc="round((l.price_subtotal*l.tax/100))"/>
+                                              </span>
+                                          </td>
+                                          <td class="text-right">
+                                              <span t-if="l.tax">
+                                                  <span t-esc="round((l.price_subtotal*l.tax/100))+l.price_subtotal"/>
+                                              </span>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="row"><br/><br/>
+                              <div class="col-xs-4 pull-right">
+                                  <table class="table table-condensed" style="font-size:18px">
+                                           <tr class="border-black">
+                                                  <td>
+                                                      <strong>Total</strong>
+                                                  </td>
+                                                  <td class="text-right">
+                                                      <strong><span t-esc="round(account_invoice.amount_total)"/></strong>
+                                                  </td>
+                                           </tr>
+                                  </table>
+                              </div>
+                          </div>
+                          <div class="row">
+                             <div class="pull-left" style="font-size:18px">
+                                  <span>Amount In Words: <span t-esc="account_invoice.amount_to_text(round(account_invoice.amount_total),'euro')"/></span>
+                              </div>
+                          </div>
+                          <div class="row"><br/><br/><br/><br/><br/>
+                              <div class="pull-left" style="font-size:17px">
+                                 <span>
+                                     Payment: Please send your Payees A/c cheque in favour of ' <span>
+                                         <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
+                                             M/s Mutual Security Systems
+                                         </t>
+                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                             Mutual Security Systems Pvt. Ltd.
+                                         </t>
+
+                                 </span>' by
+                                              Registered mail or courier or call for collection of cheque by our representative.
+                                              Please write your name and Customer ID on the back of the cheque</span>
+                              </div>
+                          </div>
+                          <br/><br/>
+                           <div class="row"><br/><br/>
+                              <div class="pull-left" style="font-size:16px">
+                                 <span>
+                                     <small><em>
+                                         <span t-field="account_invoice.create_date"/> <span t-field="account_invoice.create_uid"/></em>
+                                     </small>
+                                 </span>
+                              </div>
+                          </div>
+                           <div class="row">
+                              <div class="pull-right" style="font-size:17px">
+                                 <span>
+                                         <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
+                                             Mutual Security Systems
+                                         </t>
+                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                             Mutual Security
+                                         </t>
+                                 </span>
+                              </div>
+                          </div>
+                      </div>
+                   </t>
+               </t>
+           </t>
+       </template>
+    </data>
+</openerp>
