@@ -110,7 +110,7 @@
                 <search string="Search Logs">
                     <field name="issue_id"/>
                     <field name="cs_number"/>
-                    <field name="technician_name" filter_domain="['|',('technician_name','ilike',self),('multi_tech','ilike',self)]"/>
+                    <field name="technician_name_other" filter_domain="['|',('technician_name_other','ilike',self),('multi_tech_other','ilike',self)]"/>
                     <group string="Custom Filter">
                         <filter string="Create Day" context="{'group_by':'create_date:day'}" help="Create Date"/>
                         <filter string="Create Month" context="{'group_by':'create_date:month'}" help="Create Month"/>
@@ -144,7 +144,6 @@
                     <field name="tech_name_tasks" readonly="1"/>
                     <field name="technician_name_other"/>
                     <field name="multi_tech_other" widget="many2many_tags"/>
-                    <field name="multi_tech" widget="many2many_tags" readonly="1"/>
                     <field name="date_start"/>
                     <field name="date_end"/>
                     <field name="compute_total_time"/>

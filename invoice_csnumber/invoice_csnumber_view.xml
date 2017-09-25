@@ -59,7 +59,6 @@
                             <field name="date"/>
                             <field name="next_action"/>
                             <field name="riders_"/>
-                            <field name="riders"/>
                             <field name="payment_received"/>
                             <field name="payment_method"/>
                             <field name="cheque_no" attrs="{'invisible': [('payment_method','=','Cash')]}"/>
@@ -91,7 +90,7 @@
                   <xpath expr="//field[@name='date_due']" position="after">
                       <field name="responsible_person"/>
                       <field name="date"/>
-                      <field name="riders"/>
+                      <field name="riders_"/>
                       <field name="payment_received"/>
                   </xpath>
               </field>
@@ -104,7 +103,7 @@
                 <xpath expr="//search/field[@name='number']" position="before">
                     <field name="css"/>
                     <field name="responsible_person"/>
-                    <field name="riders"/>
+                    <field name="riders_"/>
                     <field name="date_invoice"/>
                     <field name="company_id"/>
                     <field name="number"/>
@@ -114,12 +113,12 @@
                         <filter string="My" domain="[('responsible_person','=',uid)]"/>
                         <filter string="Payment Received" domain="[('payment_received','=',True)]"/>
                         <filter string="Payment Not Received" domain="[('payment_received','=',False)]"/>
-                        <filter string="Assigned to Riders" domain="[('riders','!=',False)]"/>
-                        <filter string="Not Assigned to Riders" domain="[('riders','=',False)]"/>
+                        <filter string="Assigned to Riders" domain="[('riders_','!=',False)]"/>
+                        <filter string="Not Assigned to Riders" domain="[('riders_','=',False)]"/>
                         <filter string="Received by Me" domain="[('payment_received','=',True),('responsible_person','=',uid)]"/>
                         <filter string="Not Received by Me" domain="[('payment_received','=',False),('responsible_person','=',uid)]"/>
-                        <filter string="Assigned to Riders by Me" domain="[('riders','!=',False),('responsible_person','=',uid)]"/>
-                        <filter string="Assigned to Riders not by Me" domain="[('riders','=',False),('responsible_person','=',uid)]"/>
+                        <filter string="Assigned to Riders by Me" domain="[('riders_','!=',False),('responsible_person','=',uid)]"/>
+                        <filter string="Assigned to Riders not by Me" domain="[('riders_','=',False),('responsible_person','=',uid)]"/>
                         <filter string="Daily" domain="[('write_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('write_date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
                      </group>
                 </search>
