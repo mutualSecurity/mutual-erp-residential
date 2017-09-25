@@ -273,10 +273,10 @@ class mutual_issues(osv.osv):
 class tech_activities_issues(osv.osv):
     _name = "tech.activities.issues"
     _columns = {
-        'multi_tech_other': fields.many2many('hr.employee', string='Other Tech 2',
+        'multi_tech_other': fields.many2many('hr.employee', string='Other Tech',
                                        domain="[('department_id','=','Technical')]"),
 
-        'technician_name_other': fields.many2one('hr.employee', 'Technician Name 2', required=True, select=1,
+        'technician_name_other': fields.many2one('hr.employee', 'Assigned Tech', required=True, select=1,
                                            track_visibility='onchange', domain="[('department_id','=','Technical')]",
                                            defaults=''),
         'multi_tech': fields.many2many('res.users', string='Other Tech', domain="[('is_technician','=',True)]"),
@@ -339,10 +339,10 @@ class tech_activities_issues(osv.osv):
 class tech_activities_tasks(osv.osv):
     _name = "tech.activities.tasks"
     _columns = {
-        'multi_tech_other': fields.many2many('hr.employee', string='Other Tech 2',
+        'multi_tech_other': fields.many2many('hr.employee', string='Other Tech',
                                              domain="[('department_id','=','Technical')]"),
 
-        'technician_name_other': fields.many2one('hr.employee', 'Technician Name 2', required=True, select=1,
+        'technician_name_other': fields.many2one('hr.employee', 'Assigned Tech', required=True, select=1,
                                                  track_visibility='onchange',
                                                  domain="[('department_id','=','Technical')]",
                                                  defaults=''),
