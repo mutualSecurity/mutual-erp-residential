@@ -293,6 +293,7 @@
                     <field name="dispatch_time"/>
                     <field name="reach_time"/>
                     <field name="minutes" readonly="1"/>
+                    <field name="shift_time"/>
                     <field name="move"/>
                     <field name="remarks"/>
                     <field name="cms" required="1"/>
@@ -412,9 +413,12 @@
                         <filter name="create_date" string="Monthly" context="{'group_by':'create_date:month'}"/>
                         <filter name="create_date" string="Yearly" context="{'group_by':'create_date:year'}"/>
                     </group>
-                    <group string="By Shift">
-                        <filter name="create_uid" string="Shift"/>
+                    <group string="By Morning/Evening/Night">
+                        <filter string="Morning" domain="[('shift_time', '=', 'morning')]"/>
+                        <filter string="Evening" domain="[('shift_time', '=', 'evening')]"/>
+                        <filter string="Night" domain="[('shift_time', '=', 'night')]"/>
                     </group>
+                    <field name="create_uid" />
                 </search>
             </field>
         </record>
