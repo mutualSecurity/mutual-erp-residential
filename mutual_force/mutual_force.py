@@ -62,7 +62,7 @@ class response_time(osv.osv):
             # find the difference between two dates
             diff = reach - dispatch
             self.minutes = diff
-            self.shift_assign()
+            # self.shift_assign()
 
 
     # def shift_assign(self):
