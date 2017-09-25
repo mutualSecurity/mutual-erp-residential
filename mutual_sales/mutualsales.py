@@ -22,6 +22,14 @@ def grouplines(self, ordered_lines, sortkey):
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
+        'is_employee': fields.boolean('Is Employee?', store=True),
+        'department': fields.selection([('Technical', 'Technical'),
+                                        ('Rider', 'Rider'),
+                                        ('Recovery Officer', 'Recovery Officer'),
+                                        ('IT', 'IT'),
+                                        ('Accounts', 'Accounts'),
+                                        ('Sales', 'Sales'),
+                                        ('CMS', 'CMS')], 'Department', store=True),
         'customer_status': fields.char('Customer Status', store=True, compute='_customer_status'),
         'riders': fields.many2one('res.partner', 'Assigned to Rider', required=False, select=1,
                                   track_visibility='onchange', domain="[('is_rider','=',True)]"),

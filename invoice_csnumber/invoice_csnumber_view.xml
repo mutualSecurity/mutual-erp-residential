@@ -58,6 +58,7 @@
                             <field name="responsible_person"/>
                             <field name="date"/>
                             <field name="next_action"/>
+                            <field name="riders_"/>
                             <field name="riders"/>
                             <field name="payment_received"/>
                             <field name="payment_method"/>
