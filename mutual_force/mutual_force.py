@@ -48,7 +48,7 @@ class response_time(osv.osv):
         'move': fields.datetime('Move', store=True),
         'remarks': fields.char('Remarks',store=True),
         'cms': fields.char('Responsible',store=True),
-        'shift_time': fields.char('Shift',store=True)
+        # 'shift_time': fields.char('Shift',store=True)
     }
 
     @api.depends('dispatch_time','reach_time')
@@ -65,30 +65,30 @@ class response_time(osv.osv):
             self.shift_assign()
 
 
-    def shift_assign(self):
-        self.env.cr.execute("select * from response_time where shift_time is null and reach_time is not null")
-        all_visit = self.env.cr.dictfetchall()
-        if len(all_visit) != 0:
-            for v in all_visit:
-                dt = dti.datetime.strptime(str(v['reach_time']), '%Y-%m-%d %H:%M:%S').time()
-                print dt
-
-                if dt >= dti.time(8,1,0,0) and dt <= dti.time(16,0,59,0):
-                    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>IF"
-                    self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"morning"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
-                    print "morning updated"
-                elif (dt >= dti.time(16,1,0,0)) and (dt <= dti.time(23,30,59,0)):
-                    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ELIF TWO"
-                    self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"evening"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
-                    print "evening updated"
-                elif ((dt >= dti.time(23,31,0,0) and dt <= dti.time(23,59,59,0))):
-                    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ELIF TWO"
-                    self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"night"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
-                    print "night updated"
-                elif ((dt >= dti.time(0,0,0,0) and dt <= dti.time(8,0,59,0))):
-                    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ELIF TWO"
-                    self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"night"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
-                    print "night updated"
+    # def shift_assign(self):
+    #     self.env.cr.execute("select * from response_time where shift_time is null and reach_time is not null")
+    #     all_visit = self.env.cr.dictfetchall()
+    #     if len(all_visit) != 0:
+    #         for v in all_visit:
+    #             dt = dti.datetime.strptime(str(v['reach_time']), '%Y-%m-%d %H:%M:%S').time()
+    #             print dt
+    #
+    #             if dt >= dti.time(8,1,0,0) and dt <= dti.time(16,0,59,0):
+    #                 print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>IF"
+    #                 self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"morning"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
+    #                 print "morning updated"
+    #             elif (dt >= dti.time(16,1,0,0)) and (dt <= dti.time(23,30,59,0)):
+    #                 print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ELIF TWO"
+    #                 self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"evening"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
+    #                 print "evening updated"
+    #             elif ((dt >= dti.time(23,31,0,0) and dt <= dti.time(23,59,59,0))):
+    #                 print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ELIF TWO"
+    #                 self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"night"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
+    #                 print "night updated"
+    #             elif ((dt >= dti.time(0,0,0,0) and dt <= dti.time(8,0,59,0))):
+    #                 print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ELIF TWO"
+    #                 self.env.cr.execute("UPDATE response_time SET shift_time ="+"'"+"night"+"'"+" WHERE id ="+"'"+str(v['id'])+"'")
+    #                 print "night updated"
 
 
 
