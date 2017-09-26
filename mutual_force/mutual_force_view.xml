@@ -293,7 +293,7 @@
                     <field name="dispatch_time"/>
                     <field name="reach_time"/>
                     <field name="minutes" readonly="1"/>
-                    <field name="shift_time"/>
+                  <!--  <field name="shift_time"/> -->
                     <field name="move"/>
                     <field name="remarks"/>
                     <field name="cms" required="1"/>
