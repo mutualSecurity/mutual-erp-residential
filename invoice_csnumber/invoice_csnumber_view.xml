@@ -58,7 +58,7 @@
                             <field name="responsible_person"/>
                             <field name="date"/>
                             <field name="next_action"/>
-                            <field name="riders_"/>
+                            <field name="riders_" string="Assigned to Rider"/>
                             <field name="payment_received"/>
                             <field name="payment_method"/>
                             <field name="cheque_no" attrs="{'invisible': [('payment_method','=','Cash')]}"/>
@@ -90,7 +90,7 @@
                   <xpath expr="//field[@name='date_due']" position="after">
                       <field name="responsible_person"/>
                       <field name="date"/>
-                      <field name="riders_"/>
+                      <field name="riders_" string="Assigned To Rider"/>
                       <field name="payment_received"/>
                   </xpath>
               </field>
