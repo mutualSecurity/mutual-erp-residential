@@ -294,9 +294,14 @@ class invoice_csnumber(osv.osv):
                 self.grand_total = out + self.amount_total
 
             else:
-                out = float(self.outstanding) - total - self.amount_total
-                self.outstanding_amount = out
-                self.grand_total = out + self.amount_total
+                if len(list) == 1:
+                    out = float(self.outstanding) - total
+                    self.outstanding_amount = out
+                    self.grand_total = out + self.amount_total
+                else:
+                    out = float(self.outstanding) - total - self.amount_total
+                    self.outstanding_amount = out
+                    self.grand_total = out + self.amount_total
 
         if self.date_invoice and self.partner_id.customer:
             date_format = "%Y-%m-%d"

@@ -107,6 +107,8 @@
                     <field name="date_invoice"/>
                     <field name="company_id"/>
                     <field name="number"/>
+                    <field name="sti_num"/>
+                    <field name="invoice_type"/>
                 </xpath>
                 <search string="Search Invoice">
                     <group string="Recovery Officers">
