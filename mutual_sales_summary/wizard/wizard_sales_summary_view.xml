@@ -1,0 +1,31 @@
+<openerp>
+    <data>
+       <!-- ================================================== Begin Form views of Account Inventory Wizard ================================================ -->
+        <record id="wiz_sales_summary_report" model="ir.ui.view">
+            <field name="name">view.form.wiz.sales.summary</field>
+            <field name="model">wiz.sales.summary</field>
+            <field name="arch" type="xml">
+                <form string="Sales Summary" version="8.0">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" type="object" string="Print" class="oe_highlight"/>
+                        OR
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!-- ================================================== End Form views of Account Inventory Wizard ================================================ -->
+        <record id="action_wiz_sales_summary_report" model="ir.actions.act_window">
+            <field name="name">Sales Summary</field>
+            <field name="res_model">wiz.sales.summary</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>
+

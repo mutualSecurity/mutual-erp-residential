@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem name="Sales Reports" id="sales_summary_side_top_menu" parent="account.menu_finance" sequence="4"/>
+         <menuitem
+            name="Sales Summary"
+            action="action_wiz_sales_summary_report"
+            id="menu_action_wiz_sales_summary_report"
+            sequence="4"
+            parent="sales_summary_side_top_menu">
+        </menuitem>
+    </data>
+</openerp>

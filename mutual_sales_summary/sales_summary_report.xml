@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="action_report_sale_summary"
+            model="wiz.sales.summary"
+            string="Stock Report"
+            report_type="qweb-pdf"
+            name="mutual_sales_summary.report_sales_summary"
+            file="mutual_sales_summary.report_sales_summary"
+            menu="False"
+        />
+    </data>
+</openerp>
