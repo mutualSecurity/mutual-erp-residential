@@ -9,9 +9,8 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="cs_number"/>
                     <field name="payment_received"/>
-                    <!--<field name="additional_discount"/>-->
-                    <!--<field name="monitoring_discount"/>-->
-                    <!--<field name="monitoring_tax"/>-->
+                    <field name="sale_confirm_date" readonly="1"/>
+                    <field name="status"/>
                 </xpath>
                 <xpath expr="//field[@name='client_order_ref']" position="after">
                     <field name="terms_conditions"/>

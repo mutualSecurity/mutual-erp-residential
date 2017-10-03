@@ -2,6 +2,7 @@
 from openerp.osv import fields, osv
 from openerp import api
 from itertools import groupby
+from datetime import date, timedelta,datetime
 import re
 
 def grouplines(self, ordered_lines, sortkey):
@@ -139,10 +140,12 @@ class mutual_sales(osv.osv):
                 self.property_account_payable = payable
 
 
-
 class duedeligence(osv.osv):
     _inherit = "sale.order"
     _columns = {
+        'sale_confirm_date': fields.date('Confirmation Date', readonly=True, store=True, compute='sale_confirmation_date'),
+        'status': fields.selection([('NewInstallation', 'NewInstallation'),
+                                    ('Additional', 'Additional')], 'SO Type', store=True, default='NewInstallation'),
         'approval': fields.boolean('Quotation Approval',store=True, read=["account.group_account_user"], write=["account.group_account_manager"]),
         'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=True,
                                       states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
@@ -163,9 +166,16 @@ class duedeligence(osv.osv):
         'gsm_discount': fields.float('GSM Discount', store=True, compute='add_discount', default=0.00),
         'monitoring_discount': fields.float('Monitoring Discount', store=True, default=0.00),
         'monitoring_tax': fields.float('Monitoring Tax', store=True, default=0.00, compute='add_tax'),
+        'additional_tax': fields.float('Additional Tax', store=True, default=0.00, compute='add_tax'),
         'terms_conditions': fields.selection([('Additional', 'Additional')], 'Terms and Conditions', store=True),
         'changes_description': fields.text("Remarks", store=True),
     }
+
+    @api.multi
+    @api.depends('payment_received')
+    def sale_confirmation_date(self):
+        if self.payment_received:
+            self.sale_confirm_date = datetime.now().date()
 
     def sale_layout_lines(self, cr, uid, ids, order_id=None, context=None):
         """
@@ -214,6 +224,10 @@ class duedeligence(osv.osv):
             elif line.tax_id.description == 'SRB 19%':
                 tax = line.price_subtotal * 19 / 100
                 self.monitoring_tax = tax
+            elif line.tax_id.description == 'STO 17%':
+                additional_tax = line.price_subtotal * 17 / 100
+                self.additional_tax += additional_tax
+
 
 
 

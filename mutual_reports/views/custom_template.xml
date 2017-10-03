@@ -55,6 +55,13 @@
                  </td>
              </tr>
          </t>
+         <t t-if="sale_order.additional_tax > 0.0">
+             <tr class="text-right">
+                 <td colspan="100">
+                     <strong>Sales Tax 17%:  </strong><span t-field="sale_order.additional_tax"/>Rs.
+                 </td>
+             </tr>
+         </t>
      </t>
     <t t-if="p['category'].name=='Installation Charges'">
         <t t-if="sale_order.installation_discount > 0.0">

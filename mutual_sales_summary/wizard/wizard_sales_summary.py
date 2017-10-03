@@ -29,17 +29,17 @@ class SalesSummaryReport(osv.TransientModel):
         self.env.cr.execute("SELECT res_partner.cs_number,res_company.name FROM sale_order INNER JOIN project_task ON sale_order.partner_id = project_task.partner_id INNER JOIN res_partner ON project_task.partner_id = res_partner.id INNER JOIN res_company ON res_partner.company_id = res_company.id where project_task.name like '%NewInstallation%' and sale_order.create_date between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+" 23:59:59"+"'"+"and sale_order.amount_total >15000 and state != 'draft' order by res_partner.cs_number")
         current_sales = self.env.cr.dictfetchall()
         for cs in current_sales:
-            if cs['cs_number'].find('CM') or cs['cs_number'].find('cm'):
+            if cs['cs_number'].find('CM')!=-1 or cs['cs_number'].find('cm')!=-1:
                 frequency['cm'] += 1
-            elif cs['cs_number'].find('CN') or cs['cs_number'].find('cn'):
+            elif cs['cs_number'].find('CN')!=-1 or cs['cs_number'].find('cn')!=-1:
                 frequency['cn'] += 1
-            elif cs['cs_number'].find('LH') or cs['cs_number'].find('cm'):
+            elif cs['cs_number'].find('LH')!=-1 or cs['cs_number'].find('cm')!=-1:
                 frequency['lh'] += 1
-            elif cs['cs_number'].find('B1') or cs['cs_number'].find('b1'):
+            elif cs['cs_number'].find('B1')!=-1 or cs['cs_number'].find('b1')!=-1:
                 frequency['b1'] += 1
-            elif cs['cs_number'].find('B2') or cs['cs_number'].find('b2'):
+            elif cs['cs_number'].find('B2')!=-1 or cs['cs_number'].find('b2')!=-1:
                 frequency['b2'] += 1
-            elif cs['cs_number'].find('B3') or cs['cs_number'].find('b3'):
+            elif cs['cs_number'].find('B3')!=-1 or cs['cs_number'].find('b3')!=-1:
                 frequency['b3'] += 1
         return frequency
 
