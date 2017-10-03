@@ -55,8 +55,8 @@
                     <field name="visit"/>
                     <field name="is_employee" attrs="{'invisible': [('customer','=',True)]}"/>
                     <field name="department" attrs="{'invisible': [('is_employee','=',False)]}"/>
-                    <field name="is_technician" attrs="{'invisible': [('customer','=',True)]}"/>
-                    <field name="is_rider" attrs="{'invisible': [('customer','=',True)]}"/>
+                    <!--<field name="is_technician" attrs="{'invisible': [('customer','=',True)]}"/>
+                    <field name="is_rider" attrs="{'invisible': [('customer','=',True)]}"/>-->
                 </field>
                 <field name="function" position="after">
                     <field name="office"/>
