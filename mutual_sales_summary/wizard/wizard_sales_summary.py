@@ -26,7 +26,7 @@ class SalesSummaryReport(osv.TransientModel):
             'b2': 0,
             'b3': 0,
         }
-        self.env.cr.execute("SELECT res_partner.cs_number,res_company.name FROM sale_order INNER JOIN project_task ON sale_order.partner_id = project_task.partner_id INNER JOIN res_partner ON project_task.partner_id = res_partner.id INNER JOIN res_company ON res_partner.company_id = res_company.id where project_task.name like '%NewInstallation%' and sale_order.create_date between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+" 23:59:59"+"'"+"and sale_order.amount_total >15000 and state != 'draft' order by res_partner.cs_number")
+        self.env.cr.execute("SELECT res_partner.cs_number,res_partner.name,res_company.name,sale_order.name,sale_order.payment_received FROM sale_order INNER JOIN res_partner ON sale_order.partner_id = res_partner.id INNER JOIN res_company ON res_partner.company_id = res_company.id where sale_order.status='NewInstallation' and sale_order.sale_confirm_date between "+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+" and state != 'draft' order by res_partner.cs_number")
         current_sales = self.env.cr.dictfetchall()
         for cs in current_sales:
             if cs['cs_number'].find('CM')!=-1 or cs['cs_number'].find('cm')!=-1:
