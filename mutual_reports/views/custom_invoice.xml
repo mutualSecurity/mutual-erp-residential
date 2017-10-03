@@ -186,13 +186,13 @@
 
                                               </td>
                                               <td class="text-right">
-                                                  <span t-esc="account_invoice.outstanding_amount*-1"/>
+                                                  <span t-esc="round(account_invoice.outstanding_amount*-1)"/>
                                               </td>
                                                <td>
 
                                               </td>
                                                <td class="text-right">
-                                                  <span t-esc="account_invoice.outstanding_amount*-1"/>
+                                                  <span t-esc="round(account_invoice.outstanding_amount*-1)"/>
                                               </td>
                                           </tr>
                                       </t>
