@@ -64,15 +64,7 @@ class mutual_projects(osv.osv):
   @api.model
   def create(self, vals):
       if vals['name'] == 'disco':
-          status = "cancelled"
-          _customer_status = "Disco"
-          self.env.cr.execute('UPDATE res_partner SET active = False WHERE id =' + str(vals['partner_id']))
-          self.env.cr.execute(
-              'UPDATE account_analytic_account SET state =' + "'" + status + "'" + 'WHERE partner_id =' + str(
-                  vals['partner_id']))
-          self.env.cr.execute(
-              'UPDATE res_partner SET customer_status =' + "'" + _customer_status + "'" + 'WHERE id =' + str(
-                  vals['partner_id']))
+          self.disco_function(vals['partner_id', False])
           return super(mutual_projects, self).create(vals)
       elif vals['name'] == 'reconnection':
           _customer_status = "Active"
@@ -83,6 +75,24 @@ class mutual_projects(osv.osv):
           return super(mutual_projects, self).create(vals)
       else:
           return super(mutual_projects, self).create(vals)
+
+  @api.multi
+  def write(self, vals):
+      if self.name == 'disco':
+          self.disco_function(self.partner_id.id, True)
+          self.disco_function(vals['partner_id'], False)
+
+      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      # print self.name
+      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      # print vals
+      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      super(mutual_projects, self).write(vals)
+      return True
+
+
+
 
   @api.one
   @api.onchange('complaint_reference')
@@ -120,7 +130,37 @@ class mutual_projects(osv.osv):
           diff = _timeOut - _timeIn
           self.compute_total_time = diff
 
-# ======================================== Project.task class implementation Begins =====================================
+  def disco_function(self, d_id, stat):
+      _customer_status = ['Active', 'Disco']
+      _contract_status = ['open', 'cancelled']
+      if stat:
+          # active the first customer
+          self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(d_id))
+          self.env.cr.execute(
+              'UPDATE account_analytic_account SET state =' + "'" + _contract_status[
+                  0] + "'" + 'WHERE partner_id =' + str(d_id))
+          self.env.cr.execute(
+              'UPDATE res_partner SET customer_status =' + "'" + _customer_status[0] + "'" + 'WHERE id =' + str(
+                  d_id))
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+          print "active the first customer "+str(d_id)
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+      else:
+          # deactivate the current user
+          self.env.cr.execute('UPDATE res_partner SET active = False WHERE id =' + str(d_id))
+          self.env.cr.execute(
+              'UPDATE account_analytic_account SET state =' + "'" + _contract_status[
+                  1] + "'" + 'WHERE partner_id =' + str(d_id))
+          self.env.cr.execute(
+              'UPDATE res_partner SET customer_status =' + "'" + _customer_status[1] + "'" + 'WHERE id =' + str(
+                  d_id))
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+          print "Deactive the CURRENT customer "+str(d_id)
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+
+          # ======================================== Project.task class implementation Begins =====================================
 class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
