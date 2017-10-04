@@ -49,8 +49,8 @@
                     <field name="contactpersondetails"/>
                     <field name="tempaddress"/>
                     <field name="address_criteria"/>
-                    <separator string="Reset Account Heads"/><br/>
-                    <button name="account_head" string="Reset Heads" type="object" class="oe_highlight" />
+                    <separator string="Reset Account Heads" attrs="{'invisible': [('state','!=','draft')]}"/><br/>
+                    <button name="account_head" string="Reset Heads" type="object" class="oe_highlight" attrs="{'invisible': [('state','!=','draft')]}" />
                 </xpath>
                 <xpath expr="//notebook/page[@string='Invoice Lines']" position="after">
                     <page string="Payment Follow-Ups">

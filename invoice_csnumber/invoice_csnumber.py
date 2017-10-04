@@ -379,9 +379,12 @@ class invoice_csnumber(osv.osv):
 
     @api.multi
     def account_head(self):
-        if self.company_id.name == "Mutual Security" and self.origin:
-            for line in self.invoice_line:
-                line.account_id = line.product_id.property_account_income
+        if self.state == 'draft':
+            if self.company_id.name == "Mutual Security" and self.origin:
+                for line in self.invoice_line:
+                    line.account_id = line.product_id.property_account_income
+        else:
+            raise except_orm(_('Error!'), _('You can reset accounts head of invoice only in draft state'))
 
 
     # @api.onchange('custom_account_id')

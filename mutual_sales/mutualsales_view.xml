@@ -136,6 +136,7 @@
                 <xpath expr="//search/field[@name='name']" position="after">
                     <!--<field name="mobile" />-->
                     <field name="phone" filter_domain="['|','|',('phone','ilike',self),('mobile','ilike',self),('office','ilike',self)]" />
+                    <field name="department"/>
                     <field name="street"/>
                     <field name="email"/>
                     <field name="payment_next_action" />
@@ -152,6 +153,18 @@
                         <filter string="Uplink By Day" context="{'group_by':'uplink_date:day'}" />
                         <filter string="Uplink By Month" context="{'group_by':'uplink_date:month'}" />
                         <filter string="Uplink By Year" context="{'group_by':'uplink_date:year'}" />
+                    </group>
+                    <group string="Employee">
+                        <filter string="Is Employee"  domain="[('is_employee','=',True)]"/>
+                    </group>
+                    <group string="Department">
+                        <filter string="Technical"  domain="[('department','=','Technical')]"/>
+                        <filter string="Rider"  domain="[('department','=','Rider')]"/>
+                        <filter string="Recovery Officer"  domain="[('department','=','Recovery Officer')]"/>
+                        <filter string="IT"  domain="[('department','=','IT')]"/>
+                        <filter string="Accounts"  domain="[('department','=','Accounts')]"/>
+                        <filter string="Sales"  domain="[('department','=','Sales')]"/>
+                        <filter string="CMS"  domain="[('department','=','CMS')]"/>
                     </group>
                 </search>
             </field>
