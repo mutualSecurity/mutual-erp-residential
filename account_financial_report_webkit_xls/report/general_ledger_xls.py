@@ -2,7 +2,8 @@
 # Copyright 2009-2016 Noviat
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import xlwt
-from datetime import datetime
+from dateutil.relativedelta import *
+from datetime import date, timedelta,datetime
 from openerp.addons.report_xls.report_xls import report_xls
 from openerp.addons.report_xls.utils import rowcol_to_cell
 from openerp.addons.account_financial_report_webkit.report.general_ledger \
@@ -32,8 +33,40 @@ _column_sizes = [
 class general_ledger_xls(report_xls):
     column_sizes = [x[1] for x in _column_sizes]
 
-    def generate_xls_report(self, _p, _xs, data, objects, wb):
+    def number_of_fiscal_years(self,fiscalyear_id):
+        total_open_fiscalyears = self.cr.execute("SELECT id, date_stop, code, create_date, name, date_start,state FROM account_fiscalyear where state = 'draft'");
+        total_open_fiscalyears = self.cr.dictfetchall()
+        if total_open_fiscalyears > 1:
+            # find start_date of last fiscal year which is in open state
+            start_date = self.cr.execute("SELECT MIN(date_start) date_start FROM public.account_fiscalyear")
+            start_date = self.cr.dictfetchall()
+            start_date = start_date
+            return start_date
+        else:
+            fiscalyear_startdate =self.cr.execute("SELECT date_start FROM public.account_fiscalyear where id="+"'" + str(fiscalyear_id) + "'")
+            fiscalyear_startdate = self.cr.dictfetchall()
+            return fiscalyear_startdate
 
+    def calculate_initial_balances(self,_p_start_date,account_id,initial_bal,fiscalyear_id):
+        if initial_bal:
+            date_end = datetime.strptime(_p_start_date, '%Y-%m-%d')
+            date_end = date_end - relativedelta(days=1)
+            date_end = str(date_end).split(' ')
+            date_end = date_end[0]
+
+            fiscalyear_startdate = self.number_of_fiscal_years(fiscalyear_id)
+            query_ = self.cr.execute("SELECT sum(credit) totalcredit, sum(debit) totaldebit FROM public.account_move_line where date between" + "'" + fiscalyear_startdate[0]['date_start'] + "'" + "and" + "'" + date_end + "'" + "and account_id=" + "'" + str(account_id.id) + "'")
+            balances = self.cr.dictfetchall()
+            my_initial_balance = {'credit': balances[0]['totalcredit'],
+                              'init_balance_currency': 0.0,
+                              'init_balance': balances[0]['totaldebit'] - balances[0]['totalcredit'],
+                              'state': 'read',
+                              'debit': balances[0]['totaldebit']}
+            return my_initial_balance
+
+
+    def generate_xls_report(self, _p, _xs, data, objects, wb):
+        initial_bal = data['form']['initial_balance']
         ws = wb.add_sheet(_p.report_name[:31])
         ws.panes_frozen = True
         ws.remove_splits = True
@@ -178,14 +211,15 @@ class general_ledger_xls(report_xls):
             num_format_str=report_xls.decimal_format)
 
         cnt = 0
+        fiscalyear_id = data['form']['fiscalyear_id']
+        if type(_p.start_date) != bool:
+            fetch_initial_balances = self.calculate_initial_balances(_p.start_date,objects,initial_bal,fiscalyear_id)
         for account in objects:
-
             display_initial_balance = _p['init_balance'][account.id] and \
-                (_p['init_balance'][account.id].get(
-                    'debit', 0.0) != 0.0 or
-                    _p['init_balance'][account.id].get('credit', 0.0) != 0.0)
+                                      (_p['init_balance'][account.id].get(
+                                          'debit', 0.0) != 0.0 or
+                                       _p['init_balance'][account.id].get('credit', 0.0) != 0.0)
             display_ledger_lines = _p['ledger_lines'][account.id]
-
             if _p.display_account_raw(data) == 'all' or \
                     (display_ledger_lines or display_initial_balance):
                 # TO DO : replace cumul amounts by xls formulas
@@ -205,8 +239,37 @@ class general_ledger_xls(report_xls):
                 row_pos = self.xls_write_row(ws, row_pos, c_hdr_data)
                 row_start = row_pos
 
-                if display_initial_balance:
+                if display_initial_balance and initial_bal == False:
                     init_balance = _p['init_balance'][account.id]
+                    cumul_debit = init_balance.get('debit') or 0.0
+                    cumul_credit = init_balance.get('credit') or 0.0
+                    cumul_balance = init_balance.get('init_balance') or 0.0
+                    cumul_balance_curr = init_balance.get(
+                        'init_balance_currency') or 0.0
+                    c_specs = [('empty%s' % x, 1, 0, 'text', None)
+                               for x in range(7)]
+                    c_specs += [
+                        ('init_bal', 1, 0, 'text', _('Initial Balance')),
+                        ('counterpart', 1, 0, 'text', None),
+                        ('debit', 1, 0, 'number', cumul_debit,
+                         None, c_init_cell_style_decimal),
+                        ('credit', 1, 0, 'number', cumul_credit,
+                         None, c_init_cell_style_decimal),
+                        ('cumul_bal', 1, 0, 'number', cumul_balance,
+                         None, c_init_cell_style_decimal),
+                    ]
+                    if _p.amount_currency(data):
+                        c_specs += [
+                            ('curr_bal', 1, 0, 'number', cumul_balance_curr,
+                             None, c_init_cell_style_decimal),
+                            ('curr_code', 1, 0, 'text', None),
+                        ]
+                    row_data = self.xls_row_template(
+                        c_specs, [x[0] for x in c_specs])
+                    row_pos = self.xls_write_row(
+                        ws, row_pos, row_data, c_init_cell_style)
+                elif initial_bal ==True:
+                    init_balance = fetch_initial_balances
                     cumul_debit = init_balance.get('debit') or 0.0
                     cumul_credit = init_balance.get('credit') or 0.0
                     cumul_balance = init_balance.get('init_balance') or 0.0

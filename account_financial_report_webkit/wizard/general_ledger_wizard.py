@@ -40,6 +40,9 @@ class AccountReportGeneralLedgerWizard(orm.TransientModel):
         return res
 
     _columns = {
+        'initial_balance': fields.boolean('Include Initial Balances',
+                                          help='If you selected to filter by date or period, this field allow you to add a row to display the amount of debit/credit/balance that precedes the filter you\'ve set.'),
+
         'amount_currency': fields.boolean("With Currency",
                                           help="It adds the currency column"),
 
@@ -61,6 +64,7 @@ class AccountReportGeneralLedgerWizard(orm.TransientModel):
         'display_account': 'bal_mix',
         'account_ids': _get_account_ids,
         'centralize': True,
+        'initial_balance':False
     }
 
     def _check_fiscalyear(self, cr, uid, ids, context=None):
@@ -85,7 +89,8 @@ class AccountReportGeneralLedgerWizard(orm.TransientModel):
                          ['amount_currency',
                           'display_account',
                           'account_ids',
-                          'centralize'],
+                          'centralize',
+                          'initial_balance'],
                          context=context)[0]
         data['form'].update(vals)
         return data
