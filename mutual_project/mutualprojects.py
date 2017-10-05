@@ -67,11 +67,7 @@ class mutual_projects(osv.osv):
           self.disco_function(vals['partner_id', False])
           return super(mutual_projects, self).create(vals)
       elif vals['name'] == 'reconnection':
-          _customer_status = "Active"
-          self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(vals['partner_id']))
-          self.env.cr.execute(
-              'UPDATE res_partner SET customer_status =' + "'" + _customer_status + "'" + 'WHERE id =' + str(
-                  vals['partner_id']))
+          self.reconnect_function(vals['partner_id'],True)
           return super(mutual_projects, self).create(vals)
       else:
           return super(mutual_projects, self).create(vals)
@@ -81,13 +77,9 @@ class mutual_projects(osv.osv):
       if self.name == 'disco':
           self.disco_function(self.partner_id.id, True)
           self.disco_function(vals['partner_id'], False)
-
-      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      # print self.name
-      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      # print vals
-      # print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      elif self.name == 'reconnection':
+          self.reconnect_function(self.partner_id.id, True)
+          self.reconnect_function(vals['partner_id'], False)
       super(mutual_projects, self).write(vals)
       return True
 
@@ -130,6 +122,7 @@ class mutual_projects(osv.osv):
           diff = _timeOut - _timeIn
           self.compute_total_time = diff
 
+  #function to activate and disco a customer
   def disco_function(self, d_id, stat):
       _customer_status = ['Active', 'Disco']
       _contract_status = ['open', 'cancelled']
@@ -159,8 +152,25 @@ class mutual_projects(osv.osv):
           print "Deactive the CURRENT customer "+str(d_id)
           print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
+    #function to deactivate and reconnect a customer
+  def reconnect_function(self, d_id, stat):
+      _customer_status = ['Active', 'Disco']
+      #reconnect a customer
+      if stat:
+          self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(d_id))
+          self.env.cr.execute(
+              'UPDATE res_partner SET customer_status =' + "'" + _customer_status[0] + "'" + 'WHERE id =' + str(
+                  d_id))
+      # deactivate a customer
+      else:
+          self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(d_id))
+          self.env.cr.execute(
+              'UPDATE res_partner SET customer_status =' + "'" + _customer_status[1] + "'" + 'WHERE id =' + str(
+                  d_id))
 
-          # ======================================== Project.task class implementation Begins =====================================
+
+
+ # ======================================== Project.task class implementation Begins =====================================
 class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
