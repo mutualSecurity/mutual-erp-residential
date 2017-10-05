@@ -64,20 +64,21 @@ class mutual_projects(osv.osv):
   @api.model
   def create(self, vals):
       if vals['name'] == 'disco':
-          self.disco_function(vals['partner_id', False])
+          self.disco_function(vals['partner_id'], False)
           return super(mutual_projects, self).create(vals)
       elif vals['name'] == 'reconnection':
-          self.reconnect_function(vals['partner_id'],True)
+          self.reconnect_function(vals['partner_id'], True)
           return super(mutual_projects, self).create(vals)
       else:
           return super(mutual_projects, self).create(vals)
 
+
   @api.multi
   def write(self, vals):
-      if self.name == 'disco':
+      if self.name == 'disco' and 'partner_id' in vals:
           self.disco_function(self.partner_id.id, True)
           self.disco_function(vals['partner_id'], False)
-      elif self.name == 'reconnection':
+      elif self.name == 'reconnection' and 'partner_id' in vals:
           self.reconnect_function(self.partner_id.id, True)
           self.reconnect_function(vals['partner_id'], False)
       super(mutual_projects, self).write(vals)
@@ -161,16 +162,25 @@ class mutual_projects(osv.osv):
           self.env.cr.execute(
               'UPDATE res_partner SET customer_status =' + "'" + _customer_status[0] + "'" + 'WHERE id =' + str(
                   d_id))
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+          print "reconnect the CURRENT customer " + str(d_id)
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
       # deactivate a customer
       else:
           self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(d_id))
           self.env.cr.execute(
               'UPDATE res_partner SET customer_status =' + "'" + _customer_status[1] + "'" + 'WHERE id =' + str(
                   d_id))
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+          print "Deactive the CURRENT customer " + str(d_id)
+          print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 
 
- # ======================================== Project.task class implementation Begins =====================================
+
+
+# ======================================== Project.task class implementation Begins =====================================
 class mutual_issues(osv.osv):
   _name="project.issue"
   _inherit = "project.issue",
@@ -391,6 +401,7 @@ class tech_activities_tasks(osv.osv):
     _columns = {
         'multi_tech_other': fields.many2many('hr.employee', string='Other Tech',
                                              domain="[('department_id','=','Technical')]"),
+
 
         'technician_name_other': fields.many2one('hr.employee', 'Assigned Tech', required=True, select=1,
                                                  track_visibility='onchange',
