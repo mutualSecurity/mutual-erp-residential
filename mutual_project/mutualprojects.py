@@ -79,13 +79,10 @@ class mutual_projects(osv.osv):
           self.disco_function(self.partner_id.id, True)
           self.disco_function(vals['partner_id'], False)
       elif self.name == 'reconnection' and 'partner_id' in vals:
-          self.reconnect_function(self.partner_id.id, True)
-          self.reconnect_function(vals['partner_id'], False)
+          self.reconnect_function(self.partner_id.id, False)
+          self.reconnect_function(vals['partner_id'], True)
       super(mutual_projects, self).write(vals)
       return True
-
-
-
 
   @api.one
   @api.onchange('complaint_reference')
@@ -168,7 +165,7 @@ class mutual_projects(osv.osv):
 
       # deactivate a customer
       else:
-          self.env.cr.execute('UPDATE res_partner SET active = True WHERE id =' + str(d_id))
+          self.env.cr.execute('UPDATE res_partner SET active = False WHERE id =' + str(d_id))
           self.env.cr.execute(
               'UPDATE res_partner SET customer_status =' + "'" + _customer_status[1] + "'" + 'WHERE id =' + str(
                   d_id))
