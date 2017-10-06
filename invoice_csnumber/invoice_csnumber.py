@@ -53,7 +53,15 @@ class invoice_csnumber(osv.osv):
         'payment_received': fields.boolean('Payment Received', store=True, track_visibility='onchange'),
         'payment_method': fields.selection([('Cheque', 'Cheque'),('Cash', 'Cash')],'Payment Method', store=True),
         'cheque_no': fields.char('Cheque No.',store=True),
-        'next_action': fields.date('Next Action,',store=True)
+        'next_action': fields.date('Next Action,',store=True),
+        'remarks_invoice': fields.selection([('Disco', 'Disco'),
+                                  ('Additional Work', 'Additional Work'),
+                                  ('Complain Issue', 'Complain Issue'),
+                                  ('Out Of Country', 'Out Of Country'),
+                                  ('Shifting', 'Shifting'),
+                                            ],'Remarks For Invoice',store=True)
+
+
     }
 
     _defaults={

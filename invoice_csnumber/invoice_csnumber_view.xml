@@ -62,6 +62,7 @@
                             <field name="payment_received"/>
                             <field name="payment_method"/>
                             <field name="cheque_no" attrs="{'invisible': [('payment_method','=','Cash')]}"/>
+                            <field name="remarks_invoice"/>
                         </group>
                         <group>
                             <field name="remarks"/>
@@ -92,6 +93,13 @@
                       <field name="date"/>
                       <field name="riders_" string="Assigned To Rider"/>
                       <field name="payment_received"/>
+                      <field name="remarks_invoice" string="Remarks"/>
+                  </xpath>
+                  <xpath expr="//field[@name='residual']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                      <attribute name="invisible">1</attribute>
                   </xpath>
               </field>
         </record>
