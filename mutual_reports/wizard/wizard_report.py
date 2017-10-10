@@ -14,7 +14,7 @@ class WizardReports(osv.TransientModel):
         'responsible_person': fields.many2one('res.users', 'Follow-up Responsible'),
         'start_date': fields.date('Start Date'),
         'end_date': fields.date('End Date'),
-        'overall_invoices': fields.boolean('Overall Invoices')
+        'type': fields.selection([('Overall Invoices', 'Overall Invoices'), ('SRB Report', 'SRB Report')],'Type',store=True)
     }
 
     _defaults = {
@@ -23,17 +23,29 @@ class WizardReports(osv.TransientModel):
     }
 
     def disco_customer(self):
-        self.env.cr.execute("select res_partner.name,res_partner.cs_number,project_task.disco_reasons from project_task inner "
-                            "join res_partner on project_task.partner_id = res_partner.id where project_task.name = 'disco' and project_task.create_date between"+"'"+str(self.start_date)+"'"+" and"+"'"+str(self.end_date)+"23:59:59"+"'")
+        self.env.cr.execute("select res_partner.name,res_partner.cs_number,project_task.disco_reasons,project_task.create_date,project_task.system_status from project_task inner "
+                            "join res_partner on project_task.partner_id = res_partner.id where project_task.name = 'disco' and project_task.create_date between"+"'"+str(self.start_date)+"'"+" and"+"'"+str(self.end_date)+" "+"23:59:59"+"'")
+
         cutomer_disco = self.env.cr.dictfetchall()
         return cutomer_disco
+
+    def reco_customer(self):
+        self.env.cr.execute(
+            "select res_partner.name,res_partner.cs_number,res_partner.active,project_task.disco_reasons,project_task.create_date from project_task inner "
+            "join res_partner on project_task.partner_id = res_partner.id where project_task.name = 'reconnection' and project_task.create_date between" + "'" + str(
+                self.start_date) + "'" + " and" + "'" + str(self.end_date) + " " + "23:59:59" + "'")
+        cutomer_reco = self.env.cr.dictfetchall()
+        return cutomer_reco
 
     def invoices(self):
         break_date = str(self.start_date).split('-')
         one = break_date[0]+"-"+break_date[1]+"-"+"01"
         eleven = break_date[0] + "-" + break_date[1] + "-" + "11"
         twenty_one = break_date[0] + "-" + break_date[1] + "-" + "21"
-        if self.overall_invoices:
+
+        if self.type == 'SRB Report':
+
+        elif self.type=='Overall Invoices':
             self.env.cr.execute(
                 "select count(number) payment_received from account_invoice where date_invoice between" + "'" + str(
                     one) + "'" + "and" + "'" + str(eleven)+ str(
@@ -126,12 +138,6 @@ class WizardReports(osv.TransientModel):
                  'pendings': pendings_twenty_one[0]['pendings'],
                  'total': payment_received_twenty_one[0]['payment_received'] + pendings_twenty_one[0]['pendings']}
             ]
-
-    def report_call(self):
-        if self.report_type == 'Analysis of Invoices':
-            self.invoices()
-        elif self.report_type == 'Disco Customers':
-            self.disco_customer()
 
     def print_report(self, cr, uid, ids, data, context=None):
         return{

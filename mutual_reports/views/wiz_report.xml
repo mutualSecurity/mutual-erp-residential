@@ -10,24 +10,34 @@
                      <t t-set="received" t-value="0"/>
                      <t t-set="total" t-value="0"/>
                     <h1>Report</h1><br/>
-                <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;">
-                    <t t-if="doc.overall_invoices">
-                        <h3>Overall Analysis of Invoices</h3>
+                    <t t-if="doc.report_type=='Analysis of Invoices'">
+                         <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;">
+                             <t t-if="doc.overall_invoices">
+                                 <h3>Overall Analysis of Invoices</h3>
+                             </t>
+                             <t t-if="doc.overall_invoices == False">
+                                 <strong>Reponsible Person:</strong>  <span t-esc="doc.responsible_person.name"/><br/>
+                             </t>
+                         </div>
                     </t>
-                    <t t-if="doc.overall_invoices == False">
-                        <strong>Reponsible Person:</strong>  <span t-esc="doc.responsible_person.name"/><br/>
+                    <t t-if="doc.report_type=='Disconnected Customers'">
+                         <h3>Disconnected Customers</h3>
                     </t>
-                </div><br/>
+                    <t t-if="doc.report_type=='Reconnected Customers'">
+                         <h3>Reconnected Customers</h3>
+                    </t>
+                <br/>
                      <table class="table table-condensed" style="font-size:14px">
-                         <thead>
-                             <tr>
-                                 <th>Period</th>
-                                 <th>Total Invoices</th>
-                                 <th>Pending Payments</th>
-                                 <th class="text-right">Received Payments</th>
-                             </tr>
-                         </thead>
-                         <tbody>
+                         <t t-if="doc.report_type == 'Analysis of Invoices'">
+                             <thead>
+                                 <tr>
+                                     <th>Period</th>
+                                     <th>Total Invoices</th>
+                                     <th>Pending Payments</th>
+                                     <th class="text-right">Received Payments</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
                              <tr t-foreach="doc.invoices()" t-as="l">
                                  <td><span t-esc="l['period']"/></td>
                                  <td><span t-esc="l['total']"/></td>
@@ -43,8 +53,50 @@
                                  <th><span t-esc="pendings"/></th>
                                  <th class="text-right"><span t-esc="received"/></th>
                              </tr>
-
-                         </tbody>
+                             </tbody>
+                         </t>
+                         <t t-if="doc.report_type == 'Disconnected Customers'">
+                             <thead>
+                                 <tr>
+                                     <th>S.No.</th>
+                                     <th>Date</th>
+                                     <th>CS </th>
+                                     <th>Name</th>
+                                     <th>Reason</th>
+                                     <th class="text-right">System Status</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr t-foreach="doc.disco_customer()" t-as="l">
+                                     <td><span t-esc="l_index+1"/></td>
+                                     <td><span t-esc="l['create_date']"/></td>
+                                     <td><span t-esc="l['cs_number']"/></td>
+                                     <td><span t-esc="l['name']"/></td>
+                                     <td><span t-esc="l['disco_reasons']"/></td>
+                                     <td class="text-right"><span t-esc="l['system_status']"/></td>
+                                 </tr>
+                             </tbody>
+                         </t>
+                           <t t-if="doc.report_type == 'Reconnected Customers'">
+                             <thead>
+                                 <tr>
+                                     <th>S.No.</th>
+                                     <th>Date</th>
+                                     <th>CS </th>
+                                     <th>Name</th>
+                                     <th>Status</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr t-foreach="doc.reco_customer()" t-as="l">
+                                     <td><span t-esc="l_index+1"/></td>
+                                     <td><span t-esc="l['create_date']"/></td>
+                                     <td><span t-esc="l['cs_number']"/></td>
+                                     <td><span t-esc="l['name']"/></td>
+                                     <td><span t-esc="l['active']"/></td>
+                                 </tr>
+                             </tbody>
+                         </t>
                      </table>
                 </div>
             </t>
