@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem name="Reports" id="reports_side_top_menu" parent="account.menu_finance" sequence="5"/>
+         <menuitem
+            name="Generic Report"
+            action="action_wiz_report_form"
+            id="menu_action_wiz_report_form"
+            sequence="4"
+            parent="reports_side_top_menu">
+         </menuitem>
+    </data>
+</openerp>

@@ -10,6 +10,7 @@ class mutual_projects(osv.osv):
   _name="project.task"
   _inherit = "project.task",
   _columns = {
+      'system_status': fields.selection([('None','None'),('System Removed', 'System Removed')],'System Status', store=True),
       'description_remarks': fields.one2many('task.remarks', 'task_title', 'Description', store=True),
       'contract': fields.char('Contract', store=True, readonly=True),
       'status': fields.char('status', store=True, compute='status_task'),
@@ -45,20 +46,24 @@ class mutual_projects(osv.osv):
                               ],
                              'Task', required=True, store=True, select=True),
      'disco_reasons': fields.selection([
-          ('reason1', 'Non Payment'),
-          ('reason2', 'No Need'),
-          ('reason3', 'Shifting'),
-          ('reason4', 'Force Issue / Patrolling Issue'),
-          ('reason5', 'Hier Guards For Security Purpose'),
-          ('reason6', 'Client Going Abroad/Left the Site'),
-          ('reason7', 'Poor Service'),
-          ('reason8', 'Complaint Issues'),
-          ('reason9', 'Renovation Work'),
+          ('Non Payment', 'Non Payment'),
+          ('No Need', 'No Need'),
+          ('Shifting', 'Shifting'),
+          ('Force Issue / Patrolling Issue', 'Force Issue / Patrolling Issue'),
+          ('Hier Guards For Security Purpose', 'Hier Guards For Security Purpose'),
+          ('Client Going Abroad/Left the Site', 'Client Going Abroad/Left the Site'),
+          ('Poor Service', 'Poor Service'),
+          ('Complaint Issues', 'Complaint Issues'),
+          ('Renovation Work', 'Renovation Work'),
           ],'Disco Reasons', store=True, select=True),
       'removal_address':fields.char('Removal Address'),
       'survey_address': fields.char('Survey Address'),
       'print_removal':fields.boolean('Printout Forwarded For Removal'),
       'print_survey': fields.boolean('Printout Forwarded For Survey')
+  }
+
+  _defaults = {
+      'system_status': 'None'
   }
 
   @api.model
@@ -71,7 +76,6 @@ class mutual_projects(osv.osv):
           return super(mutual_projects, self).create(vals)
       else:
           return super(mutual_projects, self).create(vals)
-
 
   @api.multi
   def write(self, vals):

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="wiz_report">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="report.internal_layout">
+                <div class="page">
+                     <t t-set="pendings" t-value="0"/>
+                     <t t-set="received" t-value="0"/>
+                     <t t-set="total" t-value="0"/>
+                    <h1>Report</h1><br/>
+                <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;">
+                    <t t-if="doc.overall_invoices">
+                        <h3>Overall Analysis of Invoices</h3>
+                    </t>
+                    <t t-if="doc.overall_invoices == False">
+                        <strong>Reponsible Person:</strong>  <span t-esc="doc.responsible_person.name"/><br/>
+                    </t>
+                </div><br/>
+                     <table class="table table-condensed" style="font-size:14px">
+                         <thead>
+                             <tr>
+                                 <th>Period</th>
+                                 <th>Total Invoices</th>
+                                 <th>Pending Payments</th>
+                                 <th class="text-right">Received Payments</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr t-foreach="doc.invoices()" t-as="l">
+                                 <td><span t-esc="l['period']"/></td>
+                                 <td><span t-esc="l['total']"/></td>
+                                 <td><span t-esc="l['pendings']"/></td>
+                                 <td class="text-right"><span t-esc="l['payment_received']"/></td>
+                                 <t t-set="pendings" t-value="pendings+l['pendings']"/>
+                                 <t t-set="received" t-value="received+l['payment_received']"/>
+                                 <t t-set="total" t-value="total+l['total']"/>
+                             </tr>
+                             <tr>
+                                 <th>Grand Total</th>
+                                 <th><span t-esc="total"/> </th>
+                                 <th><span t-esc="pendings"/></th>
+                                 <th class="text-right"><span t-esc="received"/></th>
+                             </tr>
+
+                         </tbody>
+                     </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

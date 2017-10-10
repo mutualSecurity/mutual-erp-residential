@@ -108,5 +108,15 @@
                 attachment_use="False"
                 file="mutual_reports.customer_details"
         />
+
+         <report
+            id="action_wiz_report"
+            model="wiz.reports"
+            string="Report"
+            report_type="qweb-pdf"
+            name="mutual_reports.wiz_report"
+            file="mutual_reports.wiz_report"
+            menu="False"
+        />
     </data>
 </openerp>

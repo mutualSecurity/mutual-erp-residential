@@ -322,6 +322,7 @@
                     <!--<field name="status"/>-->
                     <field name="task_status_confirm"/>
                     <field name="disco_reasons" attrs="{'invisible':[('name','!=','disco')]}"/>
+                    <field name="system_status" attrs="{'invisible':[('name','!=','disco')]}"/>
                     <field name="removal_address" attrs="{'invisible':[('name','!=','Shifting')]}"/>
                     <field name="survey_address" attrs="{'invisible':[('name','!=','Shifting')]}"/>
                     <field name="print_removal" attrs="{'invisible':[('name','!=','Shifting')]}"/>
@@ -681,6 +682,7 @@
                     <field name="mobile_task"/>
                     <field name="phone_task"/>
                     <field name="disco_reasons"/>
+                    <field name="system_status"/>
                 </xpath>
                 <xpath expr="//search/field[@name='partner_id']" position="after">
                     <field name="priority"/>
