@@ -15,7 +15,8 @@ class WizardReports(osv.TransientModel):
         'start_date': fields.date('Start Date'),
         'end_date': fields.date('End Date'),
         'type': fields.selection([('Overall Invoices', 'Overall Invoices'),
-                                  ('SRB Report', 'SRB Report')],'Type',store=True)
+                                  ('SRB Report', 'SRB Report'),
+                                  ('Individual Invoices', 'Individual Invoices'),],'Type',store=True)
     }
 
     _defaults = {
@@ -24,19 +25,27 @@ class WizardReports(osv.TransientModel):
     }
 
     def disco_customer(self):
+        _list = []
         self.env.cr.execute("select res_partner.name,res_partner.cs_number,project_task.disco_reasons,project_task.create_date,project_task.system_status from project_task inner "
                             "join res_partner on project_task.partner_id = res_partner.id where project_task.name = 'disco' and project_task.create_date between"+"'"+str(self.start_date)+"'"+" and"+"'"+str(self.end_date)+" "+"23:59:59"+"'")
 
         cutomer_disco = self.env.cr.dictfetchall()
-        return cutomer_disco
+        for customer in cutomer_disco:
+            customer['create_date']= customer['create_date'].split(' ')[0]
+            _list.append(customer)
+        return _list
 
     def reco_customer(self):
+        _list = []
         self.env.cr.execute(
             "select res_partner.name,res_partner.cs_number,res_partner.active,project_task.disco_reasons,project_task.create_date from project_task inner "
             "join res_partner on project_task.partner_id = res_partner.id where project_task.name = 'reconnection' and project_task.create_date between" + "'" + str(
                 self.start_date) + "'" + " and" + "'" + str(self.end_date) + " " + "23:59:59" + "'")
         cutomer_reco = self.env.cr.dictfetchall()
-        return cutomer_reco
+        for customer in cutomer_reco:
+            customer['create_date'] = customer['create_date'].split(' ')[0]
+            _list.append(customer)
+        return _list
 
     def invoices(self):
         break_date = str(self.start_date).split('-')
@@ -47,7 +56,7 @@ class WizardReports(osv.TransientModel):
         quater_two=[]
         quater_three=[]
 
-        if self.type == 'SRB Report':
+        if self.type == 'SRB Report' and self.report_type == 'Analysis of Invoices':
             self.env.cr.execute("select internal_number,amount_untaxed,amount_tax,amount_total,date_invoice,res_partner.name,res_partner.cs_number from account_invoice inner join res_partner on res_partner.id=account_invoice.partner_id "
                                 "where state != 'draft' and state != 'cancel' and account_invoice.date_invoice between"+"'"+self.start_date+"'"+"and"+"'"+self.end_date+"'"+"and account_invoice.company_id = 1 order by account_invoice.internal_number")
             srb=self.env.cr.dictfetchall()
@@ -63,7 +72,7 @@ class WizardReports(osv.TransientModel):
                     quater_three.append(i)
             return [quater_one,quater_two,quater_three]
 
-        elif self.type=='Overall Invoices':
+        elif self.type=='Overall Invoices' and self.report_type == 'Analysis of Invoices':
             self.env.cr.execute(
                 "select count(number) payment_received from account_invoice where date_invoice between" + "'" + str(
                     one) + "'" + "and" + "'" + str(eleven)+ str(
@@ -112,7 +121,7 @@ class WizardReports(osv.TransientModel):
                  'total': payment_received_twenty_one[0]['payment_received'] + pendings_twenty_one[0]['pendings']}
             ]
 
-        else:
+        elif self.type == 'Individual Invoices' and self.report_type == 'Analysis of Invoices':
             self.env.cr.execute("select count(number) payment_received from account_invoice where date_invoice between"+"'"+str(one)+"'"+"and"+"'"+str(eleven)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'"+"and payment_received=True")
             payment_received_one = self.env.cr.dictfetchall()
             self.env.cr.execute(
@@ -158,8 +167,17 @@ class WizardReports(osv.TransientModel):
             ]
 
     def print_report(self, cr, uid, ids, data, context=None):
-        return{
-            'type': 'ir.actions.report.xml',
-            'name': 'mutual_reports.wiz_report',
-            'report_name': 'mutual_reports.wiz_report'
-        }
+        obj = self.browse(cr, uid, ids[0], context=context)
+        date_format = "%Y-%m-%d"
+        start_date = datetime.strptime(obj.start_date, date_format)
+        end_date = datetime.strptime(obj.end_date, date_format)
+        delta = end_date - start_date
+        if delta.days > 0:
+            return {
+                'type': 'ir.actions.report.xml',
+                'name': 'mutual_reports.wiz_report',
+                'report_name': 'mutual_reports.wiz_report'
+            }
+        else:
+            raise osv.except_osv("Alert........", "'Start Date' must be Less than 'End Date'")
+

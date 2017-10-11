@@ -15,7 +15,7 @@
                                 <field name="end_date"/>
                             </group>
                             <group>
-                                <field name="responsible_person"/>
+                                <field name="responsible_person"  attrs="{'invisible': [('type','!=','Individual Invoices')],'required': [('type', '=', 'Individual Invoices')]}"/>
                                 <field name="type"/>
                             </group>
                         </group>

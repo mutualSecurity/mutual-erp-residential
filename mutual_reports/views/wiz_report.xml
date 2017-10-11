@@ -22,8 +22,8 @@
                              <t t-if="doc.type=='Overall Invoices'">
                                  <h3>Overall Analysis of Invoices</h3>
                              </t>
-                             <t t-if="doc.type!='Overall Invoices' or doc.type!='SRB Report'">
-                                 <strong>Reponsible Person:</strong>  <span t-esc="doc.responsible_person.name"/><br/>
+                             <t t-if="doc.type=='Individual Invoices'">
+                                 <strong>Reponsible Person:</strong><span t-esc="doc.responsible_person.name"/><br/>
                              </t>
                          </div>
                     </t>
@@ -76,7 +76,7 @@
                              <tbody>
                                  <tr t-foreach="doc.disco_customer()" t-as="l">
                                      <td><span t-esc="l_index+1"/></td>
-                                     <td><span t-esc="l['create_date']"/></td>
+                                     <td><span t-esc="l['create_date']" t-field-options="{&quot;format&quot;: &quot;yyyy-MM-dd&quot;}" /></td>
                                      <td><span t-esc="l['cs_number']"/></td>
                                      <td><span t-esc="l['name']"/></td>
                                      <td><span t-esc="l['disco_reasons']"/></td>
