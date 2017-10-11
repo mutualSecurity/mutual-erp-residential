@@ -6,16 +6,23 @@
         <t t-foreach="docs" t-as="doc">
             <t t-call="report.internal_layout">
                 <div class="page">
+                    <t t-set="t_untax" t-value="0"/>
+                    <t t-set="t_tax" t-value="0"/>
+                    <t t-set="t_amount_total" t-value="0"/>
+                    <t t-set="index" t-value="0"/>
+                    <t t-set="untax" t-value="0"/>
+                    <t t-set="tax" t-value="0"/>
+                    <t t-set="amount_total" t-value="0"/>
                      <t t-set="pendings" t-value="0"/>
                      <t t-set="received" t-value="0"/>
                      <t t-set="total" t-value="0"/>
                     <h1>Report</h1><br/>
                     <t t-if="doc.report_type=='Analysis of Invoices'">
                          <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;">
-                             <t t-if="doc.overall_invoices">
+                             <t t-if="doc.type=='Overall Invoices'">
                                  <h3>Overall Analysis of Invoices</h3>
                              </t>
-                             <t t-if="doc.overall_invoices == False">
+                             <t t-if="doc.type!='Overall Invoices' or doc.type!='SRB Report'">
                                  <strong>Reponsible Person:</strong>  <span t-esc="doc.responsible_person.name"/><br/>
                              </t>
                          </div>
@@ -27,8 +34,8 @@
                          <h3>Reconnected Customers</h3>
                     </t>
                 <br/>
-                     <table class="table table-condensed" style="font-size:14px">
-                         <t t-if="doc.report_type == 'Analysis of Invoices'">
+                     <table class="table table-condensed" style="font-size:12px">
+                         <t t-if="doc.report_type == 'Analysis of Invoices' and doc.type == 'Overall Invoices'">
                              <thead>
                                  <tr>
                                      <th>Period</th>
@@ -77,7 +84,7 @@
                                  </tr>
                              </tbody>
                          </t>
-                           <t t-if="doc.report_type == 'Reconnected Customers'">
+                         <t t-if="doc.report_type == 'Reconnected Customers'">
                              <thead>
                                  <tr>
                                      <th>S.No.</th>
@@ -94,6 +101,133 @@
                                      <td><span t-esc="l['cs_number']"/></td>
                                      <td><span t-esc="l['name']"/></td>
                                      <td><span t-esc="l['active']"/></td>
+                                 </tr>
+                             </tbody>
+                         </t>
+                         <t t-if="doc.type == 'SRB Report'">
+                             <h1>SRB</h1>
+                              <thead>
+                                 <tr>
+                                     <th>S.No.</th>
+                                     <th>Invoice</th>
+                                     <th>Date</th>
+                                     <th>Customer </th>
+                                     <th>Amount</th>
+                                     <th>Tax</th>
+                                     <th>Total</th>
+                                     <th>CS</th>
+                                 </tr>
+                              </thead>
+                             <tbody>
+                                 <t t-foreach="doc.invoices()" t-as="l">
+                                     <tr t-foreach="l" t-as="new">
+                                         <t t-if="new['period']=='one'">
+                                             <t t-set="index" t-value="new_index+1"/>
+                                             <td><span t-esc="index"/></td>
+                                             <td><span t-esc="new['internal_number']"/></td>
+                                             <td><span t-esc="new['date_invoice']"/></td>
+                                             <td><span t-esc="new['name']"/></td>
+                                             <td><span t-esc="new['amount_untaxed']"/></td>
+                                             <td><span t-esc="new['amount_tax']"/></td>
+                                             <td><span t-esc="new['amount_total']"/></td>
+                                             <td><span t-esc="new['cs_number']"/></td>
+                                             <t t-set="tax" t-value="tax+new['amount_tax']"/>
+                                             <t t-set="untax" t-value="untax+new['amount_untaxed']"/>
+                                             <t t-set="amount_total" t-value="amount_total+new['amount_total']"/>
+                                             <t t-set="t_tax" t-value="t_tax+new['amount_tax']"/>
+                                             <t t-set="t_untax" t-value="t_untax+new['amount_untaxed']"/>
+                                             <t t-set="t_amount_total" t-value="t_amount_total+new['amount_total']"/>
+                                         </t>
+                                     </tr>
+                                 </t>
+                                 <tr>
+                                     <th></th>
+                                     <th></th>
+                                     <th></th>
+                                     <th>SubTotal</th>
+                                     <th><span t-esc="round(untax)"/></th>
+                                     <th><span t-esc="round(tax)"/></th>
+                                     <th><span t-esc="round(amount_total)"/></th>
+                                     <th></th>
+                                 </tr>
+                                 <t t-set="tax" t-value="0"/>
+                                 <t t-set="untax" t-value="0"/>
+                                 <t t-set="amount_total" t-value="0"/>
+                                   <t t-foreach="doc.invoices()" t-as="l">
+                                     <tr t-foreach="l" t-as="new">
+                                         <t t-if="new['period']=='eleven'">
+                                             <td><span t-esc="index+new_index+1"/></td>
+                                             <td><span t-esc="new['internal_number']"/></td>
+                                             <td><span t-esc="new['date_invoice']"/></td>
+                                             <td><span t-esc="new['name']"/></td>
+                                             <td><span t-esc="new['amount_untaxed']"/></td>
+                                             <td><span t-esc="new['amount_tax']"/></td>
+                                             <td><span t-esc="new['amount_total']"/></td>
+                                             <td><span t-esc="new['cs_number']"/></td>
+                                             <t t-set="tax" t-value="tax+new['amount_tax']"/>
+                                             <t t-set="untax" t-value="untax+new['amount_untaxed']"/>
+                                             <t t-set="amount_total" t-value="amount_total+new['amount_total']"/>
+                                             <t t-set="t_tax" t-value="t_tax+new['amount_tax']"/>
+                                             <t t-set="t_untax" t-value="t_untax+new['amount_untaxed']"/>
+                                             <t t-set="t_amount_total" t-value="t_amount_total+new['amount_total']"/>
+                                         </t>
+                                     </tr>
+                                 </t>
+                                 <tr>
+                                     <th></th>
+                                     <th></th>
+                                     <th></th>
+                                     <th>SubTotal</th>
+                                     <th><span t-esc="round(untax)"/></th>
+                                     <th><span t-esc="round(tax)"/></th>
+                                     <th><span t-esc="round(amount_total)"/></th>
+                                     <th></th>
+                                 </tr>
+
+                                 <t t-set="tax" t-value="0"/>
+                                 <t t-set="untax" t-value="0"/>
+                                 <t t-set="amount_total" t-value="0"/>
+                                   <t t-foreach="doc.invoices()" t-as="l">
+                                     <tr t-foreach="l" t-as="new">
+                                         <t t-if="new['period']=='twenty_one'">
+                                             <td><span t-esc="index+new_index+1"/></td>
+                                             <td><span t-esc="new['internal_number']"/></td>
+                                             <td><span t-esc="new['date_invoice']"/></td>
+                                             <td><span t-esc="new['name']"/></td>
+                                             <td><span t-esc="new['amount_untaxed']"/></td>
+                                             <td><span t-esc="new['amount_tax']"/></td>
+                                             <td><span t-esc="new['amount_total']"/></td>
+                                             <td><span t-esc="new['cs_number']"/></td>
+                                             <t t-set="tax" t-value="tax+new['amount_tax']"/>
+                                             <t t-set="untax" t-value="untax+new['amount_untaxed']"/>
+                                             <t t-set="amount_total" t-value="amount_total+new['amount_total']"/>
+                                             <t t-set="t_tax" t-value="t_tax+new['amount_tax']"/>
+                                             <t t-set="t_untax" t-value="t_untax+new['amount_untaxed']"/>
+                                             <t t-set="t_amount_total" t-value="t_amount_total+new['amount_total']"/>
+                                         </t>
+                                     </tr>
+                                 </t>
+                                 <tr>
+                                     <th></th>
+                                     <th></th>
+                                     <th></th>
+                                     <th>SubTotal</th>
+                                     <th><span t-esc="round(untax)"/></th>
+                                     <th><span t-esc="round(tax)"/></th>
+                                     <th><span t-esc="round(amount_total)"/></th>
+                                     <th></th>
+                                 </tr>
+                                 <tr>
+                                 </tr>
+                                  <tr>
+                                     <th></th>
+                                     <th></th>
+                                     <th></th>
+                                     <th>GrandTotal</th>
+                                     <th><span t-esc="round(t_untax)"/></th>
+                                     <th><span t-esc="round(t_tax)"/></th>
+                                     <th><span t-esc="round(t_amount_total)"/></th>
+                                     <th></th>
                                  </tr>
                              </tbody>
                          </t>

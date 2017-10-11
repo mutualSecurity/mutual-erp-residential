@@ -16,7 +16,7 @@
                             </group>
                             <group>
                                 <field name="responsible_person"/>
-                                <field name="overall_invoices"/>
+                                <field name="type"/>
                             </group>
                         </group>
                         <footer>

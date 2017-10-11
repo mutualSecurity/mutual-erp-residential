@@ -14,7 +14,8 @@ class WizardReports(osv.TransientModel):
         'responsible_person': fields.many2one('res.users', 'Follow-up Responsible'),
         'start_date': fields.date('Start Date'),
         'end_date': fields.date('End Date'),
-        'type': fields.selection([('Overall Invoices', 'Overall Invoices'), ('SRB Report', 'SRB Report')],'Type',store=True)
+        'type': fields.selection([('Overall Invoices', 'Overall Invoices'),
+                                  ('SRB Report', 'SRB Report')],'Type',store=True)
     }
 
     _defaults = {
@@ -42,8 +43,25 @@ class WizardReports(osv.TransientModel):
         one = break_date[0]+"-"+break_date[1]+"-"+"01"
         eleven = break_date[0] + "-" + break_date[1] + "-" + "11"
         twenty_one = break_date[0] + "-" + break_date[1] + "-" + "21"
+        quater_one=[]
+        quater_two=[]
+        quater_three=[]
 
         if self.type == 'SRB Report':
+            self.env.cr.execute("select internal_number,amount_untaxed,amount_tax,amount_total,date_invoice,res_partner.name,res_partner.cs_number from account_invoice inner join res_partner on res_partner.id=account_invoice.partner_id "
+                                "where state != 'draft' and state != 'cancel' and account_invoice.date_invoice between"+"'"+self.start_date+"'"+"and"+"'"+self.end_date+"'"+"and account_invoice.company_id = 1 order by account_invoice.internal_number")
+            srb=self.env.cr.dictfetchall()
+            for i in srb:
+                if int(str(i['date_invoice']).split('-')[2]) > 0 and int(str(i['date_invoice']).split('-')[2]) < 11:
+                    i['period']='one'
+                    quater_one.append(i)
+                elif int(str(i['date_invoice']).split('-')[2])>=11 and int(str(i['date_invoice']).split('-')[2]) < 21:
+                    i['period']='eleven'
+                    quater_two.append(i)
+                elif int(str(i['date_invoice']).split('-')[2])>=21 and int(str(i['date_invoice']).split('-')[2]) <= 31:
+                    i['period']= 'twenty_one'
+                    quater_three.append(i)
+            return [quater_one,quater_two,quater_three]
 
         elif self.type=='Overall Invoices':
             self.env.cr.execute(
