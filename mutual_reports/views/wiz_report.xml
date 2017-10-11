@@ -100,7 +100,12 @@
                                      <td><span t-esc="l['create_date']"/></td>
                                      <td><span t-esc="l['cs_number']"/></td>
                                      <td><span t-esc="l['name']"/></td>
-                                     <td><span t-esc="l['active']"/></td>
+                                     <t t-if="l['active']">
+                                         <td>Active</td>
+                                     </t>
+                                     <t t-if="l['active']==False or l['active']==''">
+                                         <td>Inactive</td>
+                                     </t>
                                  </tr>
                              </tbody>
                          </t>
