@@ -285,11 +285,11 @@ class invoice_csnumber(osv.osv):
     @api.one
     @api.depends('state')
     def monitoring_period(self):
-        total = 0.0 # Where total refers to 'sum of all sale order amount'
+        total = 0.0  # Where total refers to 'sum of all sale order amount'
         list = self.env['account.invoice'].search([['partner_id', '=', self.partner_id.id], ])
         for value in list:
             if self.origin:
-                if((re.match(r'SO', str(value['origin']))) and (value['state'] =='open')):
+                if ((re.match(r'SO', str(value['origin']))) and (value['state'] == 'open')):
                     total = total + float(value['amount_total'])
         if self.outstanding == 0.0:
             out = 0.0
@@ -302,14 +302,9 @@ class invoice_csnumber(osv.osv):
                 self.grand_total = out + self.amount_total
 
             else:
-                if len(list) == 1:
-                    out = float(self.outstanding) - total
-                    self.outstanding_amount = out
-                    self.grand_total = out + self.amount_total
-                else:
-                    out = float(self.outstanding) - total - self.amount_total
-                    self.outstanding_amount = out
-                    self.grand_total = out + self.amount_total
+                out = float(self.outstanding) - total - self.amount_total
+                self.outstanding_amount = out
+                self.grand_total = out + self.amount_total
 
         if self.date_invoice and self.partner_id.customer:
             date_format = "%Y-%m-%d"
