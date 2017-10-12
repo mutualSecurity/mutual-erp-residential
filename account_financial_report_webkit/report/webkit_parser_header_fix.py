@@ -206,9 +206,8 @@ class HeaderFooterTextWebKitParser(webkit_report.WebKitParser):
         template = False
 
         if report_xml.report_file:
-            path = get_module_resource(
-                *report_xml.report_file.split(os.path.sep))
-            if os.path.exists(path):
+            path = get_module_resource(*report_xml.report_file.split('/'))
+            if path and os.path.exists(path):
                 template = file(path).read()
         if not template and report_xml.report_webkit_data:
             template = report_xml.report_webkit_data
