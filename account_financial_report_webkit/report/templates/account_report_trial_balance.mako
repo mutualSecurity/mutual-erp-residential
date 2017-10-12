@@ -5,12 +5,12 @@
         <style type="text/css">
             .account_level_1 {
                 text-transform: uppercase;
-                font-size: 15px;
+                font-size: 14px;
                 background-color:#F0F0F0;
             }
 
             .account_level_2 {
-                font-size: 12px;
+                font-size: 14px;
                 background-color:#F0F0F0;
             }
 
@@ -32,14 +32,14 @@
             .list_table .act_as_row {
                 margin-top: 10px;
                 margin-bottom: 10px;
-                font-size:10px;
+                font-size:14px;
             }
         </style>
     </head>
     <body>
         <%!
         def amount(text):
-            return text.replace('-', '&#8209;')  # replace by a non-breaking hyphen (it will not word-wrap between hyphen and numbers)
+            return text  # replace by a non-breaking hyphen (it will not word-wrap between hyphen and numbers)
         %>
 
         <%setLang(user.lang)%>
@@ -130,11 +130,11 @@
                     %endif
                     ## balance
                     <div class="act_as_cell amount" style="width: 30px;">
-                    %if comparison_mode == 'no_comparison' or not fiscalyear:
-                        ${_('Balance')}
-                    %else:
-                        ${_('Balance %s') % (fiscalyear.name,)}
-                    %endif
+##                     %if comparison_mode == 'no_comparison' or not fiscalyear:
+##                         ${_('Balance')}
+##                     %else:
+##                         ${_('Balance %s') % (fiscalyear.name,)}
+##                     %endif
                     </div>
                     %if comparison_mode in ('single', 'multiple'):
                         %for index in range(nb_comparison):
@@ -188,19 +188,31 @@
                                 <div class="act_as_cell amount">${formatLang(init_balance_accounts[current_account.id]) | amount}</div>
                             %endif
                             ## debit
-                            <div class="act_as_cell amount">${formatLang(debit_accounts[current_account.id]) | amount}</div>
+                            <div class="act_as_cell amount">
+                                %if balance_accounts[current_account.id]>0:
+                                     ${formatLang(balance_accounts[current_account.id]) | amount}
+                                %else:
+                                     0
+                                %endif:
+                            </div>
                             ## credit
-                            <div class="act_as_cell amount">${formatLang(credit_accounts[current_account.id]) | amount}</div>
+                             <div class="act_as_cell amount">
+                                %if balance_accounts[current_account.id]<0:
+                                     ${formatLang(balance_accounts[current_account.id]*-1) | amount}
+                                %else:
+                                     0
+                                %endif:
+                            </div>
                         %endif
                         ## balance
-                        <div class="act_as_cell amount">${formatLang(balance_accounts[current_account.id]) | amount}</div>
+                        <div class="act_as_cell amount"></div>
 
                         %if comparison_mode in ('single', 'multiple'):
                             %for comp_account in comparisons:
                                 <div class="act_as_cell amount">${formatLang(comp_account['balance']) | amount}</div>
                                 %if comparison_mode == 'single':  ## no diff in multiple comparisons because it shows too data
                                     <div class="act_as_cell amount">${formatLang(comp_account['diff']) | amount}</div>
-                                    <div class="act_as_cell amount"> 
+                                    <div class="act_as_cell amount">
                                     %if comp_account['percent_diff'] is False:
                                      ${ '-' }
                                     %else:
