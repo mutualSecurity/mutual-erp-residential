@@ -18,14 +18,14 @@
                      <t t-set="total" t-value="0"/>
                     <h1>Report</h1><br/>
                     <t t-if="doc.report_type=='Analysis of Invoices'">
-                         <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;">
                              <t t-if="doc.type=='Overall Invoices'">
                                  <h3>Overall Analysis of Invoices</h3>
                              </t>
                              <t t-if="doc.type=='Individual Invoices'">
-                                 <strong>Reponsible Person:</strong><span t-esc="doc.responsible_person.name"/><br/>
+                                 <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;">
+                                     <strong>Reponsible Person:</strong><span t-esc="doc.responsible_person.name"/><br/>
+                                 </div>
                              </t>
-                         </div>
                     </t>
                     <t t-if="doc.report_type=='Disconnected Customers'">
                          <h3>Disconnected Customers</h3>
@@ -35,7 +35,7 @@
                     </t>
                 <br/>
                      <table class="table table-condensed" style="font-size:12px">
-                         <t t-if="doc.report_type == 'Analysis of Invoices' and doc.type == 'Overall Invoices'">
+                         <t t-if="doc.report_type == 'Analysis of Invoices' and doc.type == 'Individual Invoices'">
                              <thead>
                                  <tr>
                                      <th>Period</th>
