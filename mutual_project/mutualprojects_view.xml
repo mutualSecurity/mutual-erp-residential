@@ -98,6 +98,7 @@
                     <field name="first_signal"/>
                     <field name="reason"/>
                     <field name="status"/>
+                    <field name="create_date" readonly="1"/>
                     <!--<field name="create_date" readonly="1"/>-->
                 </tree>
             </field>
@@ -150,6 +151,7 @@
                     <field name="first_signal"/>
                     <field name="reason_tasks"/>
                     <field name="status"/>
+                    <field name="create_date" readonly="1"/>
                 </tree>
             </field>
         </record>
@@ -362,6 +364,7 @@
                                 <field name="date_end"/>
                                 <field name="compute_total_time"/>
                                 <field name="reason_tasks" />
+                                <field name="create_date" readonly="1"/>
                             </tree>
                           </field>
                     </page>
@@ -487,6 +490,7 @@
                                 <field name="date_end"/>
                                 <field name="compute_total_time"/>
                                 <field name="reason"/>
+                                <field name="create_date" readonly="1"/>
                             </tree>
                           </field>
                     </page>
