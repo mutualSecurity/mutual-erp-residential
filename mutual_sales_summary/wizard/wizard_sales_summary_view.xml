@@ -9,6 +9,7 @@
                     <group>
                         <field name="start_date"/>
                         <field name="end_date"/>
+                        <field name="only_new_sales"/>
                     </group>
                     <footer>
                         <button name="print_report" type="object" string="Print" class="oe_highlight"/>

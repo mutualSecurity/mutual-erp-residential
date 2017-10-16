@@ -10,6 +10,27 @@
                      <t t-set="total_active" t-value="0"/>
                      <t t-set="total_inactive" t-value="0"/>
                     <h1>Sales Summary</h1><br/>
+                    <t t-if="doc.only_new_sales">
+                        <table class="table table-condensed" style="font-size:14px">
+                         <thead>
+                             <tr>
+                                 <th>Name</th>
+                                 <th>CS Number</th>
+                                 <th>Company</th>
+                                 <th class="text-right">SO Reference</th>
+                             </tr>
+                         </thead>
+                          <tbody class="invoice_tbody">
+                             <tr t-foreach="doc.new_sales()" t-as="l">
+                                 <td><span t-esc="l['customer']"/></td>
+                                 <td><span t-esc="l['cs_number']"/></td>
+                                 <td><span t-esc="l['company']"/></td>
+                                 <td class="text-right"><span t-esc="l['name']"/></td>
+                             </tr>
+                         </tbody>
+                     </table>
+                    </t>
+                    <t t-if="doc.only_new_sales==False">
                      <table class="table table-condensed" style="font-size:14px">
                          <thead>
                              <tr>
@@ -101,6 +122,7 @@
                              </tr>
                          </tbody>
                      </table>
+                    </t>
                 </div>
             </t>
         </t>

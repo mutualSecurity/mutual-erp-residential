@@ -10,6 +10,7 @@ class SalesSummaryReport(osv.TransientModel):
     _columns = {
         'start_date': fields.date('Start Date', required=True),
         'end_date': fields.date('End Date', required=True),
+        'only_new_sales': fields.boolean('Only New Sales')
     }
 
     _defaults = {
@@ -26,22 +27,25 @@ class SalesSummaryReport(osv.TransientModel):
             'b2': 0,
             'b3': 0,
         }
-        self.env.cr.execute("SELECT res_partner.cs_number,res_partner.name,res_company.name,sale_order.name,sale_order.payment_received FROM sale_order INNER JOIN res_partner ON sale_order.partner_id = res_partner.id INNER JOIN res_company ON res_partner.company_id = res_company.id where sale_order.status='NewInstallation' and sale_order.sale_confirm_date between "+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+" and state != 'draft' order by res_partner.cs_number")
+        self.env.cr.execute("SELECT res_partner.cs_number,res_partner.name as customer,res_company.name as company,sale_order.name,sale_order.payment_received FROM sale_order INNER JOIN res_partner ON sale_order.partner_id = res_partner.id INNER JOIN res_company ON res_partner.company_id = res_company.id where sale_order.status='NewInstallation' and sale_order.sale_confirm_date between "+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+" and state != 'draft' order by res_partner.cs_number")
         current_sales = self.env.cr.dictfetchall()
-        for cs in current_sales:
-            if cs['cs_number'].find('CM')!=-1 or cs['cs_number'].find('cm')!=-1:
-                frequency['cm'] += 1
-            elif cs['cs_number'].find('CN')!=-1 or cs['cs_number'].find('cn')!=-1:
-                frequency['cn'] += 1
-            elif cs['cs_number'].find('LH')!=-1 or cs['cs_number'].find('cm')!=-1:
-                frequency['lh'] += 1
-            elif cs['cs_number'].find('B1')!=-1 or cs['cs_number'].find('b1')!=-1:
-                frequency['b1'] += 1
-            elif cs['cs_number'].find('B2')!=-1 or cs['cs_number'].find('b2')!=-1:
-                frequency['b2'] += 1
-            elif cs['cs_number'].find('B3')!=-1 or cs['cs_number'].find('b3')!=-1:
-                frequency['b3'] += 1
-        return frequency
+        if self.only_new_sales:
+            return current_sales
+        else:
+            for cs in current_sales:
+                if cs['cs_number'].find('CM')!=-1 or cs['cs_number'].find('cm')!=-1:
+                    frequency['cm'] += 1
+                elif cs['cs_number'].find('CN')!=-1 or cs['cs_number'].find('cn')!=-1:
+                    frequency['cn'] += 1
+                elif cs['cs_number'].find('LH')!=-1 or cs['cs_number'].find('cm')!=-1:
+                    frequency['lh'] += 1
+                elif cs['cs_number'].find('B1')!=-1 or cs['cs_number'].find('b1')!=-1:
+                    frequency['b1'] += 1
+                elif cs['cs_number'].find('B2')!=-1 or cs['cs_number'].find('b2')!=-1:
+                    frequency['b2'] += 1
+                elif cs['cs_number'].find('B3')!=-1 or cs['cs_number'].find('b3')!=-1:
+                    frequency['b3'] += 1
+            return frequency
 
     def ms_record(self):
         # "Active Customers Of Mutual Security Systems"
