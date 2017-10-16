@@ -427,9 +427,6 @@
                     <field name="user_id_issue"/>
                     <field name="additional"/>
                     <field name="first_signal_time"/>
-                    <xpath expr="//field[@name='first_signal']" position="attributes">
-                        <attribute name="invisible">1</attribute>
-                    </xpath>
                     <field name="date_start" />
                     <field name="date_end" />
                     <field name='compute_total_time'/>
