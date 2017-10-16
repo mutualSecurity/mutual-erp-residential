@@ -95,7 +95,7 @@
                     <field name="date_start"/>
                     <field name="date_end"/>
                     <field name="compute_total_time"/>
-                    <field name="first_signal"/>
+                   <!-- <field name="first_signal"/>-->
                     <field name="reason"/>
                     <field name="status"/>
                     <field name="create_date" readonly="1"/>
@@ -148,7 +148,7 @@
                     <field name="date_start"/>
                     <field name="date_end"/>
                     <field name="compute_total_time"/>
-                    <field name="first_signal"/>
+                    <!--<field name="first_signal"/>-->
                     <field name="reason_tasks"/>
                     <field name="status"/>
                     <field name="create_date" readonly="1"/>
@@ -427,6 +427,9 @@
                     <field name="user_id_issue"/>
                     <field name="additional"/>
                     <field name="first_signal_time"/>
+                    <xpath expr="//field[@name='first_signal']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
                     <field name="date_start" />
                     <field name="date_end" />
                     <field name='compute_total_time'/>
