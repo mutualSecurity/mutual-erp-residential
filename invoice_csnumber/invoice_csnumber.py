@@ -497,10 +497,16 @@ class generalEntryCreate(osv.osv):
                         if(obj.parts_payment == 'Cheque Return'):
                             if(line.customer_invoice.id != False):
                                 invoice_status = 'open'
+                                cursor.execute(
+                                    'UPDATE account_invoice SET payment_received =FALSE ' + 'WHERE id =' + str(
+                                        line.customer_invoice.id))
                                 cursor.execute('UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(line.customer_invoice.id))
                         else:
                             if((line.credit == line.customer_invoice.grand_total or line.customer_invoice.amount_total == line.credit or line.customer_invoice.residual == line.credit) and line.customer_invoice.id):
                                 invoice_status = "paid"
+                                cursor.execute(
+                                    'UPDATE account_invoice SET payment_received =TRUE '+ 'WHERE id =' + str(
+                                        line.customer_invoice.id))
                                 cursor.execute(
                                     'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
                                         line.customer_invoice.id))
@@ -510,6 +516,9 @@ class generalEntryCreate(osv.osv):
                             elif(line.credit > line.customer_invoice.amount_total and line.customer_invoice.id):
                                 invoice_status = "paid"
                                 cursor.execute(
+                                    'UPDATE account_invoice SET payment_received =TRUE ' + 'WHERE id =' + str(
+                                        line.customer_invoice.id))
+                                cursor.execute(
                                     'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
                                         line.customer_invoice.id))
                                 cursor.execute(
@@ -518,6 +527,9 @@ class generalEntryCreate(osv.osv):
 
                             elif(line.customer_invoice.amount_total > line.credit and line.customer_invoice.id):
                                 invoice_status = "open"
+                                cursor.execute(
+                                    'UPDATE account_invoice SET payment_received =TRUE ' + 'WHERE id =' + str(
+                                        line.customer_invoice.id))
                                 cursor.execute(
                                     'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
                                         line.customer_invoice.id))
