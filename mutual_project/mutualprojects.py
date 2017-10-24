@@ -290,6 +290,11 @@ class mutual_issues(osv.osv):
                                'Complaint Title', required=True, read=['__export__.res_groups_52'], write=['project.group_project_user'])
   }
 
+  def _get_default_project_board(self, cr, uid, context=None):
+      res = self.pool.get('project.project').search(cr, uid, [('name', '=', 'Complaints')], context=context)
+      print res
+      return res and res[0] or False
+
   def _get_default_forwarder(self, cr, uid, context=None):
       res = self.pool.get('res.users').search(cr, uid, [('partner_id', '=',38952)], context=context)
       print res
@@ -297,6 +302,7 @@ class mutual_issues(osv.osv):
 
   _defaults = {
       'user_id_issue': _get_default_forwarder,
+      'project_id': _get_default_project_board
   }
 
   @api.depends('additional','stage_id')
