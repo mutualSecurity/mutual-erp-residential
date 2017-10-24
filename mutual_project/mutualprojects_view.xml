@@ -380,6 +380,14 @@
                           </field>
                     </page>
                 </xpath>
+                 <xpath expr="//page[@string='Remarks']" position="after">
+                    <page string="Reconnection Remarks" attrs="{'invisible':[('name','!=','reconnection')]}">
+                        <group><field name="date_of_next_inv" attrs="{'required':[('name','=','reconnection')]}"/>
+                        <field name="start_date" attrs="{'required':[('name','=','reconnection')]}"/>
+                        <field name="end_date" attrs="{'required':[('name','=','reconnection')]}"/>
+                        <field name="m_p" widget="radio" attrs="{'required':[('name','=','reconnection')]}"/></group>
+                    </page>
+                </xpath>
             </field>
         </record>
          <!--====================================== Task form view Ending ==================================-->
