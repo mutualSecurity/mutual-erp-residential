@@ -74,78 +74,51 @@ class WizardReports(osv.TransientModel):
 
         elif self.type=='Overall Invoices' and self.report_type == 'Analysis of Invoices':
             self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice between" + "'" + str(
-                    one) + "'" + "and" + "'" + str(eleven)+ str(
+                "select count(number) payment_received from account_invoice where date_invoice >=" + "'" + str(
+                    self.start_date) + "'" + "and date_invoice <=" + "'" + str(
+                    self.end_date) + "'" + "and responsible_person =" + "'" + str(
                     self.responsible_person.id) + "'" + "and payment_received=True")
-            payment_received_one = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice between" + "'" + str(
-                    eleven) + "'" + "and" + "'" + str(twenty_one) + str(
-                    self.responsible_person.id) + "'" + "and payment_received=True")
-            payment_received_eleven = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice between" + "'" + str(
-                    twenty_one) + "'" + "and" + "'" + str(self.end_date) + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
-            payment_received_twenty_one = self.env.cr.dictfetchall()
+            payment_received = self.env.cr.dictfetchall()
 
             self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice between" + "'" + str(
-                    one) + "'" + "and" + "'" + str(eleven) + str(
+                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
+                    self.start_date) + "'" + "and date_invoice <=" + "'" + str(
+                    self.end_date) + "'" + "and responsible_person =" + "'" + str(
                     self.responsible_person.id) + "'" + "and payment_received=False")
-            pendings_one = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice between" + "'" + str(
-                    eleven) + "'" + "and" + "'" + str(twenty_one) + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
-            pendings_eleven = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice between" + "'" + str(
-                    twenty_one) + "'" + "and" + "'" + str(self.end_date) + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
-            pendings_twenty_one = self.env.cr.dictfetchall()
+            pendings = self.env.cr.dictfetchall()
             return [
-                {'period': "From " + str(one) + " to " + str(eleven),
-                 'payment_received': payment_received_one[0]['payment_received'],
-                 'pendings': pendings_one[0]['pendings'],
-                 'total': payment_received_one[0]['payment_received'] + pendings_one[0]['pendings']},
 
-                {'period': "From " + str(eleven) + " to " + str(twenty_one),
-                 'payment_received': payment_received_eleven[0]['payment_received'],
-                 'pendings': pendings_eleven[0]['pendings'],
-                 'total': payment_received_eleven[0]['payment_received'] + pendings_eleven[0]['pendings']},
-
-                {'period': "From " + str(twenty_one) + " to " + str(self.end_date),
-                 'payment_received': payment_received_twenty_one[0]['payment_received'],
-                 'pendings': pendings_twenty_one[0]['pendings'],
-                 'total': payment_received_twenty_one[0]['payment_received'] + pendings_twenty_one[0]['pendings']}
+                {'period': "From " + str(self.start_date) + " to " + str(self.end_date),
+                 'payment_received': payment_received[0]['payment_received'],
+                 'pendings': pendings[0]['pendings'],
+                 'total': payment_received[0]['payment_received'] + pendings[0]['pendings']}
             ]
 
         elif self.type == 'Individual Invoices' and self.report_type == 'Analysis of Invoices':
-            self.env.cr.execute("select count(number) payment_received from account_invoice where date_invoice between"+"'"+str(one)+"'"+"and"+"'"+str(eleven)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'"+"and payment_received=True")
+            self.env.cr.execute("select count(number) payment_received from account_invoice where date_invoice >="+"'"+str(one)+"'"+"and date_invoice <"+"'"+str(eleven)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'"+"and payment_received=True")
             payment_received_one = self.env.cr.dictfetchall()
             self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice between" + "'" + str(eleven) + "'" + "and" + "'" + str(twenty_one) + "'" + "and responsible_person =" + "'" + str(
+                "select count(number) payment_received from account_invoice where date_invoice >=" + "'" + str(eleven) + "'" + "and date_invoice <" + "'" + str(twenty_one) + "'" + "and responsible_person =" + "'" + str(
                     self.responsible_person.id) + "'" + "and payment_received=True")
             payment_received_eleven = self.env.cr.dictfetchall()
             self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice between" + "'" + str(twenty_one) + "'" + "and" + "'" + str(self.end_date) + "'" + "and responsible_person =" + "'" + str(
+                "select count(number) payment_received from account_invoice where date_invoice >=" + "'" + str(twenty_one) + "'" + "and date_invoice <" + "'" + str(self.end_date) + "'" + "and responsible_person =" + "'" + str(
                     self.responsible_person.id) + "'" + "and payment_received=False")
             payment_received_twenty_one = self.env.cr.dictfetchall()
 
             self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice between" + "'" + str(
-                    one) + "'" + "and" + "'" + str(eleven) + "'" + "and responsible_person =" + "'" + str(
+                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
+                    one) + "'" + "and date_invoice <" + "'" + str(eleven) + "'" + "and responsible_person =" + "'" + str(
                     self.responsible_person.id) + "'" + "and payment_received=False")
             pendings_one = self.env.cr.dictfetchall()
             self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice between" + "'" + str(
-                    eleven) + "'" + "and" + "'" + str(twenty_one) + "'" + "and responsible_person =" + "'" + str(
+                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
+                    eleven) + "'" + "and date_invoice <" + "'" + str(twenty_one) + "'" + "and responsible_person =" + "'" + str(
                     self.responsible_person.id) + "'" + "and payment_received=False")
             pendings_eleven = self.env.cr.dictfetchall()
             self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice between" + "'" + str(
-                    twenty_one) + "'" + "and" + "'" + str(self.end_date) + "'" + "and responsible_person =" + "'" + str(
+                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
+                    twenty_one) + "'" + "and date_invoice <" + "'" + str(self.end_date) + "'" + "and responsible_person =" + "'" + str(
                     self.responsible_person.id) + "'" + "and payment_received=False")
             pendings_twenty_one = self.env.cr.dictfetchall()
 
