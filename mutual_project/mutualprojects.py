@@ -15,6 +15,7 @@ class mutual_projects(osv.osv):
       'end_date': fields.date('End Date', store=True),
       'm_p': fields.selection([('Yes', 'Yes'), ('No', 'No')], 'Is monitoring period change?',
                                         store=True),
+      'recon_rem': fields.text('Reconnection Details', store=True),
       'system_status': fields.selection([('None','None'),('System Removed', 'System Removed')],'System Status', store=True),
       'description_remarks': fields.one2many('task.remarks', 'task_title', 'Description', store=True),
       'contract': fields.char('Contract', store=True, readonly=True),

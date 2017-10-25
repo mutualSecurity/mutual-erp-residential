@@ -385,7 +385,9 @@
                         <group><field name="date_of_next_inv" attrs="{'required':[('name','=','reconnection')]}"/>
                         <field name="start_date" attrs="{'required':[('name','=','reconnection')]}"/>
                         <field name="end_date" attrs="{'required':[('name','=','reconnection')]}"/>
-                        <field name="m_p" widget="radio" attrs="{'required':[('name','=','reconnection')]}"/></group>
+                        <field name="m_p" widget="radio" attrs="{'required':[('name','=','reconnection')]}"/>
+                        <field name="recon_rem" />
+                        </group>
                     </page>
                 </xpath>
             </field>
