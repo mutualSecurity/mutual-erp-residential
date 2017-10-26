@@ -48,6 +48,19 @@ class WizardReports(osv.TransientModel):
         return _list
 
     def invoices(self):
+        frequency ={
+            'date_one': '',
+            'payment_received_one': 0,
+            'pendings_one': 0,
+
+            'date_eleven': '',
+            'payment_received_eleven': 0,
+            'pendings_eleven': 0,
+
+            'date_twenty_one': '',
+            'payment_received_twenty_one': 0,
+            'pendings_twenty_one': 0
+        }
         break_date = str(self.start_date).split('-')
         one = break_date[0]+"-"+break_date[1]+"-"+"01"
         eleven = break_date[0] + "-" + break_date[1] + "-" + "11"
@@ -95,48 +108,44 @@ class WizardReports(osv.TransientModel):
             ]
 
         elif self.type == 'Individual Invoices' and self.report_type == 'Analysis of Invoices':
-            self.env.cr.execute("select count(number) payment_received from account_invoice where date_invoice >="+"'"+str(one)+"'"+"and date_invoice <"+"'"+str(eleven)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'"+"and payment_received=True")
-            payment_received_one = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice >=" + "'" + str(eleven) + "'" + "and date_invoice <" + "'" + str(twenty_one) + "'" + "and responsible_person =" + "'" + str(
-                    self.responsible_person.id) + "'" + "and payment_received=True")
-            payment_received_eleven = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice >=" + "'" + str(twenty_one) + "'" + "and date_invoice <" + "'" + str(self.end_date) + "'" + "and responsible_person =" + "'" + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
-            payment_received_twenty_one = self.env.cr.dictfetchall()
+            self.env.cr.execute("select payment_received,date_invoice from account_invoice where date_invoice between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'")
+            res = self.env.cr.dictfetchall()
+            for invoice in res:
+                if str(invoice['date_invoice']).find(one) != -1 and invoice['payment_received']==True:
+                    frequency['payment_received_one']+=1
+                    frequency['date_one']=str(invoice['date_invoice'])
+                elif str(invoice['date_invoice']).find(one) != -1 and invoice['payment_received']==False:
+                    frequency['pendings_one']+=1
 
-            self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
-                    one) + "'" + "and date_invoice <" + "'" + str(eleven) + "'" + "and responsible_person =" + "'" + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
-            pendings_one = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
-                    eleven) + "'" + "and date_invoice <" + "'" + str(twenty_one) + "'" + "and responsible_person =" + "'" + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
-            pendings_eleven = self.env.cr.dictfetchall()
-            self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
-                    twenty_one) + "'" + "and date_invoice <" + "'" + str(self.end_date) + "'" + "and responsible_person =" + "'" + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
-            pendings_twenty_one = self.env.cr.dictfetchall()
+                elif str(invoice['date_invoice']).find(eleven) != -1 and invoice['payment_received']==True:
+                    frequency['payment_received_eleven']+=1
+                    frequency['date_eleven'] = str(invoice['date_invoice'])
+
+                elif str(invoice['date_invoice']).find(eleven) != -1 and invoice['payment_received']==False:
+                    frequency['pendings_eleven']+=1
+
+                elif str(invoice['date_invoice']).find(twenty_one) != -1 and invoice['payment_received']==True:
+                    frequency['payment_received_twenty_one']+=1
+                    frequency['date_twenty_one'] = str(invoice['date_invoice'])
+
+                elif str(invoice['date_invoice']).find(twenty_one) != -1 and invoice['payment_received']==False:
+                    frequency['pendings_twenty_one']+=1
 
             return [
-                {'period': "From "+ str(one)+ " to "+str(eleven),
-                'payment_received': payment_received_one[0]['payment_received'],
-                'pendings': pendings_one[0]['pendings'],
-                'total':payment_received_one[0]['payment_received']+pendings_one[0]['pendings']},
+                {'period': frequency['date_one'] ,
+                'payment_received':  frequency['payment_received_one'],
+                'pendings': frequency['pendings_one'],
+                'total':frequency['payment_received_one']+frequency['pendings_one']},
 
-                {'period': "From "+ str(eleven) + " to "+str(twenty_one),
-                'payment_received': payment_received_eleven[0]['payment_received'],
-                'pendings': pendings_eleven[0]['pendings'],
-                'total':payment_received_eleven[0]['payment_received']+pendings_eleven[0]['pendings']},
+                {'period': frequency['date_eleven'],
+                 'payment_received': frequency['payment_received_eleven'],
+                 'pendings': frequency['pendings_eleven'],
+                 'total': frequency['payment_received_eleven'] + frequency['pendings_eleven']},
 
-                {'period': "From " + str(twenty_one) + " to " + str(self.end_date),
-                 'payment_received': payment_received_twenty_one[0]['payment_received'],
-                 'pendings': pendings_twenty_one[0]['pendings'],
-                 'total': payment_received_twenty_one[0]['payment_received'] + pendings_twenty_one[0]['pendings']}
+                {'period': frequency['date_twenty_one'],
+                 'payment_received': frequency['payment_received_twenty_one'],
+                 'pendings': frequency['pendings_twenty_one'],
+                 'total': frequency['payment_received_twenty_one'] + frequency['pendings_twenty_one']},
             ]
 
     def print_report(self, cr, uid, ids, data, context=None):

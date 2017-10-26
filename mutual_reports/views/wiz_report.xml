@@ -54,11 +54,10 @@
                              </tr>
                              </tbody>
                          </t>
-
                          <t t-if="doc.report_type == 'Analysis of Invoices' and doc.type == 'Individual Invoices'">
                              <thead>
                                  <tr>
-                                     <th>Period</th>
+                                     <th>Date of Invoice</th>
                                      <th>Total Invoices</th>
                                      <th>Pending Payments</th>
                                      <th class="text-right">Received Payments</th>
@@ -67,9 +66,21 @@
                              <tbody>
                              <tr t-foreach="doc.invoices()" t-as="l">
                                  <td><span t-esc="l['period']"/></td>
-                                 <td><span t-esc="l['total']"/></td>
-                                 <td><span t-esc="l['pendings']"/></td>
-                                 <td class="text-right"><span t-esc="l['payment_received']"/></td>
+                                 <td>
+                                     <t t-if="l['total']>0">
+                                         <span t-esc="l['total']"/>
+                                     </t>
+                                 </td>
+                                 <td>
+                                     <t t-if="l['pendings']>0">
+                                         <span t-esc="l['pendings']"/>
+                                     </t>
+                                 </td>
+                                 <td class="text-right">
+                                     <t t-if="l['payment_received']>0">
+                                          <span t-esc="l['payment_received']"/>
+                                     </t>
+                                 </td>
                                  <t t-set="pendings" t-value="pendings+l['pendings']"/>
                                  <t t-set="received" t-value="received+l['payment_received']"/>
                                  <t t-set="total" t-value="total+l['total']"/>
