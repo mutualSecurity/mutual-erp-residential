@@ -74,7 +74,7 @@
                <tbody>
                     <tr t-foreach="o.tech_name" t-as="l">
                         <td>
-                           <span t-field="l.technician_name"/>
+                           <span t-field="l.technician_name_other"/>
                         </td>
                         <td>
                            <span t-field="l.reason"/>
