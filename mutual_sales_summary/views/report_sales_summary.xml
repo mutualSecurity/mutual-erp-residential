@@ -14,6 +14,7 @@
                         <table class="table table-condensed" style="font-size:14px">
                          <thead>
                              <tr>
+                                 <th>S.No.</th>
                                  <th>Name</th>
                                  <th>CS Number</th>
                                  <th>Company</th>
@@ -22,6 +23,7 @@
                          </thead>
                           <tbody class="invoice_tbody">
                              <tr t-foreach="doc.new_sales()" t-as="l">
+                                 <td><span t-esc="l_index+1"/></td>
                                  <td><span t-esc="l['customer']"/></td>
                                  <td><span t-esc="l['cs_number']"/></td>
                                  <td><span t-esc="l['company']"/></td>

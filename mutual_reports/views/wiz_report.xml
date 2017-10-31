@@ -122,6 +122,7 @@
                                      <th>Date</th>
                                      <th>CS </th>
                                      <th>Name</th>
+                                     <th>Company</th>
                                      <th>Status</th>
                                  </tr>
                              </thead>
@@ -131,6 +132,14 @@
                                      <td><span t-esc="l['create_date']"/></td>
                                      <td><span t-esc="l['cs_number']"/></td>
                                      <td><span t-esc="l['name']"/></td>
+                                     <td>
+                                         <t t-if="l['company_id']==1">
+                                             Mutual Security Systems
+                                         </t>
+                                         <t t-if="l['company_id']==3">
+                                             Mutual Security
+                                         </t>
+                                     </td>
                                      <t t-if="l['active']">
                                          <td>Active</td>
                                      </t>

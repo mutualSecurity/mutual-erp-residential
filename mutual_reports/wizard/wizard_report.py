@@ -38,7 +38,7 @@ class WizardReports(osv.TransientModel):
     def reco_customer(self):
         _list = []
         self.env.cr.execute(
-            "select res_partner.name,res_partner.cs_number,res_partner.active,project_task.disco_reasons,project_task.create_date from project_task inner "
+            "select res_partner.name,res_partner.cs_number,res_partner.active,res_partner.company_id,project_task.disco_reasons,project_task.create_date from project_task inner "
             "join res_partner on project_task.partner_id = res_partner.id where project_task.name = 'reconnection' and project_task.create_date between" + "'" + str(
                 self.start_date) + "'" + " and" + "'" + str(self.end_date) + " " + "23:59:59" + "'")
         cutomer_reco = self.env.cr.dictfetchall()
