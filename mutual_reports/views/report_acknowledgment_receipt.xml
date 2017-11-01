@@ -103,7 +103,9 @@
                               </div>
                               <div class="col-xs-2">
                                   <strong>Cheque no.</strong>
-                                  <p>__________</p>
+                                  <p><t t-if="account.cheque_no">
+                                      <span t-field="account.cheque_no"/>
+                                  </t></p>
                               </div>
                           </div>
                           <div style="font-size:16px;">
