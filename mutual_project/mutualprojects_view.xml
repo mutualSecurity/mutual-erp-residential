@@ -522,6 +522,10 @@
                 <xpath expr="//field[@name='finalstatus']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'limit': 0, 'create': false, 'create_edit': false}</attribute>
+                </xpath>
+
             </field>
         </record>
         <!--====================================== Issue form view Ending ==================================-->
