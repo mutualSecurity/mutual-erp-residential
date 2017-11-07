@@ -14,5 +14,18 @@
                   </xpath>
               </field>
         </record>
+        <record id="crm.crm_case_inbound_phone_search_view_mutual" model="ir.ui.view">
+              <field name="name">CRM - Phone Calls Search</field>
+              <field name="model">crm.phonecall</field>
+              <field name="inherit_id" ref="crm.view_crm_case_phonecalls_filter" />
+              <field name="arch" type="xml">
+                  <search string="Search Phonecalls">
+                      <group string="Filters">
+                        <filter name="date" string="Daily" context="{'group_by':'date:day'}"/>
+                      </group>
+                  </search>
+              </field>
+        </record>
+
     </data>
 </openerp>
