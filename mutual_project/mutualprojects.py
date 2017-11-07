@@ -53,6 +53,7 @@ class mutual_projects(osv.osv):
                              'Task', required=True, store=True, select=True),
      'disco_reasons': fields.selection([
           ('Non Payment', 'Non Payment'),
+          ('Office/Shop Closed', 'Office/Shop Closed'),
           ('No Need', 'No Need'),
           ('Shifting', 'Shifting'),
           ('Force Issue / Patrolling Issue', 'Force Issue / Patrolling Issue'),
