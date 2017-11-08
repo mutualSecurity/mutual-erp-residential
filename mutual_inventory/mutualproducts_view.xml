@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <record id="product_variant_action_custom" model="ir.actions.act_window">
+            <field name="name">Product Variants</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_type">form</field>
+            <field name="view_id" eval="False"/> <!-- Force empty -->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new product.
+              </p><p>
+                You must define a product for everything you buy or sell,
+                whether it's a physical product, a consumable or service.
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+            name="Product Variants"
+            action="product_variant_action_custom"
+            id="menu_product_variant_action_custom"
+            sequence="7"
+            parent="stock.menu_stock_product">
+        </menuitem>
+
         <record model="ir.ui.view" id="product_variant_id">
             <field name="name">product.product.form</field>
             <field name="model">product.product</field>
