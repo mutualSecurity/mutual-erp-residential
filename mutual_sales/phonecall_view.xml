@@ -21,7 +21,8 @@
               <field name="arch" type="xml">
                   <search string="Search Phonecalls">
                       <group string="Filters">
-                        <filter name="date" string="Daily" context="{'group_by':'date:day'}"/>
+                           <filter name="date" string="Daily" context="{'group_by':'date:day'}"/>
+                           <filter string="Today" domain="[('date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
                       </group>
                   </search>
               </field>
