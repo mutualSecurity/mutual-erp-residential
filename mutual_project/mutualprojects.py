@@ -62,6 +62,7 @@ class mutual_projects(osv.osv):
           ('Poor Service', 'Poor Service'),
           ('Complaint Issues', 'Complaint Issues'),
           ('Renovation Work', 'Renovation Work'),
+          ('House Saleout', 'House Saleout'),
           ],'Disco Reasons', store=True, select=True),
       'removal_address':fields.char('Removal Address'),
       'survey_address': fields.char('Survey Address'),
