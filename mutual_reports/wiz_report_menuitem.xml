@@ -9,5 +9,13 @@
             sequence="4"
             parent="reports_side_top_menu">
          </menuitem>
+
+        <menuitem
+            name="Bank Report"
+            action="action_wiz_report_hmb_bop_form"
+            id="menu_action_wiz_report_hmb_bop_form"
+            sequence="5"
+            parent="reports_side_top_menu">
+        </menuitem>
     </data>
 </openerp>

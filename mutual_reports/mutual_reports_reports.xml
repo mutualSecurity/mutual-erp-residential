@@ -118,5 +118,15 @@
             file="mutual_reports.wiz_report"
             menu="False"
         />
+
+        <report
+            id="action_wiz_report_hmb_bop"
+            model="wiz.hmb.bop.reports"
+            string="Report"
+            report_type="qweb-pdf"
+            name="mutual_reports.wiz_report_hmb_bop"
+            file="mutual_reports.wiz_report_hmb_bop"
+            menu="False"
+        />
     </data>
 </openerp>

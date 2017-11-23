@@ -21,6 +21,8 @@
     ],
     'data': [
         'mutual_reports_reports.xml',
+        'views/wiz_report.xml',
+        'views/wiz_report_hmb_bop.xml',
         'views/custom_invoice.xml',
         'views/dummy_custom_invoice.xml',
         'views/customer_details.xml',
@@ -35,8 +37,8 @@
         'views/custom_template.xml',
         'views/report_history_pdf.xml',
         'wizard/wizard_report_view.xml',
+        'wizard/wizard_hmb_bop_view.xml',
         'wiz_report_menuitem.xml',
-        'views/wiz_report.xml'
     ]
 
 }
