@@ -6,6 +6,9 @@
         <t t-foreach="docs" t-as="doc">
             <t t-call="report.internal_layout">
                 <div class="page">
+                    <t t-set="hmb_total" t-value="0"/>
+                    <t t-set="bop_total" t-value="0"/>
+                    <t t-set="grand_total" t-value="0"/>
                     <h1>Balance In Bank Accounts</h1><br/>
                     <table class="table table-condensed" style="font-size:16px; width:30%; display:inline-block;">
                         <thead>
@@ -21,6 +24,7 @@
                                  </td>
                                  <td>
                                      <span t-esc="round(l['sum'])"/>
+                                     <t t-set="hmb_total" t-value="hmb_total+round(l['sum'])"/>
                                  </td>
                              </tr>
                         </tbody>
@@ -35,6 +39,7 @@
                              <tr t-foreach="doc.cal_bal_bop()" t-as="l">
                                  <td>
                                      <span t-esc="round(l['sum'])"/>
+                                     <t t-set="bop_total" t-value="bop_total+round(l['sum'])"/>
                                  </td>
                              </tr>
                         </tbody>
@@ -49,10 +54,17 @@
                              <tr t-foreach="doc.total()" t-as="l">
                                  <td>
                                      <span t-esc="round(l['total'])"/>
+                                       <t t-set="grand_total" t-value="grand_total+round(l['total'])"/>
                                  </td>
                              </tr>
                         </tbody>
                     </table>
+                    <h4>Grand Total</h4>
+                    <div style="border:2px solid grey; padding:10px;border-radius:10px;width:64%;font-size:16px;">
+                         <p><strong>HMB Total Amount: </strong><span t-esc="hmb_total"/></p>
+                         <p><strong>BOP Total Amount: </strong><span t-esc="bop_total"/></p>
+                         <p><strong>Grand Total Amount: </strong><span t-esc="grand_total"/></p>
+                    </div>
                 <br/>
                 </div>
             </t>
