@@ -443,6 +443,8 @@ class generalEntryCreate(osv.osv):
                                            ('Monitoring Payment', 'Monitoring Payment'),
                                            ('Parts Payment', 'Parts Payment'),
                                            ('Cheque Return', 'Cheque Return'),
+                                           ('Entered cheque from HMB', 'Entered cheque from HMB'),
+                                           ('Entered cheque from BOP', 'Entered cheque from BOP'),
                                            ('Miscellaneous', 'Miscellaneous'),
                                            ('yes', 'Yes'),
                                            ('no', 'No'),], 'Entry Type?', store=True, required=True),
