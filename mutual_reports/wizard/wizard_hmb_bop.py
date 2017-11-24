@@ -31,7 +31,7 @@ class WizardReports(osv.TransientModel):
             self.env.cr.execute(
                 "select sum(account_move_line.debit) as sum_bop from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='" + str(
                     period[
-                        'id']) + "'and account_move_line.journal_id=19 and (account_move_line.account_id=59 or account_move_line.account_id=297) and account_move_line.debit>0 and account_move.parts_payment!='No'")
+                        'id']) + "'and account_move_line.journal_id=19 and account_move_line.account_id=59 and account_move_line.debit>0 and account_move.parts_payment!='No'")
             sum_bop= self.env.cr.dictfetchall()
             res.append({'period': period['p_name'], 'sum': sum_bop[0]['sum_bop']})
         for data in res:
@@ -45,7 +45,7 @@ class WizardReports(osv.TransientModel):
         self.env.cr.execute("select name as p_name,id,date_start from account_period where fiscalyear_id='"+str(self.fiscalyear_id_mss.id)+"'"+"order by date_start")
         periods = self.env.cr.dictfetchall()
         for period in periods:
-            self.env.cr.execute("select sum(account_move_line.debit) as sum_hmb from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='"+str(period['id'])+"'and account_move_line.journal_id=9 and (account_move_line.account_id=26 or account_move_line.account_id=296) and account_move_line.debit>0 and account_move.parts_payment!='No'")
+            self.env.cr.execute("select sum(account_move_line.debit) as sum_hmb from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='"+str(period['id'])+"'and account_move_line.journal_id=9 and account_move_line.account_id=26  and account_move_line.debit>0 and account_move.parts_payment!='No'")
             sum_hmb = self.env.cr.dictfetchall()
             res.append({'period':period['p_name'],'sum':sum_hmb[0]['sum_hmb']})
         for data in res:
