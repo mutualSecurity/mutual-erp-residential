@@ -31,7 +31,7 @@ class WizardReports(osv.TransientModel):
             self.env.cr.execute(
                 "select sum(account_move_line.debit) as sum_bop from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='" + str(
                     period[
-                        'id']) + "'and account_move_line.journal_id=19 and account_move_line.account_id=59 and account_move_line.debit>0 and (account_move.parts_payment!='No' or account_move.parts_payment!='Entered cheque from HMB'")
+                        'id']) + "'and account_move_line.journal_id=19 and account_move_line.account_id=59 and account_move_line.debit>0 and (account_move.parts_payment!='No' or account_move.parts_payment!='Entered cheque from HMB')")
             sum_bop= self.env.cr.dictfetchall()
             res.append({'period': period['p_name'], 'sum': sum_bop[0]['sum_bop']})
         for data in res:
