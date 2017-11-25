@@ -24,6 +24,27 @@
                   <xpath expr="//field[@name='to_check']" position="after">
                       <field name="parts_payment" />
                   </xpath>
+                  <xpath expr="//field[@name='journal_id']" position="attributes">
+                      <attribute name="attrs">{'invisible':[('parts_payment','=','None')]}</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='period_id']" position="attributes">
+                      <attribute name="attrs">{'invisible':[('parts_payment','=','None')]}</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='company_id']" position="attributes">
+                      <attribute name="attrs">{'invisible':[('parts_payment','=','None')]}</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='ref']" position="attributes">
+                      <attribute name="attrs">{'invisible':[('parts_payment','=','None')]}</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='date']" position="attributes">
+                      <attribute name="attrs">{'invisible':[('parts_payment','=','None')]}</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='to_check']" position="attributes">
+                      <attribute name="attrs">{'invisible':[('parts_payment','=','None')]}</attribute>
+                  </xpath>
+                  <xpath  expr="//page[@string='Journal Items']" position="attributes">
+                       <attribute name="attrs">{'invisible':[('parts_payment','=','None')]}</attribute>
+                  </xpath>
               </field>
          </record>
         <record id="account_report_general_ledger_view_mutual" model="ir.ui.view">
