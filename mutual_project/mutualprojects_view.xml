@@ -660,6 +660,7 @@
                     <field name="cs_number_issue"/>
                     <field name="mobile_issue"/>
                     <field name="phone_issue"/>
+                    <field name="monitoring_address_issue"/>
                 </xpath>
                 <xpath expr="//search/field[@name='partner_id']" position="after">
                     <field name="priority"/>
@@ -699,6 +700,7 @@
                     <field name="create_uid"/>
                     <field name="mobile_task"/>
                     <field name="phone_task"/>
+                    <field name="monitoring_address_task"/>
                     <field name="disco_reasons"/>
                     <field name="system_status"/>
                 </xpath>
