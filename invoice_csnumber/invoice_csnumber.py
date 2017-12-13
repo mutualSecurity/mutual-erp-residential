@@ -306,7 +306,7 @@ class invoice_csnumber(osv.osv):
                 self.grand_total = out + self.amount_total
 
             else:
-                out = float(self.outstanding) - total - self.amount_total
+                out = float(self.outstanding) - self.amount_total
                 self.outstanding_amount = out
                 self.grand_total = out + self.amount_total
 
