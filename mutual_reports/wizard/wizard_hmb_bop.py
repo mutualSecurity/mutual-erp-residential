@@ -34,11 +34,14 @@ class WizardReports(osv.TransientModel):
                         'id']) + "'and account_move_line.journal_id=19 and account_move_line.account_id=59 and account_move_line.debit>0 and (account_move.parts_payment!='No' and account_move.parts_payment!='Entered cheque from HMB')")
             sum_bop= self.env.cr.dictfetchall()
             self.env.cr.execute(
-                "select sum(account_move_line.debit) as cheque_returned from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='" + str(
+                "select sum(account_move_line.credit) as cheque_returned from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='" + str(
                     period[
-                        'id']) + "'and account_move_line.journal_id=19 and account_move_line.account_id=59  and account_move_line.credit>0 and (account_move.parts_payment!='Cheque Return')")
+                        'id']) + "'and account_move_line.journal_id=19 and account_move_line.account_id=59  and account_move_line.credit>0 and (account_move.parts_payment='Cheque Return')")
             cheque_returned_amount = self.env.cr.dictfetchall()
-            res.append({'period': period['p_name'], 'sum': sum_bop[0]['sum_bop']-cheque_returned_amount[0]['cheque_returned']})
+            if cheque_returned_amount[0]['cheque_returned']!=None:
+                res.append({'period': period['p_name'], 'sum': sum_bop[0]['sum_bop']-cheque_returned_amount[0]['cheque_returned']})
+            else:
+                res.append({'period': period['p_name'],'sum': sum_bop[0]['sum_bop']})
         for data in res:
             if data['sum'] != None:
                 result.append(data)
@@ -53,11 +56,14 @@ class WizardReports(osv.TransientModel):
             self.env.cr.execute("select sum(account_move_line.debit) as sum_hmb from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='"+str(period['id'])+"'and account_move_line.journal_id=9 and account_move_line.account_id=26  and account_move_line.debit>0 and (account_move.parts_payment!='No' and account_move.parts_payment!='Entered cheque from BOP')")
             sum_hmb = self.env.cr.dictfetchall()
             self.env.cr.execute(
-                "select sum(account_move_line.debit) as cheque_returned from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='" + str(
+                "select sum(account_move_line.credit) as cheque_returned from account_move INNER JOIN account_move_line on account_move.id = account_move_line.move_id where account_move_line.period_id='" + str(
                     period[
-                        'id']) + "'and account_move_line.journal_id=9 and account_move_line.account_id=26  and account_move_line.credit>0 and (account_move.parts_payment!='Cheque Return')")
+                        'id']) + "'and account_move_line.journal_id=9 and account_move_line.account_id=26  and account_move_line.credit>0 and (account_move.parts_payment='Cheque Return')")
             cheque_returned_amount = self.env.cr.dictfetchall()
-            res.append({'period':period['p_name'],'sum':sum_hmb[0]['sum_hmb']-cheque_returned_amount[0]['cheque_returned']})
+            if cheque_returned_amount[0]['cheque_returned']!=None:
+                res.append({'period':period['p_name'],'sum':sum_hmb[0]['sum_hmb']-cheque_returned_amount[0]['cheque_returned']})
+            else:
+                res.append({'period':period['p_name'],'sum':sum_hmb[0]['sum_hmb']})
         for data in res:
             if data['sum']!=None:
                 result.append(data)
