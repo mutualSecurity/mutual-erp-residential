@@ -10,11 +10,11 @@
                     <t t-set="bop_total" t-value="0"/>
                     <t t-set="grand_total" t-value="0"/>
                     <h1>Balance In Bank Accounts</h1><br/>
-                    <table class="table table-condensed" style="font-size:16px; width:30%; display:inline-block;">
+                    <table class="table table-condensed" style="font-size:16px;">
                         <thead>
                             <tr>
                                 <th>Month</th>
-                                <th>HMB Amount</th>
+                                <th class="text-right">HMB Amount</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -22,37 +22,45 @@
                                  <td>
                                      <span t-esc="l['period']"/>
                                  </td>
-                                 <td>
+                                 <td class="text-right">
                                      <span t-esc="round(l['sum'])"/>
                                      <t t-set="hmb_total" t-value="hmb_total+round(l['sum'])"/>
                                  </td>
                              </tr>
                         </tbody>
                     </table>
-                    <table class="table table-condensed" style="font-size:16px; width:20%;display:inline-block;">
+                    <table class="table table-condensed" style="font-size:16px;">
                         <thead>
                             <tr>
-                                <th>BOP Amount</th>
+                                <th>Month</th>
+                                <th class="text-right">BOP Amount</th>
                             </tr>
                         </thead>
                         <tbody>
                              <tr t-foreach="doc.cal_bal_bop()" t-as="l">
                                  <td>
+                                     <span t-esc="l['period']"/>
+                                 </td>
+                                 <td class="text-right">
                                      <span t-esc="round(l['sum'])"/>
                                      <t t-set="bop_total" t-value="bop_total+round(l['sum'])"/>
                                  </td>
                              </tr>
                         </tbody>
                     </table>
-                    <table class="table table-condensed" style="font-size:16px; width:14%;display:inline-block;">
+                    <table class="table table-condensed" style="font-size:16px;">
                         <thead>
                             <tr>
-                                <th>Total</th>
+                                <th>Month</th>
+                                <th class="text-right">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                              <tr t-foreach="doc.total()" t-as="l">
                                  <td>
+                                     <span t-esc="l['period']"/>
+                                 </td>
+                                 <td class="text-right">
                                      <span t-esc="round(l['total'])"/>
                                        <t t-set="grand_total" t-value="grand_total+round(l['total'])"/>
                                  </td>
