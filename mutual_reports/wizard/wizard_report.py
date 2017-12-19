@@ -86,26 +86,19 @@ class WizardReports(osv.TransientModel):
             return [quater_one,quater_two,quater_three]
 
         elif self.type=='Overall Invoices' and self.report_type == 'Analysis of Invoices':
-            self.env.cr.execute(
-                "select count(number) payment_received from account_invoice where date_invoice >=" + "'" + str(
-                    self.start_date) + "'" + "and date_invoice <=" + "'" + str(
-                    self.end_date) + "'" + "and responsible_person =" + "'" + str(
-                    self.responsible_person.id) + "'" + "and payment_received=True")
-            payment_received = self.env.cr.dictfetchall()
+            # self.env.cr.execute(
+            #     "select count(number) payment_received from account_invoice where date_invoice >=" + "'" + str(
+            #         self.start_date) + "'" + "and date_invoice <=" + "'" + str(
+            #         self.end_date) + "'" + "and responsible_person =" + "'" + str(
+            #         self.responsible_person.id) + "'" + "and payment_received=True")
+            # payment_received = self.env.cr.dictfetchall()
 
             self.env.cr.execute(
-                "select count(number) pendings from account_invoice where date_invoice >=" + "'" + str(
-                    self.start_date) + "'" + "and date_invoice <=" + "'" + str(
-                    self.end_date) + "'" + "and responsible_person =" + "'" + str(
-                    self.responsible_person.id) + "'" + "and payment_received=False")
+                "select date_invoice,responsible_person,res_partner.name as recovery_officers,count(date_invoice) invoices "
+                "from account_invoice inner join res_users on account_invoice.responsible_person = res_users.id inner join res_partner on res_users.partner_id = res_partner.id "
+                "where from_date>='"+str(self.start_date)+"'"+"and from_date <='"+str(self.end_date)+"'"+"and account_invoice.payment_received=False and responsible_person is not null group by date_invoice,responsible_person,res_partner.name order by date_invoice asc")
             pendings = self.env.cr.dictfetchall()
-            return [
-
-                {'period': "From " + str(self.start_date) + " to " + str(self.end_date),
-                 'payment_received': payment_received[0]['payment_received'],
-                 'pendings': pendings[0]['pendings'],
-                 'total': payment_received[0]['payment_received'] + pendings[0]['pendings']}
-            ]
+            return pendings
 
         elif self.type == 'Individual Invoices' and self.report_type == 'Analysis of Invoices':
             self.env.cr.execute("select payment_received,date_invoice from account_invoice where date_invoice between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'")

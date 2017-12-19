@@ -20,7 +20,7 @@
                     <t t-if="doc.report_type=='Analysis of Invoices'">
                              <t t-if="doc.type=='Overall Invoices'">
                                  <h3>Overall Analysis of Invoices</h3>
-                                 <h4>Responsible Person:<span t-esc="doc.responsible_person.name"/></h4>
+                                <!--<h4>Responsible Person:<span t-esc="doc.responsible_person.name"/></h4>-->
                              </t>
                              <t t-if="doc.type=='Individual Invoices'">
                                  <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;">
@@ -40,17 +40,17 @@
                              <thead>
                                  <tr>
                                      <th>Period</th>
-                                     <th>Total Invoices</th>
-                                     <th>Pending Payments</th>
-                                     <th class="text-right">Received Payments</th>
+                                     <th>Recovery Officer</th>
+                                     <th class="text-right">Pending Payments</th>
+                                    <!-- <th class="text-right">Received Payments</th>-->
                                  </tr>
                              </thead>
                              <tbody>
                              <tr t-foreach="doc.invoices()" t-as="l">
-                                 <td><span t-esc="l['period']"/></td>
-                                 <td><span t-esc="l['total']"/></td>
-                                 <td><span t-esc="l['pendings']"/></td>
-                                 <td class="text-right"><span t-esc="l['payment_received']"/></td>
+                                 <td><span t-esc="l['date_invoice']"/></td>
+                                 <td><span t-esc="l['recovery_officers']"/></td>
+                                 <td class="text-right"><span t-esc="l['invoices']"/></td>
+                                 <!--td class="text-right"><span t-esc="l['payment_received']"/></td>-->
                              </tr>
                              </tbody>
                          </t>
