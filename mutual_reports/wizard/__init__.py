@@ -1,2 +1,3 @@
 import wizard_report
 import wizard_hmb_bop
+import wizard_report_balances

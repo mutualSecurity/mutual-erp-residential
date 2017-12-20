@@ -23,6 +23,13 @@ def grouplines(self, ordered_lines, sortkey):
 class mutual_sales(osv.osv):
     _inherit = "res.partner"
     _columns = {
+        'cs_category': fields.selection([('CM', 'CM'),
+                                         ('CN', 'CN'),
+                                         ('LH', 'LH'),
+                                         ('B1', 'B1'),
+                                         ('B2', 'B2'),
+                                         ('B3', 'B3'),
+                                        ], 'CS Category', store=True),
         'is_employee': fields.boolean('Is Employee?', store=True),
         'department': fields.selection([('Technical', 'Technical'),
                                         ('Rider', 'Rider'),

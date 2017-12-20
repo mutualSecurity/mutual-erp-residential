@@ -47,6 +47,7 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field string="CS Number" name="cs_number"  placeholder="CS Number" />
+                    <field name="cs_category" string="CS Category"/>
                     <field string="Uplink Date" name="uplink_date"  placeholder="Uplink Date" />
                     <field name="customer_status" readonly="1"/>
                 </field>

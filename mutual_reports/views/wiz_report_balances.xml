@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="wiz_report_balances">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="report.internal_layout">
+                <div class="page">
+                    <h1 align="center">Partner Balances</h1><br/>
+                    <h2><span t-esc="doc.company_id.name"/> </h2>
+                    <h5>From <span t-esc="doc.start_date"/> to <span t-esc="doc.end_date"/> </h5>
+                    <table class="table table-condensed" style="font-size:16px;">
+                        <thead>
+                            <tr>
+                                <th>CS</th>
+                                <th class="text-right">Debit</th>
+                                <th class="text-right">Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.cal_balances()" t-as="l">
+                                 <td>
+                                     <span t-esc="l['cs_category']"/>
+                                 </td>
+                                 <td class="text-right">
+                                     <span t-esc="round(l['debit'])"/>
+                                 </td>
+                                 <td class="text-right">
+                                     <span t-esc="round(l['credit'])"/>
+                                 </td>
+                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

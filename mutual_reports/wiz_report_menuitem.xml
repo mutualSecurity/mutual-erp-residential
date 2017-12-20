@@ -17,5 +17,13 @@
             sequence="5"
             parent="reports_side_top_menu">
         </menuitem>
+
+        <menuitem
+            name="Balance"
+            action="action_wiz_report_balances_form"
+            id="menu_action_wiz_report_balances_form"
+            sequence="6"
+            parent="reports_side_top_menu">
+        </menuitem>
     </data>
 </openerp>
