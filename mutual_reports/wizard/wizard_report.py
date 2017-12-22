@@ -10,7 +10,8 @@ class WizardReports(osv.TransientModel):
     _columns = {
         'report_type': fields.selection([('Analysis of Invoices', 'Analysis of Invoices'),
                                          ('Disconnected Customers', 'Disconnected Customers'),
-                                         ('Reconnected Customers', 'Reconnected Customers')], 'Report Type', required=True),
+                                         ('Reconnected Customers', 'Reconnected Customers'),
+                                         ('Call Logs', 'Call Logs')], 'Report Type', required=True),
         'responsible_person': fields.many2one('res.users', 'Follow-up Responsible'),
         'start_date': fields.date('Start Date'),
         'end_date': fields.date('End Date'),
@@ -23,6 +24,12 @@ class WizardReports(osv.TransientModel):
         'start_date': lambda *a:datetime.now().strftime('%Y-%m-%d'),
         'end_date': lambda *a: datetime.now().strftime('%Y-%m-%d'),
     }
+
+    def phonecalls(self):
+        self.env.cr.execute("select res_partner.name as person_name ,count(crm_phonecall.user_id) as calls from crm_phonecall inner join res_users on crm_phonecall.user_id = res_users.id inner join res_partner on res_users.partner_id=res_partner.id "
+                            "where crm_phonecall.date>='"+str(self.start_date)+"'"+" and crm_phonecall.date<='"+str(self.end_date)+" "+"23:59:59"+"'"+"group by crm_phonecall.user_id,res_partner.name")
+        logged_calls = self.env.cr.dictfetchall()
+        return logged_calls
 
     def disco_customer(self):
         _list = []
@@ -147,7 +154,7 @@ class WizardReports(osv.TransientModel):
         start_date = datetime.strptime(obj.start_date, date_format)
         end_date = datetime.strptime(obj.end_date, date_format)
         delta = end_date - start_date
-        if delta.days > 0:
+        if delta.days >= 0:
             return {
                 'type': 'ir.actions.report.xml',
                 'name': 'mutual_reports.wiz_report',

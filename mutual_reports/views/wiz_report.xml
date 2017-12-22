@@ -16,7 +16,11 @@
                      <t t-set="pendings" t-value="0"/>
                      <t t-set="received" t-value="0"/>
                      <t t-set="total" t-value="0"/>
+                    <t t-set="total_calls" t-value="0"/>
                     <h1>Report</h1><br/>
+                    <t t-if="doc.report_type == 'Call Logs'">
+                        <h4>From <span t-esc="doc.start_date"/> to <span t-esc="doc.end_date"/></h4>
+                    </t>
                     <t t-if="doc.report_type=='Analysis of Invoices'">
                              <t t-if="doc.type=='Overall Invoices'">
                                  <h3>Overall Analysis of Invoices</h3>
@@ -35,7 +39,29 @@
                          <h3>Reconnected Customers</h3>
                     </t>
                 <br/>
-                     <table class="table table-condensed" style="font-size:12px">
+                     <table class="table table-condensed" style="font-size:16px">
+                         <t t-if="doc.report_type == 'Call Logs'">
+                             <thead>
+                                 <tr>
+                                     <th>Serial No.</th>
+                                     <th>Responsible Person</th>
+                                     <th>Number of Calls</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr t-foreach="doc.phonecalls()" t-as="l">
+                                     <td><span t-esc="l_index+1"/></td>
+                                     <td><span t-esc="l['person_name']"/></td>
+                                     <td><span t-esc="l['calls']"/></td>
+                                     <t t-set="total" t-value="total+l['calls']"/>
+                                 </tr>
+                                 <tr>
+                                     <td><strong>Total</strong></td>
+                                     <td></td>
+                                     <td><span t-esc="total"/></td>
+                                 </tr>
+                             </tbody>
+                         </t>
                          <t t-if="doc.report_type == 'Analysis of Invoices' and doc.type == 'Overall Invoices'">
                              <thead>
                                  <tr>

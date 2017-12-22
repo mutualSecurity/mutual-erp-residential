@@ -16,7 +16,7 @@
                             </group>
                             <group>
                                 <field name="responsible_person"  attrs="{'invisible':[('type','!=','Individual Invoices')],'required': ['|',('type', '=', 'Individual Invoices')]}"/>
-                                <field name="type"/>
+                                <field name="type" attrs="{'invisible':[('report_type','=','Call Logs')]}"/>
                             </group>
                         </group>
                         <footer>
