@@ -15,8 +15,7 @@ class WizardReports(osv.TransientModel):
         'responsible_person': fields.many2one('res.users', 'Follow-up Responsible'),
         'start_date': fields.date('Start Date'),
         'end_date': fields.date('End Date'),
-        'type': fields.selection([('Overall Invoices', 'Overall Invoices'),
-                                  ('SRB Report', 'SRB Report'),
+        'type': fields.selection([('SRB Report', 'SRB Report'),
                                   ('Individual Invoices', 'Individual Invoices'),],'Type',store=True)
     }
 
@@ -108,27 +107,27 @@ class WizardReports(osv.TransientModel):
             return pendings
 
         elif self.type == 'Individual Invoices' and self.report_type == 'Analysis of Invoices':
-            self.env.cr.execute("select payment_received,date_invoice from account_invoice where date_invoice between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'")
+            self.env.cr.execute("select payment_received,from_date from account_invoice where date_invoice between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'")
             res = self.env.cr.dictfetchall()
             for invoice in res:
-                if str(invoice['date_invoice']).find(one) != -1 and invoice['payment_received']==True:
+                if str(invoice['from_date']).find(one) != -1 and invoice['payment_received']==True:
                     frequency['payment_received_one']+=1
-                    frequency['date_one']=str(invoice['date_invoice'])
-                elif str(invoice['date_invoice']).find(one) != -1 and invoice['payment_received']==False:
+                    frequency['date_one']=str(invoice['from_date'])
+                elif str(invoice['from_date']).find(one) != -1 and invoice['payment_received']==False:
                     frequency['pendings_one']+=1
 
-                elif str(invoice['date_invoice']).find(eleven) != -1 and invoice['payment_received']==True:
+                elif str(invoice['from_date']).find(eleven) != -1 and invoice['payment_received']==True:
                     frequency['payment_received_eleven']+=1
-                    frequency['date_eleven'] = str(invoice['date_invoice'])
+                    frequency['date_eleven'] = str(invoice['from_date'])
 
-                elif str(invoice['date_invoice']).find(eleven) != -1 and invoice['payment_received']==False:
+                elif str(invoice['from_date']).find(eleven) != -1 and invoice['payment_received']==False:
                     frequency['pendings_eleven']+=1
 
-                elif str(invoice['date_invoice']).find(twenty_one) != -1 and invoice['payment_received']==True:
+                elif str(invoice['from_date']).find(twenty_one) != -1 and invoice['payment_received']==True:
                     frequency['payment_received_twenty_one']+=1
-                    frequency['date_twenty_one'] = str(invoice['date_invoice'])
+                    frequency['date_twenty_one'] = str(invoice['from_date'])
 
-                elif str(invoice['date_invoice']).find(twenty_one) != -1 and invoice['payment_received']==False:
+                elif str(invoice['from_date']).find(twenty_one) != -1 and invoice['payment_received']==False:
                     frequency['pendings_twenty_one']+=1
 
             return [
