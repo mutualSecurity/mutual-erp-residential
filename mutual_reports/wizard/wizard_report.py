@@ -107,10 +107,10 @@ class WizardReports(osv.TransientModel):
             return pendings
 
         elif self.type == 'Individual Invoices' and self.report_type == 'Analysis of Invoices':
-            self.env.cr.execute("select payment_received,from_date from account_invoice where date_invoice between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'")
+            self.env.cr.execute("select payment_received,from_date from account_invoice where from_date between"+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+"and responsible_person ="+"'"+str(self.responsible_person.id)+"'")
             res = self.env.cr.dictfetchall()
             for invoice in res:
-                if str(invoice['from_date']).find(one) != -1 and invoice['payment_received']==True:
+                if str(invoice['from']).find(one) != -1 and invoice['payment_received']==True:
                     frequency['payment_received_one']+=1
                     frequency['date_one']=str(invoice['from_date'])
                 elif str(invoice['from_date']).find(one) != -1 and invoice['payment_received']==False:

@@ -83,7 +83,7 @@
                          <t t-if="doc.report_type == 'Analysis of Invoices' and doc.type == 'Individual Invoices'">
                              <thead>
                                  <tr>
-                                     <th>Date of Invoice</th>
+                                     <th>Period of Invoice</th>
                                      <th>Total Invoices</th>
                                      <th>Pending Payments</th>
                                      <th class="text-right">Received Payments</th>
