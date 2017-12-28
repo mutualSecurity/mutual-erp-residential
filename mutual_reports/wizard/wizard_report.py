@@ -15,7 +15,8 @@ class WizardReports(osv.TransientModel):
         'responsible_person': fields.many2one('res.users', 'Follow-up Responsible'),
         'start_date': fields.date('Start Date'),
         'end_date': fields.date('End Date'),
-        'type': fields.selection([('SRB Report', 'SRB Report'),
+        'type': fields.selection([('Overall Invoices', 'Overall Invoices'),
+            ('SRB Report', 'SRB Report'),
                                   ('Individual Invoices', 'Individual Invoices'),],'Type',store=True)
     }
 
@@ -99,10 +100,10 @@ class WizardReports(osv.TransientModel):
             #         self.responsible_person.id) + "'" + "and payment_received=True")
             # payment_received = self.env.cr.dictfetchall()
 
-            self.env.cr.execute(
-                "select date_invoice,responsible_person,res_partner.name as recovery_officers,count(date_invoice) invoices "
-                "from account_invoice inner join res_users on account_invoice.responsible_person = res_users.id inner join res_partner on res_users.partner_id = res_partner.id "
-                "where from_date>='"+str(self.start_date)+"'"+"and from_date <='"+str(self.end_date)+"'"+"and account_invoice.payment_received=False and responsible_person is not null group by date_invoice,responsible_person,res_partner.name order by date_invoice asc")
+            self.env.cr.execute( "select from_date,responsible_person,res_partner.name as recovery_officers,count(date_invoice) invoices "
+                                 "from account_invoice inner join res_users on account_invoice.responsible_person = res_users.id inner join res_partner on res_users.partner_id = res_partner.id "
+                                 "where from_date>='" + str(self.start_date) + "'" + "and from_date <='" + str(
+                self.end_date) + "'" + "and account_invoice.payment_received=False and responsible_person is not null group by from_date,responsible_person,res_partner.name order by from_date asc")
             pendings = self.env.cr.dictfetchall()
             return pendings
 
@@ -153,12 +154,18 @@ class WizardReports(osv.TransientModel):
         start_date = datetime.strptime(obj.start_date, date_format)
         end_date = datetime.strptime(obj.end_date, date_format)
         delta = end_date - start_date
-        if delta.days >= 0:
+        if (delta.days==0 or delta.days==28 or delta.days==30 or delta.days==31) and obj.report_type == 'Analysis of Invoices' and obj.type=='Individual Invoices':
+            return {
+                'type': 'ir.actions.report.xml',
+                'name': 'mutual_reports.wiz_report',
+                'report_name': 'mutual_reports.wiz_report'
+            }
+        elif delta.days>=0 and obj.report_type == 'Analysis of Invoices' and (obj.type=='SRB Report' or obj.type=='Overall Invoices'):
             return {
                 'type': 'ir.actions.report.xml',
                 'name': 'mutual_reports.wiz_report',
                 'report_name': 'mutual_reports.wiz_report'
             }
         else:
-            raise osv.except_osv("Alert........", "'Start Date' must be Less than 'End Date'")
+            raise osv.except_osv("Alert........", "'Start Date' must be Less than 'End Date' or Interval must be of one month")
 
