@@ -37,6 +37,7 @@
         'views/report_task_pdf.xml',
         'views/custom_template.xml',
         'views/report_history_pdf.xml',
+        'views/customer_address.xml',
         'wizard/wizard_report_view.xml',
         'wizard/wizard_hmb_bop_view.xml',
         'wizard/wizard_report_balances_view.xml',

@@ -139,5 +139,15 @@
             menu="False"
         />
 
+        <report
+                id="customer_address_pdf"
+                model="account.analytic.invoice.line"
+                string="Customer Address"
+                report_type="qweb-pdf"
+                name="mutual_reports.customer_address"
+                attachment_use="False"
+                file="mutual_reports.customer_address"
+        />
+
     </data>
 </openerp>

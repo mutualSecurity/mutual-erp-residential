@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="contract_lines_view" model="ir.actions.act_window">
+	        <field name="name">Contract Lines</field>
+            <field name="res_model">account.analytic.invoice.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">click create to add a new record</p>
+            </field>
+        </record>
+        <menuitem
+            name="Contract Lines"
+            action="contract_lines_view"
+            id="menu_contract_lines_view"
+            sequence="200"
+            parent="account.menu_finance_receivables">
+        </menuitem>
+
+        <!-- ================================================== Begin Form view of Guard Details ================================================ -->
+       <record id="contract_lines_tree_view" model="ir.ui.view">
+            <field name="name">contract_lines.tree.view</field>
+            <field name="model">account.analytic.invoice.line</field>
+            <field name="arch" type="xml">
+                <tree string="Contract Lines Tree" version="8.0">
+                    <field name="cs_number"/>
+                    <field name="analytic_account_id" />
+                    <field name="company_id"/>
+                    <field name="price_unit"/>
+                    <field name="state"/>
+                    <field name="updated"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

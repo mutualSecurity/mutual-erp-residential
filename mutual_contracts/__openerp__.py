@@ -25,7 +25,7 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'mutual_contracts_view.xml',
+        'mutual_contracts_view.xml','contract_lines_view.xml'
     ],
 
 }
