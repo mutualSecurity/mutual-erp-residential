@@ -19,11 +19,19 @@
 
 <template id="custom_subtotal_template">
     <!-- Subtotal -->
-    <t t-if="'subtotal' in p['category'] and p['category'].subtotal is True and p['category'].name !='Monitoring Charges' and p['category'].name!='Sold System'">
+    <t t-if="'subtotal' in p['category'] and p['category'].subtotal is True and p['category'].name !='Monitoring Charges' and p['category'].name !='Additional' and p['category'].name!='Sold System'">
         <tr class="text-right">
             <td colspan="100">
                 <strong>Subtotal: </strong>
                 <span t-esc="round(p['subtotal'])" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
+            </td>
+        </tr>
+    </t>
+    <t t-if="p['category'].name=='Additional'">
+        <tr class="text-right">
+            <td colspan="100">
+                <strong>Subtotal:   </strong>
+                <span t-esc="p['subtotal']+sale_order.additional_tax" t-esc-options='{"widget": "monetary", "display_currency": "sale_order.currency_id"}'/>
             </td>
         </tr>
     </t>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+       <template id="customer_address">
+               <t t-foreach="docs" t-as="customer">
+                   <t>
+                      <div class="page">
+                          <div class="row"><br/>
+                              <div>
+                                  <strong>CS Number:</strong> <span t-esc="customer.cs_number"/><br/>
+                                  <t t-if="customer.analytic_account_id.partner_id.phone and customer.analytic_account_id.partner_id.mobile==False">
+                                      <strong>Phone: </strong> <span t-esc="customer.analytic_account_id.partner_id.phone"/><br/>
+                                  </t>
+                                  <t t-if="customer.analytic_account_id.partner_id.mobile and customer.analytic_account_id.partner_id.phone==False">
+                                      <strong>Mobile: </strong> <span t-esc="customer.analytic_account_id.partner_id.mobile"/><br/>
+                                  </t>
+                                  <t t-if="customer.analytic_account_id.partner_id.mobile and customer.analytic_account_id.partner_id.phone">
+                                      <strong>Mobile: </strong> <span t-esc="customer.analytic_account_id.partner_id.mobile"/><br/>
+                                  </t>
+                                  <span style="font-size:22px"><strong>Name:</strong> <span t-esc="customer.analytic_account_id.name"/><br/></span>
+                                  <!--<strong>Monitoring Address:</strong> <span t-field="customer.street"/>,<span t-field="customer.street2"/><br/>-->
+                                  <span style="font-size:22px"><strong>Address:</strong> <span t-esc="customer.analytic_account_id.partner_id.c_street"/><br/>
+                                  <t t-if="customer.analytic_account_id.partner_id.city">
+                                       <strong>City: </strong><span t-esc="customer.analytic_account_id.partner_id.city"/><br/>
+                                  </t></span>
+                              </div><br/>
+                          </div>
+                      </div>
+                   </t>
+               </t>
+       </template>
+    </data>
+</openerp>
