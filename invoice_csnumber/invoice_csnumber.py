@@ -317,7 +317,7 @@ class invoice_csnumber(osv.osv):
             for line in self.invoice_line:
                 if(number_of_days == 28 and line.product_id.name=="Service (MS)") or (number_of_days == 28 and line.product_id.name=="Service (MSS)"):
                     if from_date.day == 1:
-                        from_ = from_date + timedelta(days=10)
+                        from_ = from_date + timedelta(days=20)
                         to_ = from_ + relativedelta(months=int(line.quantity))
                         from_ = str(from_).split(" ")
                         to_ = to_ - timedelta(days=1)
@@ -325,8 +325,17 @@ class invoice_csnumber(osv.osv):
                         self.from_date = from_[0]
                         self.to_date = to_[0]
                         return {"from":self.from_date, "to":self.to_date, "customer":self.partner_id.customer}
-                    elif from_date.day == 21 or from_date.day == 11:
-                        from_ = from_date + timedelta(days=18)
+                    elif from_date.day == 11:
+                        from_ = from_date + timedelta(days=10)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
+                        return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
+                    elif from_date.day == 21:
+                        from_ = from_date + timedelta(days=8)
                         to_ = from_ + relativedelta(months=int(line.quantity))
                         from_ = str(from_).split(" ")
                         to_ = to_ - timedelta(days=1)
