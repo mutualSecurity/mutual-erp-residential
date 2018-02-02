@@ -154,13 +154,7 @@ class WizardReports(osv.TransientModel):
         start_date = datetime.strptime(obj.start_date, date_format)
         end_date = datetime.strptime(obj.end_date, date_format)
         delta = end_date - start_date
-        if (delta.days==0 or delta.days==28 or delta.days==30 or delta.days==31) and obj.report_type == 'Analysis of Invoices' and obj.type=='Individual Invoices':
-            return {
-                'type': 'ir.actions.report.xml',
-                'name': 'mutual_reports.wiz_report',
-                'report_name': 'mutual_reports.wiz_report'
-            }
-        elif delta.days>=0 and obj.report_type == 'Analysis of Invoices' and (obj.type=='SRB Report' or obj.type=='Overall Invoices'):
+        if delta.days>0:
             return {
                 'type': 'ir.actions.report.xml',
                 'name': 'mutual_reports.wiz_report',
