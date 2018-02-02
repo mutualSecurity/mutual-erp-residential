@@ -325,17 +325,8 @@ class invoice_csnumber(osv.osv):
                         self.from_date = from_[0]
                         self.to_date = to_[0]
                         return {"from":self.from_date, "to":self.to_date, "customer":self.partner_id.customer}
-                    elif from_date.day == 11:
-                        from_ = from_date + timedelta(days=10)
-                        to_ = from_ + relativedelta(months=int(line.quantity))
-                        from_ = str(from_).split(" ")
-                        to_ = to_ - timedelta(days=1)
-                        to_ = str(to_).split(" ")
-                        self.from_date = from_[0]
-                        self.to_date = to_[0]
-                        return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
-                    elif from_date.day == 21:
-                        from_ = from_date + timedelta(days=8)
+                    elif from_date.day == 21 or from_date.day == 11:
+                        from_ = from_date + timedelta(days=18)
                         to_ = from_ + relativedelta(months=int(line.quantity))
                         from_ = str(from_).split(" ")
                         to_ = to_ - timedelta(days=1)
