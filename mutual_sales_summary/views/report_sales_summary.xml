@@ -18,6 +18,7 @@
                                  <th>Name</th>
                                  <th>CS Number</th>
                                  <th>Company</th>
+                                 <th>Total</th>
                                  <th class="text-right">SO Reference</th>
                              </tr>
                          </thead>
@@ -27,6 +28,7 @@
                                  <td><span t-esc="l['customer']"/></td>
                                  <td><span t-esc="l['cs_number']"/></td>
                                  <td><span t-esc="l['company']"/></td>
+                                 <td><span t-esc="round(l['amount_total'])"/></td>
                                  <td class="text-right"><span t-esc="l['name']"/></td>
                              </tr>
                          </tbody>

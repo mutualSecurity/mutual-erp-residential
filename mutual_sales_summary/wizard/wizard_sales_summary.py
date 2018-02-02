@@ -27,7 +27,7 @@ class SalesSummaryReport(osv.TransientModel):
             'b2': 0,
             'b3': 0,
         }
-        self.env.cr.execute("SELECT res_partner.cs_number,res_partner.name as customer,res_company.name as company,sale_order.name,sale_order.payment_received FROM sale_order INNER JOIN res_partner ON sale_order.partner_id = res_partner.id INNER JOIN res_company ON res_partner.company_id = res_company.id where sale_order.status='NewInstallation' and sale_order.sale_confirm_date between "+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+" and state != 'draft' order by res_partner.cs_number")
+        self.env.cr.execute("SELECT res_partner.cs_number,res_partner.name as customer,res_company.name as company,sale_order.name,sale_order.payment_received,sale_order.amount_total FROM sale_order INNER JOIN res_partner ON sale_order.partner_id = res_partner.id INNER JOIN res_company ON res_partner.company_id = res_company.id where sale_order.status='NewInstallation' and sale_order.sale_confirm_date between "+"'"+str(self.start_date)+"'"+"and"+"'"+str(self.end_date)+"'"+" and state != 'draft' order by res_partner.cs_number")
         current_sales = self.env.cr.dictfetchall()
         if self.only_new_sales:
             return current_sales
