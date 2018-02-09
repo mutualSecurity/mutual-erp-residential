@@ -442,6 +442,9 @@
                     <field name='compute_total_time'/>
                     <field name="finalstatus"/>
                 </field>
+                <field name="user_id_issue" position="after">
+                    <field name="payment"/>
+                </field>
                 <field name="id" position="before">
                     <field name="priority" widget="priority"/>
                     <field name="create_date"/>
@@ -677,6 +680,7 @@
                          <filter string="Completed by CMS" domain="[('stage_id','=','Completed by CMS')]"/>
                          <filter string="Resolved" domain="[('stage_id','=','Resolved')]"/>
                          <filter string="Additional" domain="[('additional','=',True)]"/>
+                         <filter string="Payment Pending" domain="[('payment','=',True)]"/>
                      </group>
                      <group string="By Day Update Stages">
                         <filter name="date_last_stage_update" string="Daily" context="{'group_by':'date_last_stage_update:day'}"/>

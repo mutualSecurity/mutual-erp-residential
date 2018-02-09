@@ -196,6 +196,7 @@ class mutual_issues(osv.osv):
   _columns = {
       'color': fields.integer(compute='_get_color',string='Color', store=False),
       'additional': fields.boolean('Forwarded to additional', store=True),
+      'payment': fields.boolean('Payment Pending ?', store=True),
       'multi_tech': fields.many2many('res.users', string='Other Technicians', domain="[('is_technician','=',True)]"),
       # 'task_id': fields.many2one('project.task', ' ', domain="[('project_id','=',project_id)]"),
       'task_status': fields.related('task_id', 'status', type='char', string='Task Status'),
