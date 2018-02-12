@@ -443,6 +443,9 @@
                     <field name="finalstatus"/>
                 </field>
                 <field name="user_id_issue" position="after">
+                    <field name="payment_r"/>
+                </field>
+                <field name="payment_r" position="after">
                     <field name="payment"/>
                 </field>
                 <field name="id" position="before">
@@ -681,6 +684,7 @@
                          <filter string="Resolved" domain="[('stage_id','=','Resolved')]"/>
                          <filter string="Additional" domain="[('additional','=',True)]"/>
                          <filter string="Payment Pending" domain="[('payment','=',True)]"/>
+                         <filter string="Payment Received" domain="[('payment_r','=',True)]"/>
                      </group>
                      <group string="By Day Update Stages">
                         <filter name="date_last_stage_update" string="Daily" context="{'group_by':'date_last_stage_update:day'}"/>
