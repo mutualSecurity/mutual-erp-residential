@@ -237,6 +237,10 @@
                           </div>
                           <div class="row"><br/><br/><br/><br/><br/>
                               <div class="pull-left" style="font-size:17px">
+                                  <div class="pull-left" style="font-size:18px">
+                                      <strong>Sales Tax @ 19.5% levied by Sindh Revenue Board w.e.f 01-07-2017 (Ref: PCT 9812.9500)</strong>
+                                  </div>
+                                  <br/><br/>
                                  <span>
                                      Payment: Please send your Payees A/c cheque in favour of ' <span>
                                          <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
