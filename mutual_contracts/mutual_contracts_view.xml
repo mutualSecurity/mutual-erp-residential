@@ -21,5 +21,16 @@
                 </xpath>
             </field>
         </record>
+        <record model="ir.ui.view" id="contract_invoice_date">
+            <field name="name">analytic.analytic.account.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="account_analytic_analysis.account_analytic_account_form_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='recurring_next_date']" position="after">
+                    <field name="basic_monitoring_amount"/>
+                    <button type="object" name="add_maintenance_charges" string="Add Maintenance Charges" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
