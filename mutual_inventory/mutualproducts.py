@@ -10,7 +10,7 @@ class mutual_products(osv.osv):
     _inherit = "product.product"
     _columns = {
         'default_code': fields.char('', select=True),
-
+        'income_account': fields.many2one('account.account','Force Income Account', store=True)
     }
 
 

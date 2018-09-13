@@ -37,6 +37,9 @@
                 <field name="default_code" position="replace">
                     <field name="default_code" style="visibility:hidden"/>
                 </field>
+                 <xpath expr="//field[@name='property_account_income']" position="after">
+                    <field name="income_account"/>
+                </xpath>
             </field>
         </record>
          <record model="ir.ui.view" id="product_variant_ids">

@@ -69,6 +69,14 @@ class invoice_csnumber(osv.osv):
     }
 
     def create(self, cr, uid, vals, context=None):
+        account_id = 0
+        res_partner_obj = self.pool.get('res.partner')
+        partners = res_partner_obj.search(cr, uid, [('id', '=', vals['partner_id'])],context=context)
+        if len(partners) > 0:
+            for partner in res_partner_obj.browse(cr, uid, partners, context=context):
+                account_id = partner.property_account_receivable.id
+
+        vals['account_id'] = account_id
         if not vals['origin']:
             if vals['invoice_type']== 'Sales Tax':
                 vals['sti_num'] = self.pool.get('ir.sequence').get(cr, uid, 'account.invoice')
@@ -387,7 +395,8 @@ class invoice_csnumber(osv.osv):
     @api.multi
     def account_head(self):
         if self.state == 'draft':
-            if self.company_id.name == "Mutual Security" and self.origin:
+            if self.origin:
+                self.company_id = self.partner_id.company_id.id
                 for line in self.invoice_line:
                     line.account_id = line.product_id.property_account_income
         else:
