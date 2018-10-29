@@ -18,6 +18,11 @@ def display_line(all_comparison_lines):
 class partners_balance_xls(report_xls):
     column_sizes = [12, 40, 25, 17, 17, 17, 17, 17]
 
+    def get_cs_number(self, partner_id):
+       self.cr.execute("SELECT cs_number FROM res_partner where id ='%s'"%(partner_id))
+       cs_number = self.cr.dictfetchall()[0]['cs_number'] or ''
+       return cs_number
+
     def print_title(self, ws, _p, row_position, xlwt, _xs):
         cell_style = xlwt.easyxf(_xs['xls_title'])
         report_name = ' - '.join([_p.report_name.upper(),
@@ -322,6 +327,9 @@ class partners_balance_xls(report_xls):
             for (partner_code_name, partner_id, partner_ref, partner_name) \
                     in partners_order:
                 partner = current_partner_amounts.get(partner_id, {})
+                cs_number = ''
+                if partner_id:
+                    cs_number = self.get_cs_number(partner_id)
                 # in single mode, we have to display all the partners even if
                 # their balance is 0.0 because the initial balance should match
                 # with the previous year closings
@@ -345,8 +353,8 @@ class partners_balance_xls(report_xls):
                 c_specs = [('acc_title', account_span, 0, 'text',
                             partner_name if partner_name else
                             _('Unallocated'))]
-                c_specs += [('partner_ref', 1, 0, 'text',
-                             partner_ref if partner_ref else '')]
+                c_specs += [('cs_number', 1, 0, 'text',
+                             cs_number if cs_number else '')]
                 if _p.comparison_mode == 'no_comparison':
                     bal_formula = ''
                     if _p.initial_balance_mode:

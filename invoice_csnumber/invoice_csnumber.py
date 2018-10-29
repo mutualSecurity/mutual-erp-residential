@@ -466,39 +466,39 @@ class generalEntryCreate(osv.osv):
         'count': 0
     }
 
-    def button_cancel(self, cr, uid, ids, context=None):
-        obj = self.browse(cr, uid, ids[0], context=context)
-        obj.count = obj.count +1
-        for move in self.browse(cr, uid, ids, context=context):
-            # check that all accounts have the same topmost ancestor
-            top_common = None
-            for line in move.line_id:
-                invoice_status = "open"
-                if (line.customer_invoice.residual == 0.0 and line.customer_invoice.id):
-                    cr.execute(
-                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-                    cr.execute(
-                        'UPDATE account_invoice SET residual =' + "'" + str(line.credit) + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-                elif (line.customer_invoice.residual+line.credit == line.customer_invoice.amount_total and line.customer_invoice.id):
-                    cr.execute(
-                        'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-                    cr.execute(
-                        'UPDATE account_invoice SET residual =' + "'" + str(line.customer_invoice.residual+line.credit) + "'" + 'WHERE id =' + str(
-                            line.customer_invoice.id))
-
-        for line in self.browse(cr, uid, ids, context=context):
-            if not line.journal_id.update_posted:
-                raise osv.except_osv(_('Error!'), _(
-                    'You cannot modify a posted entry of this journal.\nFirst you should set the journal to allow cancelling entries.'))
-        if ids:
-            cr.execute('UPDATE account_move ' \
-                       'SET state=%s ' \
-                       'WHERE id IN %s', ('draft', tuple(ids),))
-            self.invalidate_cache(cr, uid, context=context)
-        return True
+    # def button_cancel(self, cr, uid, ids, context=None):
+    #     obj = self.browse(cr, uid, ids[0], context=context)
+    #     obj.count = obj.count +1
+    #     for move in self.browse(cr, uid, ids, context=context):
+    #         # check that all accounts have the same topmost ancestor
+    #         top_common = None
+    #         for line in move.line_id:
+    #             invoice_status = "open"
+    #             if (line.customer_invoice.residual == 0.0 and line.customer_invoice.id):
+    #                 cr.execute(
+    #                     'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+    #                         line.customer_invoice.id))
+    #                 cr.execute(
+    #                     'UPDATE account_invoice SET residual =' + "'" + str(line.credit) + "'" + 'WHERE id =' + str(
+    #                         line.customer_invoice.id))
+    #             elif (line.customer_invoice.residual+line.credit == line.customer_invoice.amount_total and line.customer_invoice.id):
+    #                 cr.execute(
+    #                     'UPDATE account_invoice SET state =' + "'" + invoice_status + "'" + 'WHERE id =' + str(
+    #                         line.customer_invoice.id))
+    #                 cr.execute(
+    #                     'UPDATE account_invoice SET residual =' + "'" + str(line.customer_invoice.residual+line.credit) + "'" + 'WHERE id =' + str(
+    #                         line.customer_invoice.id))
+    #
+    #     for line in self.browse(cr, uid, ids, context=context):
+    #         if not line.journal_id.update_posted:
+    #             raise osv.except_osv(_('Error!'), _(
+    #                 'You cannot modify a posted entry of this journal.\nFirst you should set the journal to allow cancelling entries.'))
+    #     if ids:
+    #         cr.execute('UPDATE account_move ' \
+    #                    'SET state=%s ' \
+    #                    'WHERE id IN %s', ('draft', tuple(ids),))
+    #         self.invalidate_cache(cr, uid, context=context)
+    #     return True
 
     def button_validate(self, cursor, user, ids, context=None):
         obj = self.browse(cursor, user, ids[0], context=context)

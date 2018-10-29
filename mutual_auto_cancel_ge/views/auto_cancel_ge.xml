@@ -1,0 +1,51 @@
+<openerp>
+    <data>
+        <record id="auto_cancel_ge_view" model="ir.ui.view">
+            <field name="name">auto_cancel_ge.view</field>
+            <field name="model">auto.cancel.ge</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="form" version="8.0">
+                    <group>
+                        <field name="type"/>
+                    </group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="fiscal_year"/>
+                    </group>
+                    <group attrs="{'invisible':[('type','!=','cancel')]}">
+                        <notebook>
+                            <page string="Accounts">
+                                <field name="account_ids"  attrs="{'required':[('type','=','cancel')]}"/>
+                            </page>
+                        </notebook>
+                    </group>
+                    <footer>
+                        <button name="post" string="Post Entries" type="object" class="oe_highlight" attrs="{'invisible':[('type','!=','post')]}" />
+                        <button name="cancel" string="Cancel Entries" type="object" class="oe_highlight" attrs="{'invisible':[('type','!=','cancel')]}"/>
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="auto_cancel_ge_action" model="ir.actions.act_window">
+            <field name="name">Auto Cancel GE</field>
+            <field name="res_model">auto.cancel.ge</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            name="Auto Cancel GE"
+            action="auto_cancel_ge_action"
+            id="menu_auto_cancel_ge_action"
+            sequence="200"
+            parent="base.menu_custom"
+            groups="base.group_no_one"
+        >
+         </menuitem>
+    </data>
+</openerp>
+
