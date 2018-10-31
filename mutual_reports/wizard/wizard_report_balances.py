@@ -21,8 +21,8 @@ class WizardReports(osv.TransientModel):
 
     def cal_balances(self):
         self.env.cr.execute("select cs_category,sum(account_move_line.debit)as debit,sum(account_move_line.credit) as credit from res_partner inner join account_move_line on res_partner.id = account_move_line.partner_id "
-                           "where customer = True and res_partner.company_id ='"+str(self.company_id.id)+"'"+"and account_move_line.date >='"+self.start_date+"'"+"and account_move_line.date<='"+str(self.end_date)+"'"
-                           "group by cs_category order by cs_category ")
+                           "where res_partner.customer = True and account_move_line.account_id=8 and res_partner.company_id ='"+str(self.company_id.id)+"'"+"and account_move_line.date >='"+self.start_date+"'"+"and account_move_line.date<='"+str(self.end_date)+"'"
+                           "group by cs_category order by cs_category")
         result = self.env.cr.dictfetchall()
         return result
 

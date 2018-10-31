@@ -9,12 +9,15 @@
                     <h1 align="center">Partner Balances</h1><br/>
                     <h2><span t-esc="doc.company_id.name"/> </h2>
                     <h5>From <span t-esc="doc.start_date"/> to <span t-esc="doc.end_date"/> </h5>
+                    <t t-set="debit_total" t-value="0"/>
+                    <t t-set="credit_total" t-value="0"/>
                     <table class="table table-condensed" style="font-size:16px;">
                         <thead>
                             <tr>
                                 <th>CS</th>
                                 <th class="text-right">Debit</th>
                                 <th class="text-right">Credit</th>
+                                <th class="text-right">Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,12 +26,31 @@
                                      <span t-esc="l['cs_category']"/>
                                  </td>
                                  <td class="text-right">
-                                     <span t-esc="round(l['debit'])"/>
+                                     <t t-if="l['cs_category']=='B1'">
+                                         <span t-esc="round(l['debit'])+81553"/>
+                                         <t t-set="debit_total" t-value="debit_total+round(l['debit'])+81553"/>
+                                     </t>
+                                     <t t-if="not (l['cs_category']=='B1')">
+                                         <span t-esc="round(l['debit'])"/>
+                                         <t t-set="debit_total" t-value="debit_total+round(l['debit'])"/>
+                                     </t>
+
+
                                  </td>
                                  <td class="text-right">
                                      <span t-esc="round(l['credit'])"/>
+                                     <t t-set="credit_total" t-value="credit_total+round(l['credit'])"/>
+                                 </td>
+                                <td class="text-right">
+                                     <span t-esc="round(l['debit']) - round(l['credit'])"/>
                                  </td>
                              </tr>
+                            <tr>
+                                <td class="text-left">Total</td>
+                                <td class="text-right"><span t-esc="debit_total"/> </td>
+                                <td class="text-right"><span t-esc="credit_total"/> </td>
+                                <td class="text-right"><span t-esc="debit_total - credit_total"/> </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
