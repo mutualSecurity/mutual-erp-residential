@@ -44,8 +44,8 @@ class account_move(models.Model):
 class account_account(models.Model):
     _inherit = 'account.account'
 
-    @api.multi
-    def _check_allow_code_change(self):
-        return True
+    # @api.multi
+    # def _check_allow_code_change(self):
+    #     return True
 
 
