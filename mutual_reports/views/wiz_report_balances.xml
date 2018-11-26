@@ -27,8 +27,8 @@
                                  </td>
                                  <td class="text-right">
                                      <t t-if="l['cs_category']=='B1'">
-                                         <span t-esc="round(l['debit'])+72554.4"/>
-                                         <t t-set="debit_total" t-value="debit_total+round(l['debit'])+72554.4"/>
+                                         <span t-esc="round(l['debit'])+81469.4"/>
+                                         <t t-set="debit_total" t-value="debit_total+round(l['debit'])+81469.4"/>
                                      </t>
                                      <t t-if="not (l['cs_category']=='B1')">
                                          <span t-esc="round(l['debit'])"/>

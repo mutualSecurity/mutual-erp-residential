@@ -69,6 +69,8 @@ class invoice_csnumber(osv.osv):
     }
 
     def create(self, cr, uid, vals, context=None):
+        if vals['type'] == 'in_invoice':
+            return super(invoice_csnumber, self).create(cr, uid, vals, context=context)
         account_id = 0
         res_partner_obj = self.pool.get('res.partner')
         partners = res_partner_obj.search(cr, uid, [('id', '=', vals['partner_id'])],context=context)
