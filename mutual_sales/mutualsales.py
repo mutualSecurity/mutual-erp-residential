@@ -72,6 +72,25 @@ class mutual_sales(osv.osv):
         'active': fields.boolean('Active', read=["account.group_account_manager"], write=["account.group_account_manager"],track_visibility='onchange'),
     }
 
+    def update_relative_customer(self, cr, uid, context=None):
+        relative_partner_obj = self.pool.get('customer.relatives')
+        cr.execute("""
+        select id,cs_number from res_partner where company_id=4 and cs_number is not null
+        """)
+        mspl_customers = cr.dictfetchall()
+        if len(mspl_customers)>0:
+            for mspl_customer in mspl_customers:
+                cr.execute("""
+                        select id,cs_number from res_partner where company_id=3 and cs_number ='%s'
+                        """%(mspl_customer['cs_number']))
+                ms_customers = cr.dictfetchall()
+                if len(ms_customers)>0:
+                    for ms_customer in ms_customers:
+                        relative_contacts = relative_partner_obj.search(cr,uid,[('customer_r','=',ms_customer['id'])],context=context)
+                        for relative_contact in relative_partner_obj.browse(cr, uid, relative_contacts, context=context):
+                            relative_contact.write({'customer_r':mspl_customer['id']})
+                            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Contact Updated>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
     @api.one
     @api.depends('active')
     def _customer_status(self):

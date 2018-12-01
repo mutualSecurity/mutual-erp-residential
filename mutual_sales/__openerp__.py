@@ -43,7 +43,7 @@ The Dashboard for the Sales Manager will include
     'author':'Parkash Kumar',
     'website': 'https://www.odoo.com/page/crm',
     'depends': ['base_setup','sale','account_followup'],
-    'data': ['mutualsales_view.xml','mutualsalesorder_view.xml','phonecall_view.xml'],
+    'data': ['data/cron.xml','mutualsales_view.xml','mutualsalesorder_view.xml','phonecall_view.xml'],
     'installable': True,
     'auto_install': False,
 

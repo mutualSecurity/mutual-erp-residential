@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+		<record id="update_relative_customer" model="ir.cron">
+			<field name="name">Update Relative Partner</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="True"/>
+			<field name="model">res.partner</field>
+			<field name="function">update_relative_customer</field>
+			<field name="args">()</field>
+		</record>
+	</data>
+</openerp>
