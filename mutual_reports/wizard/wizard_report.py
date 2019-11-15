@@ -78,7 +78,7 @@ class WizardReports(osv.TransientModel):
 
         if self.type == 'SRB Report' and self.report_type == 'Analysis of Invoices':
             self.env.cr.execute("select internal_number,amount_untaxed,amount_tax,amount_total,date_invoice,res_partner.name,res_partner.cs_number from account_invoice inner join res_partner on res_partner.id=account_invoice.partner_id "
-                                "where state != 'draft' and state != 'cancel' and account_invoice.date_invoice between"+"'"+self.start_date+"'"+"and"+"'"+self.end_date+"'"+"and account_invoice.company_id = 1 order by account_invoice.internal_number")
+                                "where account_invoice.type='out_invoice' and state != 'draft' and state != 'cancel' and account_invoice.date_invoice between"+"'"+self.start_date+"'"+"and"+"'"+self.end_date+"'"+"and account_invoice.company_id = 1 order by account_invoice.internal_number")
             srb=self.env.cr.dictfetchall()
             for i in srb:
                 if int(str(i['date_invoice']).split('-')[2]) > 0 and int(str(i['date_invoice']).split('-')[2]) < 11:
