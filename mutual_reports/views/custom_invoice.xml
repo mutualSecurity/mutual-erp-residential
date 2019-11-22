@@ -133,6 +133,18 @@
                                                         </t>
                                                     </tr>
                                                 </t>
+                                                <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                                    <tr>
+                                                        <td>
+                                                            <strong>SSTN</strong>
+                                                        </td>
+                                                        <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                                            <td>
+                                                                <span style="margin-left:13px;">S3764757-1</span>
+                                                            </td>
+                                                        </t>
+                                                    </tr>
+                                                </t>
                                             </table>
                                         </div>
                                         <div style="border:2px solid grey; padding:10px;border-radius:10px;margin-top:12px;">

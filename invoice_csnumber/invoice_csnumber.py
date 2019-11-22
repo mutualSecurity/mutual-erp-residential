@@ -297,7 +297,7 @@ class invoice_csnumber(osv.osv):
     def monitoring_period(self):
         if self.state == 'draft' and re.match(r'AA', str(self.origin)):
             for line in self.invoice_line:
-                if (line.account_id.code != self.journal_id.default_debit_account_id.code) and (self.journal_id.default_debit_account_id.name != line.account_id.company_id.name):
+                if (line.account_id.id != self.journal_id.default_debit_account_id.id) and (self.journal_id.default_debit_account_id.company_id.name != line.account_id.company_id.name):
                     raise osv.except_osv('Error...!', 'Account of service and Journal both must have same category')
         total = 0.0  # Where total refers to 'sum of all sale order amount'
         list = self.env['account.invoice'].search([['partner_id', '=', self.partner_id.id], ])
