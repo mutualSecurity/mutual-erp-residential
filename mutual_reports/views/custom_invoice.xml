@@ -19,13 +19,8 @@
                                     </h1>
                                     <br/>
                                     <div style="font-size:18px;width:550px;display:inline-block;">
-                                        <span style="font-size:18px">
-                                            <strong>CUSTOMER ID:
-                                                <span t-field="account_invoice.css"/>
-                                            </strong>
-                                        </span>
                                         <div style="border:2px solid grey; padding:10px;border-radius:10px;">
-                                            <strong style="font-size:18px">Customer's Information:</strong>
+                                            <strong style="font-size:18px">CUSTOMER ID:<span t-field="account_invoice.css"/></strong>
                                             <br/>
                                             <span t-field="account_invoice.partner_id.name"/>
                                             <br/>
@@ -63,15 +58,15 @@
                                                 <br/>
                                             </span>
                                         </div>
-                                        <div style="font-size:16px;">
+                                        <div style="font-size:18px;">
                                             <br/>
                                             <br/>
                                             <br/>
                                             <br/>
 
                                             Dear Subscriber,<br/>Please keep checking your Alarm System
-                                            regularly on weekly and monthly basis
-                                            by using panics and other devices
+                                            regularly on weekly <br/>and monthly basis
+                                            by using panics and other devices.
 
 
                                         </div>
@@ -168,7 +163,7 @@
                                                     <span t-field="account_invoice.date_due"/>
                                                 </div>
                                             </center>
-                                        </div>
+                                        </div><br/>
                                     </div>
                                     <!--<div><br/>-->
                                     <!--<strong><em>Dear Subscriber,<br/>Please keep checking your Alarm System regularly on weekly and weekly basis-->
@@ -201,10 +196,10 @@
                                                         Burglar Alarm Monitoring Fee for the period
                                                         <br/>
                                                     </span>
-                                                    <span t-if="not(l.product_id.name == 'Service (MSS)') or not(l.product_id.name == 'Service (MSS)')">
-                                                        <span t-field="l.name"/>
-                                                        <br/>
-                                                    </span>
+<!--                                                    <span t-if="not(l.product_id.name == 'Service (MSS)') or not(l.product_id.name == 'Service (MSS)')">-->
+<!--                                                        <span t-field="l.name"/>-->
+<!--                                                        <br/>-->
+<!--                                                    </span>-->
                                                     <span t-if="account_invoice.from_date">
                                                         from
                                                         <strong>
@@ -232,22 +227,22 @@
                                                 <!--</td>-->
                                                 <td class="text-right">
                                                     Rs.
-                                                    <span t-field="l.price_subtotal"/>
+                                                    <span t-esc="'%.2f'% l.price_subtotal"/>
                                                 </td>
                                                 <td class="text-right">
                                                     <span t-if="l.invoice_line_tax_id.description == 'SRB 19.5%'">
                                                         Rs.
-                                                        <span t-esc="round((l.price_subtotal*19.5/100))"/>
+                                                        <span t-esc="'%.2f'% round((l.price_subtotal*19.5/100))"/>
                                                     </span>
                                                 </td>
                                                 <td class="text-right">
                                                     <span t-if="l.invoice_line_tax_id.description == 'SRB 19.5%'">
                                                         Rs.
-                                                        <span t-esc="round((l.price_subtotal*19.5/100))+l.price_subtotal"/>
+                                                        <span t-esc="'%.2f'% (round((l.price_subtotal*19.5/100))+l.price_subtotal)"/>
                                                     </span>
                                                     <span t-if="not (l.invoice_line_tax_id.description == 'SRB 19.5%')">
                                                         Rs.
-                                                        <span t-esc="l.price_subtotal"/>
+                                                        <span t-esc="'%.2f'% l.price_subtotal"/>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -260,15 +255,15 @@
 
                                                     </td>
                                                     <td class="text-right">
-                                                        Rs.
-                                                        <span t-field="account_invoice.outstanding_amount"/>
+<!--                                                        Rs.-->
+<!--                                                        <span t-esc="'%.2f'% account_invoice.outstanding_amount"/>-->
                                                     </td>
                                                     <td>
 
                                                     </td>
                                                     <td class="text-right">
-                                                        Rs.
-                                                        <span t-field="account_invoice.outstanding_amount"/>
+
+                                                        <span t-esc="'%.2f'% account_invoice.outstanding_amount"/>
                                                     </td>
                                                 </tr>
                                             </t>
@@ -281,25 +276,30 @@
 
                                                     </td>
                                                     <td class="text-right">
-                                                        Rs.
-                                                        <span t-esc="round(account_invoice.outstanding_amount*-1)"/>
+<!--                                                        Rs.-->
+<!--                                                        <span t-esc="'%.2f'% round(account_invoice.outstanding_amount*-1)"/>-->
                                                     </td>
                                                     <td>
 
                                                     </td>
                                                     <td class="text-right">
-                                                        Rs.
-                                                        <span t-esc="round(account_invoice.outstanding_amount*-1)"/>
+
+                                                        <span t-esc="'%.2f'% round(account_invoice.outstanding_amount*-1)"/>
                                                     </td>
                                                 </tr>
                                             </t>
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="row" t-if="account_invoice.company_id.name!='Mutual Security Systems Pvt. Ltd.'">
+                                    <div class="pull-left" style="font-size:16px">
+                                        Sales Tax @ 19.5% levied by Sindh Revenue Board w.e.f 01-07-2017 (Ref: PCT
+                                        9812.9500)
+                                    </div>
+                                </div>
+                                <br/>
                                 <div class="row">
-                                    <br/>
-                                    <br/>
-                                    <div class="col-xs-4 pull-right">
+                                    <div class="col-xs-4 pull-right" style="margin-right:-16px;">
                                         <table class="table table-condensed" style="font-size:18px">
                                             <t t-if="account_invoice.grand_total > 0.0">
                                                 <tr class="border-black">
@@ -308,8 +308,7 @@
                                                     </td>
                                                     <td class="text-right">
                                                         <strong>
-                                                            Rs.
-                                                            <span t-esc="round(account_invoice.grand_total)"/>
+                                                            Rs. <span t-esc="'%.2f'% round(account_invoice.grand_total)"/>
                                                         </strong>
                                                     </td>
                                                 </tr>
@@ -322,80 +321,75 @@
                                                     <td class="text-right">
                                                         <strong>
                                                             Rs.
-                                                            <span t-esc="round(account_invoice.grand_total)"/>
+                                                            <span t-esc="'%.2f'% round(account_invoice.grand_total)"/>
                                                         </strong>
                                                     </td>
                                                 </tr>
                                             </t>
                                         </table>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="pull-left" style="font-size:18px">
+                                        <br/>
                                         <t t-if="account_invoice.grand_total > 0.0">
-                                            <span>Amount In Words:
-                                                <span t-esc="account_invoice.amount_to_text(round(account_invoice.grand_total),'euro')"/>
+                                            <span><b>Amount In Words:</b>
+                                                <span t-esc="account_invoice.amount_to_text(round(account_invoice.grand_total),'PKR')"/>
                                             </span>
                                         </t>
                                         <t t-if=" not account_invoice.grand_total > 0.0">
-                                            <span>Amount In Words:
+                                            <span><b>Amount In Words:</b>
                                                 <span t-esc="account_invoice.amount_to_text(round(account_invoice.grand_total),'PKR')"/>
                                             </span>
                                         </t>
                                     </div>
                                 </div>
+
                                 <div class="row">
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <div class="pull-left" style="font-size:17px">
-                                        <strong>Sales Tax @ 19.5% levied by Sindh Revenue Board w.e.f 01-07-2017 (Ref:
-                                            PCT 9812.9500)
-                                        </strong>
-                                        <br/>
-                                        <br/>
-<!--                                        <span>-->
-<!--                                            <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">-->
-<!--                                                <b>For online payment our bank details:-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>Title of account: Mutual Security Systems-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>Bank: Habib Metropolitan Bank Ltd-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>Account No. 0165027140103223-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>IBAN No. PK79MPBL0165027140103223-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-
-<!--                                            </t>-->
-<!--                                            <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">-->
-<!--                                                <b>For online payment our bank details:-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>Title of account: Mutual Security-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>Bank: The Bank of Punjab-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>Account No. 6020089134300018-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-<!--                                                <b>IBAN No. PK37BPUN6020089134300018-->
-<!--                                                    <br/>-->
-<!--                                                </b>-->
-
-<!--                                            </t>-->
-
-<!--                                        </span>-->
+                                    <div class="pull-left" style="font-size:18px">
                                         <br/>
                                         <span>
-                                            Payment: Please send your Payees A/c cheque in favour of '
+                                            <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
+                                                <b>PLEASE MAKE ONLINE PAYMENT TO</b>
+                                                <br/>
+                                                <b>Mutual Security Systems</b>
+                                                <br/>
+                                                <b>Bank:</b>Habib Metropolitan Bank Ltd
+                                                <br/>
+                                                <b>Account No. </b>
+                                                0165027140103223
+                                                <br/>
+                                                <b>IBAN No. </b>
+                                                PK79MPBL0165027140103223
+                                                <br/>
+                                            </t>
+                                            <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
+                                                <b>PLEASE MAKE ONLINE PAYMENT TO</b>
+                                                <br/>
+                                                <b>Mutual Security Systems (Pvt.) Ltd.</b>
+                                                <br/>
+                                                <b>Bank:</b>The Bank of Punjab
+                                                <br/>
+                                                <b>Account No. </b>6020089134300018
+                                                <br/>
+                                                <b>IBAN No. </b>PK37BPUN6020089134300018
+                                                <br/>
+                                            </t>
+                                            <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems Pvt. Ltd.'">
+                                                <b>PLEASE MAKE ONLINE PAYMENT TO</b>
+                                                <br/>
+                                                <b>Mutual Security Systems (Pvt.) Ltd.</b>
+                                                <br/>
+                                                <b>Bank:</b>Silk Bank Ltd.
+                                                <br/>
+                                                <b>Account No. </b>2009035179
+                                                <br/>
+                                                <b>IBAN No. </b>PK33SAUD0000432009035179
+                                                <br/>
+                                            </t>
+                                            <span><u>OR</u></span>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            You may send your payees account cheque favouring '
                                             <span>
                                                 <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
                                                     M/s Mutual Security Systems
@@ -403,15 +397,18 @@
                                                 <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
                                                     Mutual Security Systems Pvt. Ltd.
                                                 </t>
+                                                <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems Pvt. Ltd.'">
+                                                    Mutual Security Systems Pvt. Ltd.
+                                                </t>
 
                                             </span>
                                             ' by
-                                            Registered mail or courier or call for collection of cheque by our
-                                            representative.
-                                            Please write your name and Customer ID on the back of the cheque
+                                            Registered mail or courier. Please write your name and Customer ID on the back of the cheque.
                                         </span>
                                     </div>
                                 </div>
+                                <br/>
+                                <br/>
                                 <br/>
                                 <br/>
                                 <div class="row">
@@ -424,12 +421,12 @@
                                                 </em>
                                             </small>
                                         </span>
-                                         <span style="font-size:16px; float:right;">
+                                        <span style="font-size:16px; float:right;">
                                             <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
                                                 Mutual Security Systems
                                             </t>
                                             <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
-                                                Mutual Security
+                                                Mutual Security Systems Pvt. Ltd.
                                             </t>
                                         </span>
                                     </div>
@@ -448,13 +445,8 @@
                                     </h1>
                                     <br/>
                                     <div style="font-size:18px;width:550px;display:inline-block;">
-                                        <span style="font-size:18px">
-                                            <strong>CUSTOMER ID:
-                                                <span t-field="account_invoice.css"/>
-                                            </strong>
-                                        </span>
                                         <div style="border:2px solid grey; padding:10px;border-radius:10px;">
-                                            <strong style="font-size:18px">Customer's Information:</strong>
+                                            <strong style="font-size:18px">CUSTOMER ID:<span t-field="account_invoice.css"/></strong>
                                             <br/>
                                             <span t-field="account_invoice.partner_id.name"/>
                                             <br/>
@@ -492,15 +484,15 @@
                                                 <br/>
                                             </span>
                                         </div>
-                                        <div style="font-size:16px;">
+                                        <div style="font-size:18px;">
                                             <br/>
                                             <br/>
                                             <br/>
                                             <br/>
 
                                             Dear Subscriber,<br/>Please keep checking your Alarm System
-                                            regularly on weekly and monthly basis
-                                            by using panics and other devices
+                                            regularly on weekly<br/> and monthly basis
+                                            by using panics and other devices.
 
 
                                         </div>
@@ -578,7 +570,7 @@
                                                     <span t-field="account_invoice.date_due"/>
                                                 </div>
                                             </center>
-                                        </div>
+                                        </div><br/>
                                     </div>
                                     <!--<div><br/>-->
                                     <!--<strong><em>Dear Subscriber,<br/>Please keep checking your Alarm System regularly on weekly and weekly basis-->
@@ -599,13 +591,12 @@
                                             <tr>
                                                 <td>
                                                     <span>
-                                                        Monitoring fee inlcusive of Sales Tax and Maintenance for the
-                                                        period
+                                                        Burglar Alarm Monitoring Fee inlcusive of Sales Tax and Maintenance
                                                         <br/>
                                                     </span>
 
                                                     <span t-if="account_invoice.from_date">
-                                                        from
+                                                        for the period from
                                                         <strong>
                                                             <span t-field="account_invoice.from_date"/>
                                                         </strong>
@@ -619,7 +610,7 @@
                                                 </td>
                                                 <td class="text-right">
                                                     Rs.
-                                                    <span t-esc="round(account_invoice.amount_total)"/>
+                                                    <span t-esc="'%.2f'% round(account_invoice.amount_total)"/>
                                                 </td>
                                             </tr>
                                             <t t-if="account_invoice.outstanding_amount > 0.0">
@@ -629,8 +620,7 @@
                                                     </td>
 
                                                     <td class="text-right">
-                                                        Rs.
-                                                        <span t-field="account_invoice.outstanding_amount"/>
+                                                        <span t-esc="'%.2f'% account_invoice.outstanding_amount"/>
                                                     </td>
                                                 </tr>
                                             </t>
@@ -641,18 +631,21 @@
                                                     </td>
 
                                                     <td class="text-right">
-                                                        Rs.
-                                                        <span t-esc="round(account_invoice.outstanding_amount*-1)"/>
+                                                        <span t-esc="'%.2f'% round(account_invoice.outstanding_amount*-1)"/>
                                                     </td>
                                                 </tr>
                                             </t>
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="row" t-if="account_invoice.company_id.name!='Mutual Security Systems Pvt. Ltd.'">
+                                    <div class="pull-left" style="font-size:16px">
+                                        Sales Tax @ 19.5% levied by Sindh Revenue Board w.e.f 01-07-2017 (Ref: PCT
+                                        9812.9500)
+                                    </div>
+                                </div><br/>
                                 <div class="row">
-                                    <br/>
-                                    <br/>
-                                    <div class="col-xs-4 pull-right">
+                                    <div class="col-xs-4 pull-right" style="margin-right:-16px;">
                                         <table class="table table-condensed" style="font-size:18px">
                                             <t t-if="account_invoice.grand_total > 0.0">
                                                 <tr class="border-black">
@@ -662,7 +655,7 @@
                                                     <td class="text-right">
                                                         <strong>
                                                             Rs.
-                                                            <span t-esc="round(account_invoice.grand_total)"/>
+                                                            <span t-esc="'%.2f'% round(account_invoice.grand_total)"/>
                                                         </strong>
                                                     </td>
                                                 </tr>
@@ -675,63 +668,59 @@
                                                     <td class="text-right">
                                                         <strong>
                                                             Rs.
-                                                            <span t-esc="round(account_invoice.grand_total)"/>
+                                                            <span t-esc="'%.2f'% round(account_invoice.grand_total)"/>
                                                         </strong>
                                                     </td>
                                                 </tr>
                                             </t>
                                         </table>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="pull-left" style="font-size:18px">
+                                        <br/>
                                         <t t-if="account_invoice.grand_total > 0.0">
-                                            <span>Amount In Words:
+                                            <span><b>Amount In Words:</b>
                                                 <span t-esc="account_invoice.amount_to_text(round(account_invoice.grand_total),'PKR')"/>
                                             </span>
                                         </t>
                                         <t t-if=" not account_invoice.grand_total > 0.0">
-                                            <span>Amount In Words:
+                                            <span><b>Amount In Words:</b>
                                                 <span t-esc="account_invoice.amount_to_text(round(account_invoice.grand_total),'PKR')"/>
                                             </span>
                                         </t>
                                     </div>
                                 </div>
+
                                 <div class="row">
-                                    <div class="pull-left" style="font-size:17px">
-                                        <br/>
-                                        <br/>
-<!--                                        <span>-->
-<!--                                            <b>For online payment our bank details:-->
-<!--                                                <br/>-->
-<!--                                            </b>-->
-<!--                                            <b>Title of account: Mutual Security Systems (Pvt.) Ltd-->
-<!--                                                <br/>-->
-<!--                                            </b>-->
-<!--                                            <b>Bank: Silk Bank Ltd-->
-<!--                                                <br/>-->
-<!--                                            </b>-->
-<!--                                            <b>Account No. 2009035179-->
-<!--                                                <br/>-->
-<!--                                            </b>-->
-<!--                                            <b>IBAN No. PK33SAUD0000432009035179-->
-<!--                                                <br/>-->
-<!--                                            </b>-->
-<!--                                        </span>-->
+                                    <br/>
+                                    <div class="pull-left" style="font-size:18px">
+                                        <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems Pvt. Ltd.'">
+                                            <b>PLEASE MAKE ONLINE PAYMENT TO</b>
+                                            <br/>
+                                            <b>Mutual Security Systems (Pvt.) Ltd.</b>
+                                            <br/>
+                                            <b>Bank:</b>Silk Bank Ltd.
+                                            <br/>
+                                            <b>Account No. </b>2009035179
+                                            <br/>
+                                            <b>IBAN No. </b>PK33SAUD0000432009035179
+                                            <br/>
+                                        <span><u>OR</u></span>
+
+                                        </t>
                                         <br/>
                                         <span>
-                                            Payment: Please send your Payees A/c cheque in favour of '
+                                            You may send your payees account cheque favouring '
                                             <span>
                                                 Mutual Security Systems Pvt. Ltd.
 
                                             </span>
                                             ' by
-                                            Registered mail or courier or call for collection of cheque by our
-                                            representative.
-                                            Please write your name and Customer ID on the back of the cheque
+                                            Registered mail or courier. Please write your name and Customer ID on the back of the cheque.
                                         </span>
                                     </div>
                                 </div>
+                                <br/>
+                                <br/>
                                 <br/>
                                 <br/>
                                 <div class="row">
