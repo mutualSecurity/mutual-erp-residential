@@ -392,7 +392,7 @@
                                             You may send your payees account cheque favouring '
                                             <span>
                                                 <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
-                                                    M/s Mutual Security Systems
+                                                    Mutual Security Systems
                                                 </t>
                                                 <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
                                                     Mutual Security Systems Pvt. Ltd.
