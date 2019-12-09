@@ -348,11 +348,11 @@
                                         <br/>
                                         <span>
                                             <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems'">
-                                                <b>PLEASE MAKE ONLINE PAYMENT TO</b>
-                                                <br/>
-                                                <b>Mutual Security Systems</b>
-                                                <br/>
+                                                <b>PLEASE MAKE ONLINE PAYMENT</b>
+                                                <b>(QUOTING ABOVE CUSTOMER ID) TO</b><br/>
                                                 <b>Bank: </b>Habib Metropolitan Bank Ltd
+                                                <br/>
+                                                <b>For Mutual Security Systems</b>
                                                 <br/>
                                                 <b>Account No. </b>
                                                 0165027140103223
@@ -362,11 +362,11 @@
                                                 <br/>
                                             </t>
                                             <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security'">
-                                                <b>PLEASE MAKE ONLINE PAYMENT TO</b>
-                                                <br/>
-                                                <b>Mutual Security Systems (Pvt.) Ltd.</b>
-                                                <br/>
+                                                <b>PLEASE MAKE ONLINE PAYMENT</b>
+                                                <b>(QUOTING ABOVE CUSTOMER ID) TO</b><br/>
                                                 <b>Bank: </b>The Bank of Punjab
+                                                <br/>
+                                                <b>For Mutual Security Systems (Pvt.) Ltd.</b>
                                                 <br/>
                                                 <b>Account No. </b>6020089134300018
                                                 <br/>
@@ -374,11 +374,11 @@
                                                 <br/>
                                             </t>
                                             <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems Pvt. Ltd.'">
-                                                <b>PLEASE MAKE ONLINE PAYMENT TO</b>
-                                                <br/>
-                                                <b>Mutual Security Systems (Pvt.) Ltd.</b>
-                                                <br/>
+                                                <b>PLEASE MAKE ONLINE PAYMENT</b>
+                                                <b>(QUOTING ABOVE CUSTOMER ID) TO</b><br/>
                                                 <b>Bank: </b>Silk Bank Ltd.
+                                                <br/>
+                                                <b>For Mutual Security Systems (Pvt.) Ltd.</b>
                                                 <br/>
                                                 <b>Account No. </b>2009035179
                                                 <br/>
@@ -403,7 +403,7 @@
 
                                             </span>
                                             ' by
-                                            Registered mail or courier. Please write your name and Customer ID on the back of the cheque.
+                                            Registered mail or courier. Please write your name and Customer ID on the back of the cheque. After making online or payees cheque payment, please call us on phone.
                                         </span>
                                     </div>
                                 </div>
@@ -694,18 +694,17 @@
                                     <br/>
                                     <div class="pull-left" style="font-size:18px">
                                         <t t-if="account_invoice.partner_id.company_id.name == 'Mutual Security Systems Pvt. Ltd.'">
-                                            <b>PLEASE MAKE ONLINE PAYMENT TO</b>
+                                            <b>PLEASE MAKE ONLINE PAYMENT</b>
+                                            <b>(QUOTING ABOVE CUSTOMER ID) TO</b>
                                             <br/>
-                                            <b>Mutual Security Systems (Pvt.) Ltd.</b>
-                                            <br/>
-                                            <b>Bank: </b>Silk Bank Ltd.
+                                            <b>Bank: </b>Silk Bank Ltd.<br/>
+                                            <b>For Mutual Security Systems (Pvt.) Ltd.</b>
                                             <br/>
                                             <b>Account No. </b>2009035179
                                             <br/>
                                             <b>IBAN No. </b>PK33SAUD0000432009035179
                                             <br/>
                                         <span><u>OR</u></span>
-
                                         </t>
                                         <br/>
                                         <span>
@@ -715,7 +714,7 @@
 
                                             </span>
                                             ' by
-                                            Registered mail or courier. Please write your name and Customer ID on the back of the cheque.
+                                            Registered mail or courier. Please write your name and Customer ID on the back of the cheque. After making online or payees cheque payment, please call us on phone.
                                         </span>
                                     </div>
                                 </div>
