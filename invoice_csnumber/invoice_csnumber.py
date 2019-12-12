@@ -327,7 +327,7 @@ class invoice_csnumber(osv.osv):
             from_date = datetime.strptime(str(self.date_invoice), date_format)
             number_of_days = calendar.monthrange(from_date.year, from_date.month)[1]
             for line in self.invoice_line:
-                if(number_of_days == 28 and line.product_id.name=="Service (MS)") or (number_of_days == 28 and line.product_id.name=="Service (MSS)"):
+                if(number_of_days == 28 and line.product_id.name=="Service (MS)") or (number_of_days == 28 and line.product_id.name=="Service (MSS)") or (number_of_days == 28 and line.product_id.name=="Service (MSSPL)"):
                     if from_date.day == 1:
                         from_ = from_date + timedelta(days=20)
                         to_ = from_ + relativedelta(months=int(line.quantity))
@@ -348,7 +348,7 @@ class invoice_csnumber(osv.osv):
                         return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
                     return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
 
-                elif(number_of_days == 31 and line.product_id.name == "Service (MS)") or (number_of_days == 31 and line.product_id.name =="Service (MSS)"):
+                elif(number_of_days == 31 and line.product_id.name == "Service (MS)") or (number_of_days == 31 and line.product_id.name =="Service (MSS)") or (number_of_days == 31 and line.product_id.name=="Service (MSSPL)"):
                     if from_date.day == 1 :
                         from_ = from_date + timedelta(days=20)
                         to_ = from_ + relativedelta(months=int(line.quantity))
@@ -370,7 +370,7 @@ class invoice_csnumber(osv.osv):
                         return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
                     return {"from": self.from_date, "to": self.to_date, "customer":self.partner_id.customer}
 
-                elif(number_of_days == 30 and line.product_id.name == "Service (MS)") or (number_of_days == 30 and line.product_id.name == "Service (MSS)"):
+                elif(number_of_days == 30 and line.product_id.name == "Service (MS)") or (number_of_days == 30 and line.product_id.name == "Service (MSS)") or (number_of_days == 30 and line.product_id.name=="Service (MSSPL)"):
                     if from_date.day == 1 :
                         from_ = from_date + timedelta(days=20)
                         to_ = from_ + relativedelta(months=int(line.quantity))
