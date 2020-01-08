@@ -1,136 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data>
-<template id="report_sales_summary">
-    <t t-call="report.html_container">
-        <t t-foreach="docs" t-as="doc">
-            <t t-call="report.internal_layout">
-                <div class="page">
-                    <t t-set="total_sales" t-value="doc.new_sales()"/>
-                     <t t-set="total_active" t-value="0"/>
-                     <t t-set="total_inactive" t-value="0"/>
-                    <h1>Sales Summary</h1><br/>
-                    <t t-if="doc.only_new_sales">
-                        <table class="table table-condensed" style="font-size:14px">
-                         <thead>
-                             <tr>
-                                 <th>S.No.</th>
-                                 <th>Name</th>
-                                 <th>CS Number</th>
-                                 <th>Company</th>
-                                 <th>Total</th>
-                                 <th class="text-right">SO Reference</th>
-                             </tr>
-                         </thead>
-                          <tbody class="invoice_tbody">
-                             <tr t-foreach="doc.new_sales()" t-as="l">
-                                 <td><span t-esc="l_index+1"/></td>
-                                 <td><span t-esc="l['customer']"/></td>
-                                 <td><span t-esc="l['cs_number']"/></td>
-                                 <td><span t-esc="l['company']"/></td>
-                                 <td><span t-esc="round(l['amount_total'])"/></td>
-                                 <td class="text-right"><span t-esc="l['name']"/></td>
-                             </tr>
-                         </tbody>
-                     </table>
-                    </t>
-                    <t t-if="doc.only_new_sales==False">
-                     <table class="table table-condensed" style="font-size:14px">
-                         <thead>
-                             <tr>
-                                 <th colspan="4">Mutual Security Systems</th>
-                             </tr>
-                             <tr>
-                                 <th>Account Head</th>
-                                 <th>Active Accounts</th>
-                                 <th>Disco Accounts</th>
-                                 <th class="text-right">Total Accounts</th>
-                             </tr>
-                         </thead>
-                         <tbody class="invoice_tbody">
-                             <tr t-foreach="doc.mss_record()" t-as="l">
-                                 <td><span t-esc="l['code']"/></td>
-                                 <td><span t-esc="l['active_customer']"/></td>
-                                 <td><span t-esc="l['inactive_customer']"/></td>
-                                 <t t-set="total_active" t-value="total_active+l['active_customer']"/>
-                                 <t t-set="total_inactive" t-value="total_inactive+l['inactive_customer']"/>
-                                 <td class="text-right"><span t-esc="l['active_customer'] + l['inactive_customer']"/></td>
-                             </tr>
-                         </tbody>
-                     </table>
+    <data>
+        <template id="report_sales_summary">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.internal_layout">
+                        <div class="page">
+                            <t t-set="total_sales" t-value="doc.new_sales()"/>
+                            <t t-set="total_active" t-value="0"/>
+                            <t t-set="total_inactive" t-value="0"/>
+                            <h1>Sales Summary</h1>
+                            <br/>
+                            <t t-if="doc.only_new_sales">
+                                <table class="table table-condensed" style="font-size:14px">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No.</th>
+                                            <th>Name</th>
+                                            <th>CS Number</th>
+                                            <th>Company</th>
+                                            <th>Total</th>
+                                            <th class="text-right">SO Reference</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <tr t-foreach="doc.new_sales()" t-as="l">
+                                            <td>
+                                                <span t-esc="l_index+1"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['customer']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['cs_number']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['company']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="round(l['amount_total'])"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="l['name']"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-if="doc.only_new_sales==False">
+                                <table class="table table-condensed" style="font-size:14px">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4">Mutual Security Systems</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Account Head</th>
+                                            <th>Active Accounts</th>
+                                            <th>Disco Accounts</th>
+                                            <th class="text-right">Total Accounts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <tr t-foreach="doc.mss_record()" t-as="l">
+                                            <td>
+                                                <span t-esc="l['code']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['active_customer']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['inactive_customer']"/>
+                                            </td>
+                                            <t t-set="total_active" t-value="total_active+l['active_customer']"/>
+                                            <t t-set="total_inactive" t-value="total_inactive+l['inactive_customer']"/>
+                                            <td class="text-right">
+                                                <span t-esc="l['active_customer'] + l['inactive_customer']"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                    <table class="table table-condensed" style="font-size:14px">
-                         <thead>
-                             <tr>
-                                 <th colspan="4">Mutual Security</th>
-                             </tr>
-                             <tr>
-                                 <th>Account Head</th>
-                                 <th>Active Accounts</th>
-                                 <th>Disco Accounts</th>
-                                 <th class="text-right">Total Accounts</th>
-                             </tr>
-                         </thead>
-                         <tbody class="invoice_tbody">
-                             <tr t-foreach="doc.ms_record()" t-as="l">
-                                 <td><span t-esc="l['code']"/></td>
-                                 <td><span t-esc="l['active_customer']"/></td>
-                                 <td><span t-esc="l['inactive_customer']"/></td>
-                                 <t t-set="total_active" t-value="total_active+l['active_customer']"/>
-                                 <t t-set="total_inactive" t-value="total_inactive+l['inactive_customer']"/>
-                                 <td class="text-right"><span t-esc="l['active_customer'] + l['inactive_customer']"/></td>
-                             </tr>
-                             <tr><td></td><td></td><td></td><td></td></tr>
-                             <tr>
-                                 <td><strong>Grand Total</strong></td>
-                                 <td><span t-esc="total_active"/> </td>
-                                 <td><span t-esc="total_inactive"/> </td>
-                                 <td class="text-right"><span t-esc="total_inactive+total_active"/> </td>
-                             </tr>
-                         </tbody>
-                     </table>
-                    <table class="table table-condensed" style="font-size:14px">
-                         <thead>
-                             <tr>
-                                 <th colspan="2">New Sales</th>
-                             </tr>
-                             <tr>
-                                 <th>Account Head</th>
-                                 <th>New Accounts</th>
-                             </tr>
-                         </thead>
-                         <tbody class="invoice_tbody">
-                             <tr>
-                                 <td>CM</td>
-                                 <td><span t-esc="total_sales['cm']"/></td>
-                             </tr>
-                             <tr>
-                                 <td>CN</td>
-                                 <td><span t-esc="total_sales['cn']"/></td>
-                             </tr>
-                             <tr>
-                                 <td>LH</td>
-                                 <td><span t-esc="total_sales['lh']"/></td>
-                             </tr>
-                             <tr>
-                                 <td>B1</td>
-                                 <td><span t-esc="total_sales['b1']"/></td>
-                             </tr>
-                             <tr>
-                                 <td>B2</td>
-                                 <td><span t-esc="total_sales['b2']"/></td>
-                             </tr>
-                             <tr>
-                                 <td>B3</td>
-                                 <td><span t-esc="total_sales['b3']"/></td>
-                             </tr>
-                         </tbody>
-                     </table>
+                                <table class="table table-condensed" style="font-size:14px">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4">Mutual Security</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Account Head</th>
+                                            <th>Active Accounts</th>
+                                            <th>Disco Accounts</th>
+                                            <th class="text-right">Total Accounts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <tr t-foreach="doc.ms_record()" t-as="l">
+                                            <td>
+                                                <span t-esc="l['code']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['active_customer']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['inactive_customer']"/>
+                                            </td>
+                                            <t t-set="total_active" t-value="total_active+l['active_customer']"/>
+                                            <t t-set="total_inactive" t-value="total_inactive+l['inactive_customer']"/>
+                                            <td class="text-right">
+                                                <span t-esc="l['active_customer'] + l['inactive_customer']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Grand Total</strong>
+                                            </td>
+                                            <td>
+                                                <span t-esc="total_active"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="total_inactive"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="total_inactive+total_active"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed" style="font-size:14px">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="4">Mutual Security Systems Pvt. Ltd.</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Account Head</th>
+                                            <th>Active Accounts</th>
+                                            <th>Disco Accounts</th>
+                                            <th class="text-right">Total Accounts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <tr t-foreach="doc.msspt_record()" t-as="l">
+                                            <td>
+                                                <span t-esc="l['code']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['active_customer']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="l['inactive_customer']"/>
+                                            </td>
+                                            <t t-set="total_active" t-value="total_active+l['active_customer']"/>
+                                            <t t-set="total_inactive" t-value="total_inactive+l['inactive_customer']"/>
+                                            <td class="text-right">
+                                                <span t-esc="l['active_customer'] + l['inactive_customer']"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed" style="font-size:14px">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">New Sales</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Account Head</th>
+                                            <th>New Accounts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <tr>
+                                            <td>CM</td>
+                                            <td>
+                                                <span t-esc="total_sales['cm']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>CN</td>
+                                            <td>
+                                                <span t-esc="total_sales['cn']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>LH</td>
+                                            <td>
+                                                <span t-esc="total_sales['lh']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>B1</td>
+                                            <td>
+                                                <span t-esc="total_sales['b1']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>B2</td>
+                                            <td>
+                                                <span t-esc="total_sales['b2']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>B3</td>
+                                            <td>
+                                                <span t-esc="total_sales['b3']"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
                     </t>
-                </div>
+                </t>
             </t>
-        </t>
-    </t>
-</template>
-</data>
+        </template>
+    </data>
 </openerp>
