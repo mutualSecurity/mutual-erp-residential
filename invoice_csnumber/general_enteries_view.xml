@@ -21,6 +21,9 @@
                       <field name="cs_number" readonly="1"/>
                       <field name="customer_invoice"/>
                   </xpath>
+                  <xpath expr="//field[@name='period_id']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
                   <xpath expr="//field[@name='to_check']" position="after">
                       <field name="parts_payment" />
                   </xpath>

@@ -470,6 +470,15 @@ class generalEntryCreate(osv.osv):
         'count': 0
     }
 
+    @api.onchange('company_id','date')
+    def set_period(self):
+        period_obj = self.env['account.period']
+        for rec in self:
+            if rec.date:
+                date_split = str(self.date).split('-')
+                period = date_split[1]+"/"+date_split[0]
+                rec.period_id = period_obj.search([('name','=',period),('company_id','=',rec.company_id.id)])[0].id
+
     def button_cancel(self, cr, uid, ids, context=None):
         obj = self.browse(cr, uid, ids[0], context=context)
         obj.count = obj.count +1
