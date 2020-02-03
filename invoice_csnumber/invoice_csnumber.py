@@ -348,6 +348,27 @@ class invoice_csnumber(osv.osv):
                         return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
                     return {"from": self.from_date, "to": self.to_date,"customer":self.partner_id.customer}
 
+                elif (number_of_days == 29 and line.product_id.name == "Service (MS)") or (number_of_days == 29 and line.product_id.name == "Service (MSS)") or (number_of_days == 29 and line.product_id.name == "Service (MSSPL)"):
+                    if from_date.day == 1:
+                        from_ = from_date + timedelta(days=20)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
+                        return {"from": self.from_date, "to": self.to_date, "customer": self.partner_id.customer}
+                    elif from_date.day == 21 or from_date.day == 11:
+                        from_ = from_date + timedelta(days=19)
+                        to_ = from_ + relativedelta(months=int(line.quantity))
+                        from_ = str(from_).split(" ")
+                        to_ = to_ - timedelta(days=1)
+                        to_ = str(to_).split(" ")
+                        self.from_date = from_[0]
+                        self.to_date = to_[0]
+                        return {"from": self.from_date, "to": self.to_date, "customer": self.partner_id.customer}
+                    return {"from": self.from_date, "to": self.to_date, "customer": self.partner_id.customer}
+
                 elif(number_of_days == 31 and line.product_id.name == "Service (MS)") or (number_of_days == 31 and line.product_id.name =="Service (MSS)") or (number_of_days == 31 and line.product_id.name=="Service (MSSPL)"):
                     if from_date.day == 1 :
                         from_ = from_date + timedelta(days=20)
