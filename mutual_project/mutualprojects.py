@@ -1,9 +1,15 @@
 #The file name of this file must match the filename name which we import in __init__.py file
 from openerp.osv import fields, osv
 from openerp import api
-from datetime import date,datetime
+from datetime import date, datetime, timedelta
 import requests
 import random
+import time
+import re
+import urllib
+import urllib2
+from xml.dom.minidom import parseString
+import requests
 
 #======================================== Project.task class implementation Begins =====================================
 class mutual_projects(osv.osv):
@@ -225,6 +231,8 @@ class mutual_issues(osv.osv):
       'date_end': fields.datetime('Time Out', select=True, copy=True, write=['project.group_project_manager'], read=['project.group_project_user']),
       'first_signal_time': fields.datetime('First Signal Time', select=True, copy=True, write=['project.group_project_manager'], read=['project.group_project_user']),
       'priority': fields.selection([('0','Normal'), ('1','Urgent'), ('2','Most Urgent')], 'Priority', select=True),
+      'count': fields.char('Count', store=True, readonly=True, compute='_count'),
+      'sms_status': fields.char('SMS Status'),
       'name': fields.selection([('Activation and Deactivation problem', 'Activation and Deactivation problem'),
                                 ('All system check', 'All system check'),
                                 ('All zone and system check', 'All zone and system check'),
@@ -318,17 +326,29 @@ class mutual_issues(osv.osv):
           elif(self.additional==True) and (self.stage_id.name == 'Resolved'):
               self.color = 0
 
+  @api.depends('sms')
+  def _count(self):
+      if self.sms:
+          self.count = len(self.sms)
 
   @api.multi
   def smsSent(self):
-      r = requests.post("http://localhost:3000", data={'sms': self.sms, 'contact': self.techContact})
-      if r:
-          self.status = "Sent"
-          return True
+      if self.techContact:
+          if self.techContact and self.sms:
+              number = urllib.unquote(self.techContact).encode('utf8')
+              message = urllib.quote((self.sms).encode("utf-8"))
+              if int(self.count) <= 160:
+                  url = ("https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03315506614&message=%s&shortcode=MUTUAL&lang=English&mobilenum=%s&password=Ptml@123456&groupname=&messagetype=Transactional" % (
+                      message, number))
+                  repsonse = requests.get(url, verify=False)
+                  result = parseString(repsonse.content).getElementsByTagName('response_text')[0].childNodes[0].data
+                  # self.env['sms'].create({'mobile_no':self.techContact, 'message_body':self.sms})
+                  self.sms_status = result
+                  return result
+              else:
+                  raise osv.except_osv('Limit Exceed', 'SMS must be within 160 characters')
       else:
-          self.status = "Failed"
-          return False
-
+          raise osv.except_osv('Empty Field', 'Kindly enter mobile number of technician')
 
   @api.multi
   def details(self):

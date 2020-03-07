@@ -516,7 +516,8 @@
                         <group>
                             <field name="techContact"/>
                             <field name="sms"/>
-                            <field name="status"/>
+                            <field name="count"/>
+                            <field name="sms_status" readonly="1"/>
                         </group>
                             <button name="details" string="Details" type="object" class="btn-link" />
                             <button name="smsSent" string="Sent" type="object" class="btn-link"  />
