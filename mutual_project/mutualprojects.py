@@ -337,7 +337,7 @@ class mutual_issues(osv.osv):
           if self.techContact and self.sms:
               number = urllib.unquote(self.techContact).encode('utf8')
               message = urllib.quote((self.sms).encode("utf-8"))
-              if int(self.count) <= 160:
+              if int(self.count):
                   url = ("https://bsms.ufone.com/bsms_v8_api/sendapi-0.3.jsp?id=03315506614&message=%s&shortcode=MUTUAL&lang=English&mobilenum=%s&password=Ptml@123456&groupname=&messagetype=Transactional" % (
                       message, number))
                   repsonse = requests.get(url, verify=False)
