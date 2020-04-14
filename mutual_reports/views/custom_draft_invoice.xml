@@ -4,7 +4,7 @@
        <template id="custom_draft_invoice">
            <t t-call='report.html_container'>
                <t t-foreach="docs" t-as="account_invoice">
-                   <t>
+                   <t t-call="mutual_reports.mutual_header"/>
                       <div class="page">
                           <div class="row">
                               <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;width:400px">
@@ -114,17 +114,8 @@
                                 </span>
                               </div>
                           </div>
-                           <!--<div class="row"><br/><br/>-->
-                              <!--<div class="pull-left" style="font-size:16px">-->
-                                 <!--<span>-->
-                                     <!--<small><em>-->
-                                         <!--Prepared by Accountant Manager <br/><span t-field="account_invoice.create_date"/></em>-->
-                                     <!--</small>-->
-                                 <!--</span>-->
-                              <!--</div>-->
-                          <!--</div>-->
                       </div>
-                   </t>
+                   <t t-call="mutual_reports.mutual_footer"/>
                </t>
            </t>
        </template>

@@ -1,175 +1,222 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
-       <template id="custom_sale_invoice">
-           <t t-call='report.html_container'>
-               <t t-foreach="docs" t-as="account_invoice">
-                   <t>
-                      <div class="page">
-                          <div class="row">
-                              <h2 align="center">Sales Tax Invoice </h2>
-                              <div class="row mt32 mb32" style="font-size:16px">
-                                   <div class="col-xs-2" t-if="account_invoice.id">
-                                      <strong>Invoice No. </strong>
-                                      <u><span t-field="account_invoice.sti_num"/></u>
-                                  </div>
-                                  <div class="col-xs-2" t-if="account_invoice.date_invoice">
-                                      <strong>Date </strong>
-                                      <u><span t-field="account_invoice.date_invoice"/></u>
-                                  </div>
-                                  <div class="col-xs-4">
-                                      <strong>Time of Supply </strong> ____________
-                                  </div>
-                              </div>
-                              <div style="font-size:15px; border:2px solid grey; padding:10px;border-radius:10px;width:400px;display:inline-block;">
-                                  <strong style="font-size:16px">Supplier's Name and Address:</strong><br/>
-                                  <span t-field="account_invoice.supplier_id.name"/><br/>
-                                  <span t-if="account_invoice.supplier_id.c_street">
-                                      <span t-field="account_invoice.supplier_id.c_street"/><br/>
-                                  </span>
-                                  <span t-if="account_invoice.supplier_id.c_street2">
-                                      <span t-field="account_invoice.supplier_id.c_street2"/><br/>
-                                  </span>
-                                  <span t-if="account_invoice.supplier_id.city">
-                                      <span t-field="account_invoice.supplier_id.city"/><br/>
-                                  </span>
-                                  <span t-if="account_invoice.supplier_id.phone">
-                                      <strong>Telephone No. </strong> <span t-field="account_invoice.supplier_id.phone"/><br/>
-                                  </span>
-                                  <span t-if="account_invoice.supplier_id.ntn_num">
-                                      <strong>NTN No. </strong> <span t-field="account_invoice.supplier_id.ntn_num"/>
-                                  </span>
-                              </div>
-                              <div style="font-size:15px; border:2px solid grey; padding:10px;border-radius:10px;width:400px;display: inline-block;float:right">
-                                  <strong style="font-size:16px">Buyer's Name and Address:</strong><br/>
-                                  <span t-field="account_invoice.partner_id.name"/><br/>
-                                  <span t-if="account_invoice.partner_id.c_street">
-                                      <span t-field="account_invoice.partner_id.c_street"/><br/>
-                                  </span>
-                                  <span t-if="account_invoice.partner_id.c_street2">
-                                      <span t-field="account_invoice.partner_id.c_street2"/><br/>
-                                  </span>
-                                  <span t-if="account_invoice.partner_id.city">
-                                      <span t-field="account_invoice.partner_id.city"/><br/>
-                                  </span>
-                                   <span t-if="account_invoice.partner_id.phone">
-                                      <strong>Telephone No. </strong> <span t-field="account_invoice.partner_id.phone"/><br/>
-                                  </span>
-                                  <span t-if="account_invoice.partner_id.ntn_num">
-                                      <strong>NTN No. </strong> <span t-field="account_invoice.partner_id.ntn_num"/>
-                                  </span>
-                              </div>
-                              <br/><br/>
-                              <strong>Terms of Sale: </strong>
-                              <br/>
-                              <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;width:1000px;">
-                              <table class="table table-condensed" style="font-size:15px">
-                                  <thead border="1">
-                                      <tr>
-                                          <th>Qty.</th>
-                                          <th>Description of Goods</th>
-                                          <th class="text-right">Unit Price</th>
-                                          <th class="text-right">Value of Goods</th>
-                                          <th class="text-right">Rate of Sales Tax</th>
-                                          <th class="text-right">Amount of Sales Tax</th>
-                                          <!--<td>Further Tax on Un-registered Person</td>-->
-                                          <th class="text-right">Total</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody class="invoice_tbody">
-                                      <tr t-foreach="account_invoice.invoice_line" t-as="l">
-                                          <td>
-                                              <span t-esc="round(l.quantity)"/>
-                                          </td>
-                                          <td>
-                                              <span t-field="l.name"/><br/>
-                                          </td>
-                                          <td class="text-right" >
-                                              <span t-field="l.price_unit" />
-                                          </td>
-                                           <td class="text-right" >
-                                              <span t-esc="l.price_unit*round(l.quantity)" />
-                                          </td>
-                                          <td class="text-right" >
-                                              <span t-if="l.invoice_line_tax_id.description == 'STO 17%'">
-                                                  17%
-                                              </span>
-                                          </td>
-                                          <td class="text-right" >
-                                              <span t-if="l.invoice_line_tax_id.description == 'STO 17%'">
-                                                  <span t-esc="round((l.price_subtotal*17/100))"/>
-                                              </span>
-                                          </td>
-                                          <td class="text-right" >
-                                              <span t-if="l.invoice_line_tax_id.description == 'STO 17%'">
-                                                  <span t-esc="round((l.price_subtotal*17/100))+l.price_subtotal"/>
-                                              </span>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div><br/><br/>
-                          <div class="row"><br/>
-                              <div class="col-xs-10 pull-right">
-                                  <table class="table table-condensed" style="font-size:15px">
-                                          <t>
-                                              <tr>
-                                                  <td>
-                                                      <strong>Total</strong>
-                                                  </td>
-                                                  <td class="text-right">
-                                                      <strong><span t-esc="account_invoice.amount_untaxed"/></strong>
-                                                  </td>
-                                                  <!--<td class="text-right">-->
-                                                      <!--<strong><span t-esc="account_invoice.amount_tax"/></strong>-->
-                                                  <!--</td>-->
-                                                  <td class="text-right">
-                                                      <strong><span t-esc="account_invoice.amount_tax" style="margin-right:13px"/></strong>
-                                                      <strong><span t-esc="account_invoice.amount_total"/></strong>
-                                                  </td>
-                                              </tr>
-                                          </t>
-                                  </table>
-                              </div>
-                          </div> </div>
-                              <br/><br/>
-                          <!--<div class="row">-->
-                              <!--<div class="pull-left" style="font-size:16px">-->
-                                  <!--<t>-->
-                                      <!--<span>Amount In Words: <span t-esc="account_invoice.amount_to_text(round(account_invoice.amount_total),'euro')"/></span>-->
-                                  <!--</t>-->
-                              <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="row"><br/><br/><br/><br/><br/><br/><br/><br/>-->
-                              <!--<div class="pull-left" style="font-size:16px">-->
-                                 <!--<span>-->
-                                     <!--Note: There is no requirement to deduct any with-holding tax under section 50(4) of the Income Tax 1979,(the ordinance),-->
-                                 <!--as the goods sold to you as per this invoice were imported by us in our name and tax has been paid there on under section-->
-                                 <!--50(5) of the ordinance, thus making such goods exempt from further taxation (SRO#97(1) dated 12 February 2002)</span>-->
-                              <!--</div>-->
-                          <!--</div>--><br/><br/>
-                          <div class="row"><br/><br/>
-                              <div class="pull-left" style="font-size:16px">
-                                 <span>
-                                     <small><em>
-                                         Signature:_________________________</em>
-                                     </small>
-                                 </span>
-                              </div>
-                          </div>
-                           <div class="row"><br/><br/>
-                              <div class="pull-left" style="font-size:16px">
-                                 <span>
-                                     <small><em>
-                                         Prepared by Accountant Manager <br/><span t-field="account_invoice.create_date"/></em>
-                                     </small>
-                                 </span>
-                              </div>
-                          </div>
-                      </div>
-                   </t>
-               </t>
-           </t>
-       </template>
+        <template id="custom_sale_invoice">
+            <t t-call='report.html_container'>
+                <t t-foreach="docs" t-as="account_invoice">
+                    <t t-call="mutual_reports.mutual_header"/>
+                    <div class="page">
+                        <div class="row">
+                            <h2 align="center">Sales Tax Invoice</h2>
+                            <div class="row mt32 mb32" style="font-size:16px">
+                                <div class="col-xs-2" t-if="account_invoice.id">
+                                    <strong>Invoice No.</strong>
+                                    <u>
+                                        <span t-field="account_invoice.sti_num"/>
+                                    </u>
+                                </div>
+                                <div class="col-xs-2" t-if="account_invoice.date_invoice">
+                                    <strong>Date</strong>
+                                    <u>
+                                        <span t-field="account_invoice.date_invoice"/>
+                                    </u>
+                                </div>
+                                <div class="col-xs-4">
+                                    <strong>Time of Supply</strong>
+                                    ____________
+                                </div>
+                            </div>
+                            <div style="font-size:15px; border:2px solid grey; padding:10px;border-radius:10px;width:400px;display:inline-block;">
+                                <strong style="font-size:16px">Supplier's Name and Address:</strong>
+                                <br/>
+                                <span t-field="account_invoice.supplier_id.name"/>
+                                <br/>
+                                <span t-if="account_invoice.supplier_id.c_street">
+                                    <span t-field="account_invoice.supplier_id.c_street"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.supplier_id.c_street2">
+                                    <span t-field="account_invoice.supplier_id.c_street2"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.supplier_id.city">
+                                    <span t-field="account_invoice.supplier_id.city"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.supplier_id.phone">
+                                    <strong>Telephone No.</strong>
+                                    <span t-field="account_invoice.supplier_id.phone"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.supplier_id.ntn_num">
+                                    <strong>NTN No.</strong>
+                                    <span t-field="account_invoice.supplier_id.ntn_num"/>
+                                </span>
+                            </div>
+                            <div style="font-size:15px; border:2px solid grey; padding:10px;border-radius:10px;width:400px;display: inline-block;float:right">
+                                <strong style="font-size:16px">Buyer's Name and Address:</strong>
+                                <br/>
+                                <span t-field="account_invoice.partner_id.name"/>
+                                <br/>
+                                <span t-if="account_invoice.partner_id.c_street">
+                                    <span t-field="account_invoice.partner_id.c_street"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.partner_id.c_street2">
+                                    <span t-field="account_invoice.partner_id.c_street2"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.partner_id.city">
+                                    <span t-field="account_invoice.partner_id.city"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.partner_id.phone">
+                                    <strong>Telephone No.</strong>
+                                    <span t-field="account_invoice.partner_id.phone"/>
+                                    <br/>
+                                </span>
+                                <span t-if="account_invoice.partner_id.ntn_num">
+                                    <strong>NTN No.</strong>
+                                    <span t-field="account_invoice.partner_id.ntn_num"/>
+                                </span>
+                            </div>
+                            <br/>
+                            <br/>
+                            <strong>Terms of Sale:</strong>
+                            <br/>
+                            <div style="font-size:16px; border:2px solid grey; padding:10px;border-radius:10px;width:1000px;">
+                                <table class="table table-condensed" style="font-size:15px">
+                                    <thead border="1">
+                                        <tr>
+                                            <th>Qty.</th>
+                                            <th>Description of Goods</th>
+                                            <th class="text-right">Unit Price</th>
+                                            <th class="text-right">Value of Goods</th>
+                                            <th class="text-right">Rate of Sales Tax</th>
+                                            <th class="text-right">Amount of Sales Tax</th>
+                                            <!--<td>Further Tax on Un-registered Person</td>-->
+                                            <th class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="invoice_tbody">
+                                        <tr t-foreach="account_invoice.invoice_line" t-as="l">
+                                            <td>
+                                                <span t-esc="round(l.quantity)"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="l.name"/>
+                                                <br/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="l.price_unit"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="l.price_unit*round(l.quantity)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-if="l.invoice_line_tax_id.description == 'STO 17%'">
+                                                    17%
+                                                </span>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-if="l.invoice_line_tax_id.description == 'STO 17%'">
+                                                    <span t-esc="round((l.price_subtotal*17/100))"/>
+                                                </span>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-if="l.invoice_line_tax_id.description == 'STO 17%'">
+                                                    <span t-esc="round((l.price_subtotal*17/100))+l.price_subtotal"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <br/>
+                                <div class="col-xs-10 pull-right">
+                                    <table class="table table-condensed" style="font-size:15px">
+                                        <t>
+                                            <tr>
+                                                <td>
+                                                    <strong>Total</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong>
+                                                        <span t-esc="account_invoice.amount_untaxed"/>
+                                                    </strong>
+                                                </td>
+                                                <!--<td class="text-right">-->
+                                                <!--<strong><span t-esc="account_invoice.amount_tax"/></strong>-->
+                                                <!--</td>-->
+                                                <td class="text-right">
+                                                    <strong>
+                                                        <span t-esc="account_invoice.amount_tax"
+                                                              style="margin-right:13px"/>
+                                                    </strong>
+                                                    <strong>
+                                                        <span t-esc="account_invoice.amount_total"/>
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <!--<div class="row">-->
+                        <!--<div class="pull-left" style="font-size:16px">-->
+                        <!--<t>-->
+                        <!--<span>Amount In Words: <span t-esc="account_invoice.amount_to_text(round(account_invoice.amount_total),'euro')"/></span>-->
+                        <!--</t>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row"><br/><br/><br/><br/><br/><br/><br/><br/>-->
+                        <!--<div class="pull-left" style="font-size:16px">-->
+                        <!--<span>-->
+                        <!--Note: There is no requirement to deduct any with-holding tax under section 50(4) of the Income Tax 1979,(the ordinance),-->
+                        <!--as the goods sold to you as per this invoice were imported by us in our name and tax has been paid there on under section-->
+                        <!--50(5) of the ordinance, thus making such goods exempt from further taxation (SRO#97(1) dated 12 February 2002)</span>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <br/>
+                            <br/>
+                            <div class="pull-left" style="font-size:16px">
+                                <span>
+                                    <small>
+                                        <em>
+                                            Signature:_________________________
+                                        </em>
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br/>
+                            <br/>
+                            <div class="pull-left" style="font-size:16px">
+                                <span>
+                                    <small>
+                                        <em>
+                                            Prepared by Accountant Manager
+                                            <br/>
+                                            <span t-field="account_invoice.create_date"/>
+                                        </em>
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-call="mutual_reports.mutual_footer"/>
+                </t>
+            </t>
+        </template>
     </data>
 </openerp>

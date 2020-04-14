@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <template id="mutual_header">
+            <t t-raw="0"/>
+            <div t-if="account_invoice.print_with_letter_header" class="header">
+                <div class="row">
+                    <div style="max-width:100%; width:100%; height:135px; border-bottom:1px solid black;">
+                        <div style="max-width:100%; width:80%; height:180px; display:inline-block; float:left;">
+                            <div style="max-width:100%; width:80%; height:90px;">
+                                <img t-att-src="'/mutual_reports/static/src/mutual_logo.png'" style="max-width:100%; width:16%; height:90px;"/>
+                            </div>
+                            <div style="max-width:100%; width:80%; height:50px;">
+                                <span t-esc="account_invoice.partner_id.company_id.partner_id.name" style="font-size:32px;letter-spacing:1px;"/>
+                            </div>
+                        </div>
+                        <div style="max-width:100%; width:20%; height:180px; display:inline-block; float:left;">
+                             <img t-att-src="'/mutual_reports/static/src/mutual_plate.png'" style="max-width:100%; width:62%; height:120; float:right;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template id="mutual_footer">
+            <div t-if="account_invoice.print_with_letter_header" class="footer">
+                <div class="row" style="max-width:100%; width:100%; border-top:1px solid black;">
+                    <center>
+                        <p>
+                            <small style="font-size:14px;">202, Progressive Square, Shahrah-e-Faisal, Nursery,
+                                Karachi-75400, Pakistan.
+                                <br/>
+                                UAN:(021)111-238-222, Phones:(021)34311512-13-14, Email: info@mutualsecurity.net,
+                                www.mutualsecurity.net
+                            </small>
+                        </p>
+                    </center>
+                </div>
+            </div>
+        </template>
+    </data>
+</openerp>

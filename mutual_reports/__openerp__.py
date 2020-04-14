@@ -1,7 +1,7 @@
 {
 
-    'name'  :   'Mutual Reporting',
-    'summery'   :  'Custom Module for the all Reports',
+    'name': 'Mutual Reporting',
+    'summery': 'Custom Module for the all Reports',
     'description': """""",
     'author': "Team Emotive Labs",
     'category': '["mutual","Account", "projects"]',
@@ -14,12 +14,14 @@
     'version': '0.1',
     # any module necessary for this one to work correctly
 
-    'depends':   [
+    'depends': [
         'account',
         'mutual_sales',
         'mutual_project'
     ],
     'data': [
+        'views/mutual_header_footer.xml',
+        'views/account_invoice.xml',
         'mutual_reports_reports.xml',
         'views/wiz_report_balances.xml',
         'views/wiz_report.xml',
