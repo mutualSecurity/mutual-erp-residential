@@ -47,146 +47,58 @@ class SalesSummaryReport(osv.TransientModel):
                     frequency['b3'] += 1
             return frequency
 
-    def ms_record(self):
-        # "Active Customers Of Mutual Security Systems"
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CM%' and active=True and company_id=3")
-        cm_active_ms = self.env.cr.dictfetchall()
+    def get_inactive_customers(self,cs_category,company_id):
+        self.env.cr.execute("""select count(rp.cs_number) as total from res_partner as rp
+        inner join project_task as pt on rp.id = pt.partner_id
+        inner join res_company as rc on rp.company_id = rc.id
+        where rp.active=False and pt.write_date between '%s 00:00:00' and '%s 23:59:59'
+        and pt.stage_id=25 and rp.company_id=%s and rp.cs_category='%s' """%(self.start_date,self.end_date,company_id,cs_category))
+        res = self.env.cr.dictfetchall()
+        if len(res)>0:
+            if res[0]['total']:
+                return res[0]['total']
+            else:
+                return 0
+        else:
+            return 0
 
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CN%' and active=True and company_id=3")
-        cn_active_ms = self.env.cr.dictfetchall()
+    def get_active_customers(self,cs_category,company_id):
+        self.env.cr.execute("""SELECT count(cs_category) as total FROM public.res_partner where cs_category='%s' 
+                and active=True and company_id=%s and create_date between '%s 00:00:00' and '%s 23:59:59'""" % (cs_category,company_id, self.start_date, self.end_date))
+        res = self.env.cr.dictfetchall()
+        if len(res)>0:
+            if res[0]['total']:
+                return res[0]['total']
+            else:
+                return 0
+        else:
+            return 0
 
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%LH%' and active=True and company_id=3")
-        lh_active_ms = self.env.cr.dictfetchall()
+    def get_uplink_customers(self,cs_category,company_id):
+        self.env.cr.execute("""SELECT count(cs_category) as total FROM public.res_partner where cs_category='%s' 
+                and active=True and company_id=%s and uplink_date is not null and write_date between '%s 00:00:00' and '%s 23:59:59'""" % (cs_category,company_id, self.start_date, self.end_date))
+        res = self.env.cr.dictfetchall()
+        if len(res)>0:
+            if res[0]['total']:
+                return res[0]['total']
+            else:
+                return 0
+        else:
+            return 0
 
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B1%' and active=True and company_id=3")
-        b1_active_ms = self.env.cr.dictfetchall()
+    def get_data(self):
+        data = []
+        cs_categories = ['CM', 'CN', 'LH', 'B1', 'B2', 'B3']
+        for company in self.env['res.company'].search([]):
+            res = {'company':company.name,'data':[]}
+            for category in cs_categories:
+                res['data'].append({'code': category,
+                             'uplink_customer': self.get_uplink_customers(category,company.id),
+                             'active_customer': self.get_active_customers(category,company.id),
+                             'inactive_customer': self.get_inactive_customers(category,company.id)})
+            data.append(res)
+        return data
 
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B2%' and active=True and company_id=3")
-        b2_active_ms = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B3%' and active=True and company_id=3")
-        b3_active_ms = self.env.cr.dictfetchall()
-
-        # "InActive Customers Of Mutual Security Systems"
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CM%' and active=False and cs_number is not null and company_id=3")
-        cm_inactive_ms = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CN%' and active=False and cs_number is not null  and company_id=3")
-        cn_inactive_ms = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%LH%' and active=False and cs_number is not null and company_id=3")
-        lh_inactive_ms = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B1%' and active=False and cs_number is not null and company_id=3")
-        b1_inactive_ms = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B2%' and active=False and cs_number is not null and company_id=3")
-        b2_inactive_ms = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B3%' and active=False and cs_number is not null and company_id=3")
-        b3_inactive_ms = self.env.cr.dictfetchall()
-
-        return [{'code': 'CM', 'active_customer': cm_active_ms[0]['cs_number'], 'inactive_customer': cm_inactive_ms[0]['cs_number']},
-                {'code': 'CN', 'active_customer': cn_active_ms[0]['cs_number'], 'inactive_customer': cn_inactive_ms[0]['cs_number']},
-                {'code': 'LH', 'active_customer': lh_active_ms[0]['cs_number'], 'inactive_customer': lh_inactive_ms[0]['cs_number']},
-                {'code': 'B1', 'active_customer': b1_active_ms[0]['cs_number'], 'inactive_customer': b1_inactive_ms[0]['cs_number']},
-                {'code': 'B2', 'active_customer': b2_active_ms[0]['cs_number'], 'inactive_customer': b2_inactive_ms[0]['cs_number']},
-                {'code': 'B3', 'active_customer': b3_active_ms[0]['cs_number'], 'inactive_customer': b3_inactive_ms[0]['cs_number']},
-        ]
-
-    def mss_record(self):
-        # "Active Customers Of Mutual Security Systems"
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CM%' and active=True and company_id=1")
-        cm_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CN%' and active=True and company_id=1")
-        cn_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%LH%' and active=True and company_id=1")
-        lh_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B1%' and active=True and company_id=1")
-        b1_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B2%' and active=True and company_id=1")
-        b2_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B3%' and active=True and company_id=1")
-        b3_active_mss = self.env.cr.dictfetchall()
-
-        # "InActive Customers Of Mutual Security Systems"
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CM%' and active=False and cs_number is not null and company_id=1")
-        cm_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CN%' and active=False and cs_number is not null  and company_id=1")
-        cn_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%LH%' and active=False and cs_number is not null and company_id=1")
-        lh_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B1%' and active=False and cs_number is not null and company_id=1")
-        b1_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B2%' and active=False and cs_number is not null and company_id=1")
-        b2_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B3%' and active=False and cs_number is not null and company_id=1")
-        b3_inactive_mss = self.env.cr.dictfetchall()
-
-        return [{'code': 'CM', 'active_customer': cm_active_mss[0]['cs_number'], 'inactive_customer': cm_inactive_mss[0]['cs_number']},
-                {'code': 'CN', 'active_customer': cn_active_mss[0]['cs_number'], 'inactive_customer': cn_inactive_mss[0]['cs_number']},
-                {'code': 'LH', 'active_customer': lh_active_mss[0]['cs_number'], 'inactive_customer': lh_inactive_mss[0]['cs_number']},
-                {'code': 'B1', 'active_customer': b1_active_mss[0]['cs_number'], 'inactive_customer': b1_inactive_mss[0]['cs_number']},
-                {'code': 'B2', 'active_customer': b2_active_mss[0]['cs_number'], 'inactive_customer': b2_inactive_mss[0]['cs_number']},
-                {'code': 'B3', 'active_customer': b3_active_mss[0]['cs_number'], 'inactive_customer': b3_inactive_mss[0]['cs_number']},
-        ]
-
-    def msspt_record(self):
-        # "Active Customers Of Mutual Security Systems"
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CM%' and active=True and company_id=4")
-        cm_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CN%' and active=True and company_id=4")
-        cn_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%LH%' and active=True and company_id=4")
-        lh_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B1%' and active=True and company_id=4")
-        b1_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B2%' and active=True and company_id=4")
-        b2_active_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B3%' and active=True and company_id=4")
-        b3_active_mss = self.env.cr.dictfetchall()
-
-        # "InActive Customers Of Mutual Security Systems"
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CM%' and active=False and cs_number is not null and company_id=4")
-        cm_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%CN%' and active=False and cs_number is not null  and company_id=4")
-        cn_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%LH%' and active=False and cs_number is not null and company_id=4")
-        lh_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B1%' and active=False and cs_number is not null and company_id=4")
-        b1_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B2%' and active=False and cs_number is not null and company_id=4")
-        b2_inactive_mss = self.env.cr.dictfetchall()
-
-        self.env.cr.execute("SELECT count(cs_number) as cs_number FROM public.res_partner where cs_number like '%B3%' and active=False and cs_number is not null and company_id=4")
-        b3_inactive_mss = self.env.cr.dictfetchall()
-
-        return [{'code': 'CM', 'active_customer': cm_active_mss[0]['cs_number'], 'inactive_customer': cm_inactive_mss[0]['cs_number']},
-                {'code': 'CN', 'active_customer': cn_active_mss[0]['cs_number'], 'inactive_customer': cn_inactive_mss[0]['cs_number']},
-                {'code': 'LH', 'active_customer': lh_active_mss[0]['cs_number'], 'inactive_customer': lh_inactive_mss[0]['cs_number']},
-                {'code': 'B1', 'active_customer': b1_active_mss[0]['cs_number'], 'inactive_customer': b1_inactive_mss[0]['cs_number']},
-                {'code': 'B2', 'active_customer': b2_active_mss[0]['cs_number'], 'inactive_customer': b2_inactive_mss[0]['cs_number']},
-                {'code': 'B3', 'active_customer': b3_active_mss[0]['cs_number'], 'inactive_customer': b3_inactive_mss[0]['cs_number']},
-        ]
 
     def print_report(self, cr, uid, ids, data, context=None):
         return{

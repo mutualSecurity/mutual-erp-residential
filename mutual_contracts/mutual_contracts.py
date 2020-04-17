@@ -10,6 +10,13 @@ class invoice_csnumber(osv.osv):
         'basic_monitoring_amount': fields.float('Monitoring Amount', store=True)
     }
 
+    @api.constrains('company_id','partner_id')
+    def check_company(self):
+        for rec in self:
+            if rec.partner_id.company_id.id != rec.company_id.id:
+                raise osv.except_osv('Error.......!',
+                                     'Customer and its contract must belong from same company')
+
     def _prepare_invoice_line(self, cr, uid, line, fiscal_position, context=None):
         fpos_obj = self.pool.get('account.fiscal.position')
         res = line.product_id
