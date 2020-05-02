@@ -76,7 +76,7 @@ class SalesSummaryReport(osv.TransientModel):
 
     def get_uplink_customers(self,cs_category,company_id):
         self.env.cr.execute("""SELECT count(cs_category) as total FROM public.res_partner where cs_category='%s' 
-                and active=True and company_id=%s and uplink_date is not null and write_date between '%s 00:00:00' and '%s 23:59:59'""" % (cs_category,company_id, self.start_date, self.end_date))
+                and active=True and company_id=%s and uplink_date is not null and uplink_date between '%s 00:00:00' and '%s 23:59:59'""" % (cs_category,company_id, self.start_date, self.end_date))
         res = self.env.cr.dictfetchall()
         if len(res)>0:
             if res[0]['total']:

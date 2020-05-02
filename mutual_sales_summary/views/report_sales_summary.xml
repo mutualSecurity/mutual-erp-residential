@@ -111,6 +111,10 @@
                                             <td class="text-right">
                                                 <span t-esc="total_accounts"/>
                                             </td>
+                                            <t t-set="total_uplink" t-value="0"/>
+                                            <t t-set="total_active" t-value="0"/>
+                                            <t t-set="total_inactive" t-value="0"/>
+                                            <t t-set="total_accounts" t-value="0"/>
                                         </tr>
                                         <tr>
 

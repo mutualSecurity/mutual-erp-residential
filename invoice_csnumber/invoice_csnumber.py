@@ -281,7 +281,7 @@ class invoice_csnumber(osv.osv):
     @api.multi
     def invoice_validate(self):
         if self.partner_id.company_id.name == self.journal_id.company_id.name:
-            if (float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0) and (self.partner_id.customer == True):
+            if abs(float(self.outstanding))>= self.amount_total and self.partner_id.customer == True:
                 return self.write({'state': 'paid'})
             else:
                 return self.write({'state': 'open'})
@@ -307,20 +307,19 @@ class invoice_csnumber(osv.osv):
             if self.origin:
                 if ((re.match(r'SO', str(value['origin']))) and (value['state'] == 'open')):
                     total = total + float(value['amount_total'])
+
         if self.outstanding == 0.0:
             out = 0.0
             self.outstanding_amount = out
             self.grand_total = out + self.amount_total
-        else:
-            if total == 0 and float(self.outstanding) == 0.0:
-                out = 0.0
-                self.outstanding_amount = out
-                self.grand_total = out + self.amount_total
 
-            else:
-                out = float(self.outstanding) - self.amount_total
-                self.outstanding_amount = out
-                self.grand_total = out + self.amount_total
+        elif self.outstanding > 0.0:
+           self.outstanding_amount = self.outstanding
+           self.grand_total = self.outstanding + self.amount_total
+
+        elif self.outstanding < 0.0:
+                self.outstanding_amount = self.outstanding
+                self.grand_total = self.outstanding_amount + self.amount_total
 
         if self.date_invoice and self.partner_id.customer:
             date_format = "%Y-%m-%d"

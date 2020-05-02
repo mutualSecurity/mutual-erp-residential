@@ -36,7 +36,7 @@ class mutual_account_invoice(osv.osv):
                     self.createLogs(line,self.partner_id.customer,self.partner_id.supplier)
 
         if self.partner_id.company_id.name == self.journal_id.company_id.name:
-            if (float(self.outstanding) == 0.0 or float(self.outstanding) < 0.0) and (self.partner_id.customer == True):
+            if abs(float(self.outstanding)) >= self.amount_total and self.outstanding<0.0 and self.partner_id.customer == True:
                 return self.write({'state': 'paid'})
 
             else:
