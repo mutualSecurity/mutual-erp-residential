@@ -64,7 +64,19 @@ class SalesSummaryReport(osv.TransientModel):
 
     def get_active_customers(self,cs_category,company_id):
         self.env.cr.execute("""SELECT count(cs_category) as total FROM public.res_partner where cs_category='%s' 
-                and active=True and company_id=%s and create_date between '%s 00:00:00' and '%s 23:59:59'""" % (cs_category,company_id, self.start_date, self.end_date))
+                and uplink_date is null and active=True and company_id=%s and create_date between '%s 00:00:00' and '%s 23:59:59'""" % (cs_category,company_id, self.start_date, self.end_date))
+        res = self.env.cr.dictfetchall()
+        if len(res)>0:
+            if res[0]['total']:
+                return res[0]['total']
+            else:
+                return 0
+        else:
+            return 0
+
+    def get_inactive_customers_opening_balance(self,cs_category,company_id):
+        self.env.cr.execute("""SELECT count(cs_category) as total FROM public.res_partner where cs_category='%s' 
+                and active=False and company_id=%s """ % (cs_category,company_id))
         res = self.env.cr.dictfetchall()
         if len(res)>0:
             if res[0]['total']:
@@ -95,10 +107,9 @@ class SalesSummaryReport(osv.TransientModel):
                 res['data'].append({'code': category,
                              'uplink_customer': self.get_uplink_customers(category,company.id),
                              'active_customer': self.get_active_customers(category,company.id),
-                             'inactive_customer': self.get_inactive_customers(category,company.id)})
+                             'inactive_customer': self.get_inactive_customers(category,company.id) + self.get_inactive_customers_opening_balance(category,company.id)})
             data.append(res)
         return data
-
 
     def print_report(self, cr, uid, ids, data, context=None):
         return{
