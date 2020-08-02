@@ -20,11 +20,18 @@ class WizardReports(osv.TransientModel):
     }
 
     def cal_balances(self):
+        id = 0
+        if self.company_id.name == 'Mutual Security Systems':
+            id = 8
+        elif self.company_id.name == 'Mutual Security':
+            id = 41
+        elif self.company_id.name == 'Mutual Security Systems Pvt. Ltd.':
+            id = 356
         self.env.cr.execute("""select cs_category,sum(account_move_line.debit)as debit,sum(account_move_line.credit) as credit from res_partner 
         inner join account_move_line on res_partner.id = account_move_line.partner_id 
         inner join account_move on account_move_line.move_id = account_move.id
         where account_move_line.account_id=%s and res_partner.company_id=%s and account_move_line.company_id=%s and
-        account_move_line.date between '%s' and '%s' group by cs_category order by cs_category"""%(8,self.company_id.id,self.company_id.id,self.start_date,self.end_date))
+        account_move_line.date between '%s' and '%s' group by cs_category order by cs_category"""%(id,self.company_id.id,self.company_id.id,self.start_date,self.end_date))
 
         result = self.env.cr.dictfetchall()
         return result
