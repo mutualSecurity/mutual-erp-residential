@@ -1,0 +1,176 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* popup_reminder
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-31 05:14+0000\n"
+"PO-Revision-Date: 2016-08-31 05:14+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_active
+msgid "Active"
+msgstr "فعال"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "All"
+msgstr "All"
+
+#. module: popup_reminder
+#: model:ir.model,name:popup_reminder.model_auditlog_log
+msgid "Auditlog - Log"
+msgstr "Auditlog - Log"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_color
+msgid "Color"
+msgstr "Color"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_create_uid
+msgid "Created by"
+msgstr "ایجاد شده توسط"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_create_date
+msgid "Created on"
+msgstr "ایجاد شده در"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "Current Month"
+msgstr "Current Month"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_duration_in_days
+#: selection:popup.reminder,search_option:0
+msgid "Days"
+msgstr "Days"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_popup_field_ids
+#: model:ir.ui.view,arch_db:popup_reminder.popup_reminder_form
+msgid "Display Fields"
+msgstr "Display Fields"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_display_name
+msgid "Display Name"
+msgstr "نام نمایشی"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_field_id
+msgid "Fields"
+msgstr "Fields"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_from_today
+msgid "From Today"
+msgstr "From Today"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_id
+msgid "ID"
+msgstr "شناسه"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder___last_update
+msgid "Last Modified on"
+msgstr "تاریخ آخرین به‌روزرسانی"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_write_uid
+msgid "Last Updated by"
+msgstr "آخرین به روز رسانی توسط"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_write_date
+msgid "Last Updated on"
+msgstr "آخرین به روز رسانی در"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_model_id
+msgid "Model"
+msgstr "Model"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_name
+msgid "Name"
+msgstr "اسم"
+
+#. module: popup_reminder
+#. openerp-web
+#: code:addons/popup_reminder/static/src/xml/view.xml:33
+#, python-format
+msgid "Next"
+msgstr "Next"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "Next Month"
+msgstr "Next Month"
+
+#. module: popup_reminder
+#: model:ir.ui.menu,name:popup_reminder.main_popup_reminder_menu
+#: model:ir.ui.view,arch_db:popup_reminder.popup_reminder_form
+#: model:ir.ui.view,arch_db:popup_reminder.popup_reminder_tree
+msgid "Popup Reminder"
+msgstr "Popup Reminder"
+
+#. module: popup_reminder
+#. openerp-web
+#: code:addons/popup_reminder/static/src/xml/view.xml:24
+#, python-format
+msgid "Prev"
+msgstr "Prev"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_auditlog_log_is_record_read
+msgid "Record Read"
+msgstr "Record Read"
+
+#. module: popup_reminder
+#: model:ir.actions.act_window,name:popup_reminder.action_popup_reminder
+#: model:ir.ui.menu,name:popup_reminder.main_reminder_menu
+#: model:ir.ui.menu,name:popup_reminder.menu_popup_reminder
+msgid "Reminder"
+msgstr "Reminder"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_search_option
+msgid "Search Option"
+msgstr "Search Option"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "Today"
+msgstr "Today"
+
+#. module: popup_reminder
+#. openerp-web
+#: code:addons/popup_reminder/static/src/xml/view.xml:30
+#, python-format
+msgid "of"
+msgstr "of"
+
+#. module: popup_reminder
+#: model:ir.model,name:popup_reminder.model_popup_reminder
+msgid "popup.reminder"
+msgstr "popup.reminder"
+
+#. module: popup_reminder
+#. openerp-web
+#: code:addons/popup_reminder/static/src/xml/view.xml:28
+#, python-format
+msgid "to"
+msgstr "to"
+

@@ -1,0 +1,149 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* popup_reminder
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-10 04:56+0000\n"
+"PO-Revision-Date: 2017-03-10 04:56+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "All"
+msgstr "Tout"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "As Date"
+msgstr "Comme date"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "Current Month"
+msgstr "Mois en cours"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_duration_in_days
+#: selection:popup.reminder,search_option:0
+msgid "Days"
+msgstr "Journées"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_popup_field_ids
+#: model:ir.ui.view,arch_db:popup_reminder.popup_reminder_form
+msgid "Display Fields"
+msgstr "Afficher les champs"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_display_name
+msgid "Display Name"
+msgstr "Afficher un nom"
+
+#. module: popup_reminder
+#. openerp-web
+#: code:addons/popup_reminder/static/src/js/popup_reminder.js:276
+#, python-format
+msgid "Display Reminder Panel"
+msgstr "Panneau de rappel d'affichage"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_field_id
+msgid "Fields"
+msgstr "Des champs"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_from_today
+msgid "From Today"
+msgstr "À partir d'aujourd'hui"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_id
+msgid "ID"
+msgstr "ID"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder___last_update
+msgid "Last Modified on"
+msgstr "Dernière Modification le"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_model_id
+msgid "Model"
+msgstr "Modèle"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "Next Month"
+msgstr "Le mois prochain"
+
+#. module: popup_reminder
+#: model:ir.ui.menu,name:popup_reminder.main_reminder_menu
+#: model:ir.ui.view,arch_db:popup_reminder.popup_reminder_form
+#: model:ir.ui.view,arch_db:popup_reminder.popup_reminder_tree
+msgid "Popup Reminder"
+msgstr "Rappel Popup"
+
+#. module: popup_reminder
+#: model:ir.actions.act_window,name:popup_reminder.action_popup_reminder
+#: model:ir.ui.menu,name:popup_reminder.menu_popup_reminder
+msgid "Reminder"
+msgstr "Rappel"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_search_option
+msgid "Search Option"
+msgstr "Option de recherche"
+
+#. module: popup_reminder
+#: model:ir.model.fields,help:popup_reminder.field_popup_reminder_search_option
+msgid "To use the functionality of As Date the field needs to be in the database !"
+msgstr "Pour utiliser la fonctionnalité de Date Comme le champ doit être dans la base de données!"
+
+#. module: popup_reminder
+#: selection:popup.reminder,search_option:0
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#. module: popup_reminder
+#: model:ir.model.fields,field_description:popup_reminder.field_popup_reminder_user_domain
+msgid "User Domain"
+msgstr "Domaine Utilisateur"
+
+#. module: popup_reminder
+#: model:ir.model,name:popup_reminder.model_popup_reminder
+msgid "popup.reminder"
+msgstr "Popup.reminder"
+
