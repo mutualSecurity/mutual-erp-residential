@@ -106,6 +106,9 @@ class invoice_csnumber(osv.osv):
     @api.multi
     def action_move_create(self):
         """ Creates invoice related analytics and financial move lines """
+        if self.invoice_type == 'Sales Tax' or self.type == 'in_invoice':
+            return super(invoice_csnumber, self).action_move_create()
+
         account_invoice_tax = self.env['account.invoice.tax']
         account_move = self.env['account.move']
 
@@ -179,7 +182,7 @@ class invoice_csnumber(osv.osv):
                     if i + 1 == len(totlines):
                         amount_currency += res_amount_currency
 
-                    iml.append({
+                    entry_line = {
                         'type': 'dest',
                         'name': name,
                         'price': t[1],
@@ -188,9 +191,14 @@ class invoice_csnumber(osv.osv):
                         'amount_currency': diff_currency and amount_currency,
                         'currency_id': diff_currency and inv.currency_id.id,
                         'ref': ref,
-                    })
+                    }
+                    if datetime.strptime(self.create_date, '%Y-%m-%d %H:%M:%S')>=datetime.strptime('2021-02-11 00:00:00', '%Y-%m-%d %H:%M:%S'):
+                        entry_line.update({
+                            'date': inv.from_date
+                        })
+                    iml.append(entry_line)
             else:
-                iml.append({
+                entry_line = {
                     'type': 'dest',
                     'name': name,
                     'price': total,
@@ -199,9 +207,18 @@ class invoice_csnumber(osv.osv):
                     'amount_currency': diff_currency and total_currency,
                     'currency_id': diff_currency and inv.currency_id.id,
                     'ref': ref
-                })
+                }
+                if datetime.strptime(self.create_date, '%Y-%m-%d %H:%M:%S') >= datetime.strptime('2021-02-11 00:00:00', '%Y-%m-%d %H:%M:%S') and inv.company_id.id==1:
+                    entry_line.update({
+                        'date': inv.from_date
+                    })
+                iml.append(entry_line)
 
-            date = date_invoice
+            #date = date_invoice
+            if datetime.strptime(self.create_date, '%Y-%m-%d %H:%M:%S') >= datetime.strptime('2021-02-11 00:00:00', '%Y-%m-%d %H:%M:%S') and inv.company_id.id==1:
+                date = inv.from_date
+            else:
+                date = date_invoice
 
             part = self.env['res.partner']._find_accounting_partner(inv.partner_id)
 
@@ -211,8 +228,7 @@ class invoice_csnumber(osv.osv):
             journal = inv.journal_id.with_context(ctx)
             if journal.centralisation:
                 raise except_orm(_('User Error!'),
-                                 _(
-                                     'You cannot create an invoice on a centralized journal. Uncheck the centralized counterpart box in the related journal from the configuration menu.'))
+                                 _('You cannot create an invoice on a centralized journal. Uncheck the centralized counterpart box in the related journal from the configuration menu.'))
 
             line = inv.finalize_invoice_move_lines(line)
             periods = self.monitoring_period()
@@ -224,14 +240,21 @@ class invoice_csnumber(osv.osv):
                 'ref': ledger_status if periods[0]['customer'] else inv.reference or inv.name,
                 'line_id': line,
                 'journal_id': journal.id,
-                'date': inv.date_invoice,
                 'narration': inv.comment,
                 'company_id': inv.company_id.id,
             }
+            if datetime.strptime(self.create_date, '%Y-%m-%d %H:%M:%S') >= datetime.strptime('2021-02-11 00:00:00', '%Y-%m-%d %H:%M:%S') and inv.company_id.id==1:
+                move_vals.update({'date': inv.from_date})
+            else:
+                move_vals.update({'date': date_invoice})
             ctx['company_id'] = inv.company_id.id
-            period = inv.period_id
-            if not period:
-                period = period.with_context(ctx).find(date_invoice)[:1]
+            if datetime.strptime(self.create_date, '%Y-%m-%d %H:%M:%S') >= datetime.strptime('2021-02-11 00:00:00', '%Y-%m-%d %H:%M:%S') and inv.company_id.id==1:
+                period = inv.period_id.with_context(ctx).find(inv.from_date)[:1]
+            else:
+                period = inv.period_id
+                if not period:
+                    period = period.with_context(ctx).find(date_invoice)[:1]
+            #period = inv.period_id.with_context(ctx).find(inv.from_date if inv.from_date else date_invoice)[:1]
             if period:
                 move_vals['period_id'] = period.id
                 for i in line:
