@@ -378,13 +378,16 @@ class CommonReportHeaderWebkit(common_report_header):
             if not account_id or not period_ids:
                 raise Exception('Missing account or period_ids')
             try:
-                self.cursor.execute("SELECT sum(debit) AS debit, "
-                                    " sum(credit) AS credit, "
-                                    " sum(debit)-sum(credit) AS balance, "
-                                    " sum(amount_currency) AS curr_balance"
-                                    " FROM account_move_line"
-                                    " WHERE period_id in %s"
-                                    " AND account_id = %s",
+                self.cursor.execute("SELECT sum(aml.debit) AS debit, "
+                                    " sum(aml.credit) AS credit, "
+                                    " sum(aml.debit)-sum(aml.credit) AS balance, "
+                                    " sum(aml.amount_currency) AS curr_balance"
+                                    " FROM account_move_line as aml"
+                                    " INNER JOIN account_move as am"
+                                    " ON aml.move_id=am.id"
+                                    " WHERE aml.period_id in %s"
+                                    " AND aml.account_id = %s"
+                                    " AND am.state='posted'",
                                     (tuple(period_ids), account_id))
                 res = self.cursor.dictfetchone()
 
