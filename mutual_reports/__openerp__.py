@@ -26,6 +26,7 @@
         'views/wiz_report_balances.xml',
         'views/wiz_report.xml',
         'views/wiz_report_hmb_bop.xml',
+        'views/custom_mspl_invoice.xml',
         'views/custom_invoice.xml',
         'views/dummy_custom_invoice.xml',
         'views/customer_details.xml',

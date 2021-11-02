@@ -69,6 +69,15 @@
                 attachment_use="False"
                 file="mutual_reports.custom_invoice"
         />
+        <report
+                id="custom_mspl_invoice_pdf"
+                model="account.invoice"
+                string="Monitoring Invoice II"
+                report_type="qweb-pdf"
+                name="mutual_reports.custom_mspl_invoice"
+                attachment_use="False"
+                file="mutual_reports.custom_mspl_invoice"
+        />
          <report
                 id="dummy_custom_invoice_pdf"
                 model="mutual.dummy.invoice"
@@ -141,7 +150,7 @@
 
         <report
                 id="customer_address_pdf"
-                model="account.analytic.invoice.line"
+                model="res.partner"
                 string="Customer Address"
                 report_type="qweb-pdf"
                 name="mutual_reports.customer_address"

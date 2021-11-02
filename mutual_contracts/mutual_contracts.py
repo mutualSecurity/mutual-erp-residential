@@ -34,7 +34,7 @@ class invoice_csnumber(osv.osv):
             'account_analytic_id': line.analytic_account_id.id,
             'price_unit': line.price_unit or 0.0,
             'quantity': line.quantity,
-            'uos_id': line.uom_id.id or False,
+            'uom_id': line.uom_id.id or False,
             'product_id': line.product_id.id or False,
             'invoice_line_tax_id': [(6, 0, tax_id)],
         }

@@ -32,7 +32,7 @@ class mutual_projects(osv.osv):
                                  domain="[('is_technician','=',True)]", default='', readonly=True),
       'finalstatus': fields.char("Final Status", store=True),
       'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain="[('customer','=',True)]"),
-      'company_id': fields.related('partner_id', 'company_id', relation="res.company", type='many2one', string='Company', store=True, readonly=True),
+      'oc_company_id': fields.related('partner_id', 'company_id', relation="res.company", type='many2one', string='Company', store=True, readonly=True),
       'city_task': fields.related('partner_id', 'city', type='char', size=12, string='City', readonly=True),
       'monitoring_address_task': fields.related('partner_id', 'street', type='char', string='Monitoring address',readonly=True),
       'mobile_task': fields.related('partner_id', 'mobile', type='char', string='Mobile', readonly=True),

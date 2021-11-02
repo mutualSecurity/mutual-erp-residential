@@ -8,20 +8,20 @@
                           <div class="row"><br/>
                               <div>
                                   <strong>CS Number:</strong> <span t-esc="customer.cs_number"/><br/>
-                                  <t t-if="customer.analytic_account_id.partner_id.phone and customer.analytic_account_id.partner_id.mobile==False">
-                                      <strong>Phone: </strong> <span t-esc="customer.analytic_account_id.partner_id.phone"/><br/>
+                                  <t t-if="customer.phone and customer.mobile==False">
+                                      <strong>Phone: </strong> <span t-esc="customer.phone"/><br/>
                                   </t>
-                                  <t t-if="customer.analytic_account_id.partner_id.mobile and customer.analytic_account_id.partner_id.phone==False">
-                                      <strong>Mobile: </strong> <span t-esc="customer.analytic_account_id.partner_id.mobile"/><br/>
+                                  <t t-if="customer.mobile and customer.phone==False">
+                                      <strong>Mobile: </strong> <span t-esc="customer.mobile"/><br/>
                                   </t>
-                                  <t t-if="customer.analytic_account_id.partner_id.mobile and customer.analytic_account_id.partner_id.phone">
-                                      <strong>Mobile: </strong> <span t-esc="customer.analytic_account_id.partner_id.mobile"/><br/>
+                                  <t t-if="customer.mobile and customer.phone">
+                                      <strong>Mobile: </strong> <span t-esc="customer.mobile"/><br/>
                                   </t>
-                                  <span style="font-size:22px"><strong>Name:</strong> <span t-esc="customer.analytic_account_id.name"/><br/></span>
+                                  <span style="font-size:22px"><strong>Name:</strong> <span t-esc="customer.name"/><br/></span>
                                   <!--<strong>Monitoring Address:</strong> <span t-field="customer.street"/>,<span t-field="customer.street2"/><br/>-->
-                                  <span style="font-size:22px"><strong>Address:</strong> <span t-esc="customer.analytic_account_id.partner_id.c_street"/><br/>
-                                  <t t-if="customer.analytic_account_id.partner_id.city">
-                                       <strong>City: </strong><span t-esc="customer.analytic_account_id.partner_id.city"/><br/>
+                                  <span style="font-size:22px"><strong>Address:</strong> <span t-esc="customer.c_street"/><br/>
+                                  <t t-if="customer.city">
+                                       <strong>City: </strong><span t-esc="customer.city"/><br/>
                                   </t></span>
                               </div><br/>
                           </div>

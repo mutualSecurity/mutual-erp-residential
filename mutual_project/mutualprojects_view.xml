@@ -305,7 +305,7 @@
                 <xpath expr="//field[@name='project_id']" position="before">
                     <field name="create_uid" readonly="True"/>
                     <field name="partner_id"  attrs="{'readonly':[('stage_id','!=',19)]}"/>
-                    <field name="company_id"/>
+                    <field name="oc_company_id"/>
                     <field name="cs_number_task"/>
                     <field name="city_task"/>
                     <field name="monitoring_address_task"/>
